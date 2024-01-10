@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "aIiqcs9oPsGvdAnBOd42gvG2cEKVMSW2JKKEq5FSPFQ=",
+  "Source": "Notification.microservice",
+  "BasePath": "_content/Notification.microservice",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

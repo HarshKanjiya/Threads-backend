@@ -1,0 +1,6 @@
+@Subscription.microservice_HostAddress = http://localhost:5193
+
+GET {{Subscription.microservice_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

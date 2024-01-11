@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-
+using Thread.Constants;
 using static Thread.Constants.Constants;
 
 namespace Thread.Model
@@ -14,7 +14,7 @@ namespace Thread.Model
         public string? ReferenceId { get; set; }
         public required ThreadReplyAccessType ReplyAccess { get; set; } = ThreadReplyAccessType.ANY;
 
-        public required ThreadContentType Content { get; set; }
+        public required ThreadContent Content { get; set; }
 
     }
 }

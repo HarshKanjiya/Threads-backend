@@ -21,6 +21,7 @@ namespace AuthAPI.microservice.Constants
         PC
     }
 
+
     public enum GenderType
     {
         MALE,

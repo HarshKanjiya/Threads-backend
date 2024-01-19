@@ -33,7 +33,7 @@ namespace Thread.Constants
     public class ThreadContent
     {
         [Key] public Guid ContentId { get; set; }
-        public ThreadContentType MyProperty { get; set; } = ThreadContentType.TEXT;
+        public ThreadContentType ContentType { get; set; } = ThreadContentType.TEXT;
         public required string Text { get; set; }
         public List<String>? Images { get; set; }
         public List<ThreadContentOptions>? Options { get; set; }

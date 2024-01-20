@@ -9,4 +9,9 @@
     {
         public required string Email { get; set; }
     }
+
+    public class UsernameAvailabilitiesRequest
+    {
+        public required string UserName { get; set; }
+    }
 }

@@ -12,6 +12,8 @@ namespace AuthAPI.microservice.data
 
         public DbSet<UserModel> Users { get; set; }
 
+        public DbSet<Otp> OTPs { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

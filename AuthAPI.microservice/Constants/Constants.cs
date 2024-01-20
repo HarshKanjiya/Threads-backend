@@ -4,13 +4,7 @@ namespace AuthAPI.microservice.Constants
 {
     public class Constants
     {
-        public class Device
-        {
-            public required DeviceType Type { get; set; }
-            [Key] public required string RefreshToken { get; set; }
 
-            public DateTime CreateAt { get; set; } = DateTime.Now;
-        }
     }
 
     public enum DeviceType
@@ -26,8 +20,7 @@ namespace AuthAPI.microservice.Constants
     {
         MALE,
         FEMALE,
-        NON_BINARY,
-        NOT_SPECIFIED
+        KEEP_SECRET
     }
 
     public enum RoleType

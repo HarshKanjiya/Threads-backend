@@ -22,13 +22,18 @@ namespace AuthAPI.microservice.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AuthAPI.microservice.Constants.Constants+Device", b =>
+            modelBuilder.Entity("AuthAPI.microservice.Model.Device", b =>
                 {
-                    b.Property<string>("RefreshToken")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("DeviceId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("RefreshToken")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Type")
                         .HasColumnType("int");
@@ -36,11 +41,32 @@ namespace AuthAPI.microservice.Migrations
                     b.Property<string>("UserModelId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.HasKey("RefreshToken");
+                    b.HasKey("DeviceId");
 
                     b.HasIndex("UserModelId");
 
                     b.ToTable("Device");
+                });
+
+            modelBuilder.Entity("AuthAPI.microservice.Model.Otp", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OTP")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("OTPs");
                 });
 
             modelBuilder.Entity("AuthAPI.microservice.Model.UserModel", b =>
@@ -51,7 +77,14 @@ namespace AuthAPI.microservice.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<string>("Avatar")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Bio")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Birthdate")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -97,6 +130,7 @@ namespace AuthAPI.microservice.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("PhoneNumberConfirmed")
@@ -277,7 +311,7 @@ namespace AuthAPI.microservice.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("AuthAPI.microservice.Constants.Constants+Device", b =>
+            modelBuilder.Entity("AuthAPI.microservice.Model.Device", b =>
                 {
                     b.HasOne("AuthAPI.microservice.Model.UserModel", null)
                         .WithMany("Devices")

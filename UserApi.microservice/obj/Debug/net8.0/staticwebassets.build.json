@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "H9awqiI5mj1/M2y2lS1oTqqGV/VN4+lPgVHfGv4wTYE=",
+  "Source": "UserApi.microservice",
+  "BasePath": "_content/UserApi.microservice",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

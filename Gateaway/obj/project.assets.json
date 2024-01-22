@@ -7734,9 +7734,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Gateaway\\Gateaway.csproj",
-      "projectName": "Gateaway",
-      "projectPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Gateaway\\Gateaway.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Gateaway\\Gateway.csproj",
+      "projectName": "Gateway",
+      "projectPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Gateaway\\Gateway.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Gateaway\\obj\\",
       "projectStyle": "PackageReference",

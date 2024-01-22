@@ -1,8 +1,8 @@
 {
   "Version": 1,
-  "Hash": "j2o7VmnlAHGGyvJCkGnaOD+iqx7TAnLLWaIRqVDU2wQ=",
-  "Source": "Gateaway",
-  "BasePath": "_content/Gateaway",
+  "Hash": "Mm2RDizQeHix8kCAUsZgS+0ztC2dLjQoQlefsvZCCqc=",
+  "Source": "Gateway",
+  "BasePath": "_content/Gateway",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],

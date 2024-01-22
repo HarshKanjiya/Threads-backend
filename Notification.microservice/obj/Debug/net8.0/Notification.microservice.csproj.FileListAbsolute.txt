@@ -135,3 +135,4 @@ C:\Users\Admin\Desktop\demo\threads\backend\Notification.microservice\obj\Debug\
 C:\Users\Admin\Desktop\demo\threads\backend\Notification.microservice\obj\Debug\net8.0\Notification.microservice.genruntimeconfig.cache
 C:\Users\Admin\Desktop\demo\threads\backend\Notification.microservice\obj\Debug\net8.0\ref\Notification.microservice.dll
 C:\Users\Admin\Desktop\demo\threads\backend\Notification.microservice\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Admin\Desktop\demo\threads\backend\Notification.microservice\obj\Debug\net8.0\Notification.microservice.sourcelink.json

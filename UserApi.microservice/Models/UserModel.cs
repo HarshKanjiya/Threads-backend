@@ -10,6 +10,7 @@ namespace UserApi.microservice.Models
         public required string UserName { get; set; }
         public required string Email { get; set; } = string.Empty;
         public required string Password { get; set; } = string.Empty;
+        public required string PasswordSalt {  get; set; } = string.Empty;
         public required string Gender { get; set; }
         public string? Bio { get; set; } = string.Empty;
         public required string PhoneNumber { get; set; }

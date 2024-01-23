@@ -6,10 +6,11 @@ using UserApi.microservice.Data;
 using UserApi.microservice.Models;
 using UserApi.microservice.Models.DTOs;
 using UserApi.microservice.Utils;
+using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace UserApi.microservice.Controllers
 {
-    [Route("api/[controller]")]
+
     [ApiController]
     public class OtpController : ControllerBase
     {
@@ -21,6 +22,7 @@ namespace UserApi.microservice.Controllers
         }
 
         [HttpPost]
+        [Route("otp/create")]
         public async Task<ActionResult<ResponseDTO>> sendOtp(OtpCreateDTO req)
         {
             ResponseDTO response = new ResponseDTO();
@@ -36,7 +38,7 @@ namespace UserApi.microservice.Controllers
                     return response;
                 }
 
-                EmailService emailService = new EmailService("smtp.gmail.com", 587, "harshkanjiyaotp@gmail.com", "1Trillion$");
+                EmailService emailService = new EmailService("smtp.gmail.com", 587, "harshkanjiyaotp@gmail.com", "ppxs yjmq xgal vmzu\r\n");
 
 
                 Random rnd = new Random();
@@ -58,16 +60,31 @@ namespace UserApi.microservice.Controllers
                     UserId = User.UserId
                 };
 
-                var res = await db.Otps.AddAsync(OTP);
-                await db.SaveChangesAsync();
+                //check if otp record already exist, if yes then udate else create
+                var oldOtpExistance = db.Otps.FirstOrDefault(o => o.UserId == User.UserId);
 
-                if (res != null)
+                if (oldOtpExistance == null)
                 {
+                    var res = await db.Otps.AddAsync(OTP);
+                    await db.SaveChangesAsync();
+                    if (res != null)
+                    {
+                        response.Message = "Otp sent Successfully.";
+                        response.Success = true;
+
+                        return Ok(response);
+                    }
+                }
+                else
+                {
+                    oldOtpExistance.otp = otp;
+                    db.SaveChanges();
                     response.Message = "Otp sent Successfully.";
                     response.Success = true;
 
                     return Ok(response);
                 }
+
                 response.Message = "Otp couldn't be sent.";
                 response.Success = false;
 
@@ -80,9 +97,67 @@ namespace UserApi.microservice.Controllers
                 return BadRequest(e.ToString());
 
             }
+        }
+
+        [HttpPost, Route("otp/verify")]
+        public async Task<ActionResult<ResponseDTO>> verifyOtp(OtpVerifyDTO req)
+        {
+            ResponseDTO response = new ResponseDTO();
+
+            try
+            {
+                var User = db.Users.FirstOrDefault(u => string.Equals(u.Email, req.Email));
+                if (User == null)
+                {
+                    response.Message = "User doesnot exist.";
+                    response.Success = false;
+                    return BadRequest(response);
+                }
 
 
 
+                var OtpRecord = db.Otps.FirstOrDefault(otp => string.Equals(otp.UserId, User.UserId));
+
+                if (OtpRecord == null)
+                {
+                    response.Message = "OTP doesn't exist, Please try again.";
+                    response.Success = false;
+                    return BadRequest(response);
+                }
+
+                int timeDifference = (int)DateTime.Now.Subtract(OtpRecord.CreatedAt).TotalSeconds;
+                if (timeDifference > 60)
+                {
+                    response.Message = "OTP has Expired!" + timeDifference;
+                    response.Success = false;
+                    return BadRequest(response);
+                }
+
+                if (string.Equals(OtpRecord.otp, req.Otp))
+                {
+                    User.Password = "";
+                    User.PasswordSalt = "";
+                    response.Message = "Login Successful." + timeDifference;
+                    response.Success = true;
+                    response.Data = User;
+                    return Ok(response);
+                }
+                else
+                {
+                    response.Message = "OTP doesn't match!" + timeDifference + "," + OtpRecord.otp + "," + req.Otp;
+                    response.Success = false;
+                    return BadRequest(response);
+                }
+
+
+            }
+            catch (Exception e)
+            {
+                response.Message = "Something went wrong";
+                response.Success = false;
+                return BadRequest(e.ToString());
+
+            }
         }
     }
 }

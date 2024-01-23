@@ -9,6 +9,8 @@ namespace Thread.Data
 
         public DbSet<ThreadModel> Threads { get; set; }
 
+        public DbSet<ThreadContent> Contents { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

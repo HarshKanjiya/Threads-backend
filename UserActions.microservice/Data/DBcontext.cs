@@ -7,7 +7,6 @@ namespace UserActions.microservice.Data
         public DBcontext(DbContextOptions<DBcontext> options) : base(options) { }
 
         public DbSet<LikeModel> Likes { get; set; }
-        public DbSet<PollResponseModel> PollResponses { get; set; }
         public DbSet<RelationshipModel> Relationships { get; set; }
     }
 }

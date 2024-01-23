@@ -1,12 +1,8 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Net.Mail;
-using System.Net;
+﻿using Microsoft.AspNetCore.Mvc;
 using UserApi.microservice.Data;
 using UserApi.microservice.Models;
 using UserApi.microservice.Models.DTOs;
 using UserApi.microservice.Utils;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace UserApi.microservice.Controllers
 {

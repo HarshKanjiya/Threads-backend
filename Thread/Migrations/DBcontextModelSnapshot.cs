@@ -122,6 +122,28 @@ namespace Thread.microservice.Migrations
                     b.ToTable("Threads");
                 });
 
+            modelBuilder.Entity("Thread.microservice.Model.PollResponseModel", b =>
+                {
+                    b.Property<Guid>("PollResponseId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Selection")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ThreadId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("PollResponseId");
+
+                    b.ToTable("PollResponses");
+                });
+
             modelBuilder.Entity("Thread.Model.ThreadContent", b =>
                 {
                     b.HasOne("Thread.Model.ThreadContentRatings", "Ratings")

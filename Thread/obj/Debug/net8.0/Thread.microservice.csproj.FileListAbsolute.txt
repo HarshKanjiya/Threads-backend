@@ -136,3 +136,5 @@ C:\Users\Admin\Desktop\demo\threads\backend\Thread\obj\Debug\net8.0\Thread.micro
 C:\Users\Admin\Desktop\demo\threads\backend\Thread\obj\Debug\net8.0\Thread.microservice.genruntimeconfig.cache
 C:\Users\Admin\Desktop\demo\threads\backend\Thread\obj\Debug\net8.0\ref\Thread.microservice.dll
 C:\Users\Admin\Desktop\demo\threads\backend\Thread\obj\Debug\net8.0\Thread.microservice.sourcelink.json
+C:\Users\Admin\Desktop\demo\threads\backend\Thread\bin\Debug\net8.0\CloudinaryDotNet.dll
+C:\Users\Admin\Desktop\demo\threads\backend\Thread\bin\Debug\net8.0\Newtonsoft.Json.dll

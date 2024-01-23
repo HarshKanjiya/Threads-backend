@@ -41,29 +41,6 @@ namespace UserActions.microservice.Migrations
                     b.ToTable("Likes");
                 });
 
-            modelBuilder.Entity("UserActions.microservice.Models.PollResponseModel", b =>
-                {
-                    b.Property<Guid>("PollResponseId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Selection")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ThreadId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("PollResponseId");
-
-                    b.ToTable("PollResponses");
-                });
-
             modelBuilder.Entity("UserActions.microservice.Models.RelationshipModel", b =>
                 {
                     b.Property<string>("RelationId")
@@ -77,8 +54,9 @@ namespace UserActions.microservice.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("RelationId");
 

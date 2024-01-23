@@ -135,3 +135,4 @@ C:\Users\Admin\Desktop\demo\threads\backend\UserActions.microservice\obj\Debug\n
 C:\Users\Admin\Desktop\demo\threads\backend\UserActions.microservice\obj\Debug\net8.0\UserActions.microservice.genruntimeconfig.cache
 C:\Users\Admin\Desktop\demo\threads\backend\UserActions.microservice\obj\Debug\net8.0\ref\UserActions.microservice.dll
 C:\Users\Admin\Desktop\demo\threads\backend\UserActions.microservice\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\Admin\Desktop\demo\threads\backend\UserActions.microservice\obj\Debug\net8.0\UserActions.microservice.sourcelink.json

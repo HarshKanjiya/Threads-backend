@@ -142,3 +142,5 @@ C:\Users\Admin\Desktop\demo\threads\backend\UserApi.microservice\obj\Debug\net8.
 C:\Users\Admin\Desktop\demo\threads\backend\UserApi.microservice\obj\Debug\net8.0\UserApi.microservice.pdb
 C:\Users\Admin\Desktop\demo\threads\backend\UserApi.microservice\obj\Debug\net8.0\UserApi.microservice.genruntimeconfig.cache
 C:\Users\Admin\Desktop\demo\threads\backend\UserApi.microservice\obj\Debug\net8.0\ref\UserApi.microservice.dll
+C:\Users\Admin\Desktop\demo\threads\backend\UserApi.microservice\bin\Debug\net8.0\CloudinaryDotNet.dll
+C:\Users\Admin\Desktop\demo\threads\backend\UserApi.microservice\bin\Debug\net8.0\Newtonsoft.Json.dll

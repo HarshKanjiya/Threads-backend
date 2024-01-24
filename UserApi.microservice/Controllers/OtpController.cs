@@ -44,7 +44,7 @@ namespace UserApi.microservice.Controllers
 
                 if (!isEmailSent)
                 {
-                    response.Message = "Otp couldn't be sent1.";
+                    response.Message = "Otp couldn't be sent.";
                     response.Success = false;
 
                     return BadRequest(response);
@@ -136,6 +136,12 @@ namespace UserApi.microservice.Controllers
                     response.Message = "Login Successful." + timeDifference;
                     response.Success = true;
                     response.Data = User;
+
+
+                    db.Otps.Remove(OtpRecord);
+                    db.SaveChanges();
+
+
                     return Ok(response);
                 }
                 else

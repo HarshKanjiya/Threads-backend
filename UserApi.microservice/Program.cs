@@ -1,5 +1,5 @@
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
-using System.Text.Json.Serialization;
 using UserApi.microservice.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -13,6 +13,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DbContextUsers>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("conn")));
 
+builder.Services.Configure<KestrelServerOptions>(options =>
+{
+    options.Limits.MaxRequestBodySize = 52428800; // Set the limit to 50 MB (in bytes)
+});
 
 var app = builder.Build();
 

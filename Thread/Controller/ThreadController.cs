@@ -21,7 +21,7 @@ namespace Thread.microservice.Controller
 
 
         [HttpPost]
-        public async Task<ActionResult<ResponseDTO>> CreateThread(CreateRequestDTO req)
+        public async Task<ActionResult<ResponseDTO>> CreateThread([FromBody] CreateRequestDTO req)
         {
             ResponseDTO response = new ResponseDTO();
             try
@@ -96,5 +96,12 @@ namespace Thread.microservice.Controller
             }
         }
 
+
+        [HttpPost, Route("/file")]
+        [Consumes("multipart/form-data")]
+        public async Task<ActionResult> FileUpload(IFormFile file)
+        {
+            return Ok();
+        }
     }
 }

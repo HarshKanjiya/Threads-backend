@@ -128,7 +128,7 @@ namespace UserApi.microservice.Controllers
                     responseDTO.Message = "Invalid credentials.";
                     responseDTO.Success = false;
 
-                    return BadRequest(responseDTO);
+                    return Ok(responseDTO);
 
 
                 }
@@ -156,7 +156,7 @@ namespace UserApi.microservice.Controllers
                     responseDTO.Message = "Invalid credentials.";
                     responseDTO.Success = false;
 
-                    return BadRequest(responseDTO);
+                    return Ok(responseDTO);
                 }
                 else if (Regex.IsMatch(req.UniqueId, Email_REGEX))
                 {
@@ -182,14 +182,14 @@ namespace UserApi.microservice.Controllers
                     responseDTO.Message = "Invalid credentials.";
                     responseDTO.Success = false;
 
-                    return BadRequest(responseDTO);
+                    return Ok(responseDTO);
                 }
                 else
                 {
                     responseDTO.Message = "Invalid credentials.";
                     responseDTO.Success = false;
 
-                    return BadRequest(responseDTO);
+                    return Ok(responseDTO);
                 }
             }
             catch (Exception e)

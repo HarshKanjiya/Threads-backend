@@ -107,7 +107,7 @@ namespace UserApi.microservice.Controllers
                 {
                     response.Message = "User doesnot exist.";
                     response.Success = false;
-                    return BadRequest(response);
+                    return Ok(response);
                 }
 
 
@@ -118,7 +118,7 @@ namespace UserApi.microservice.Controllers
                 {
                     response.Message = "OTP doesn't exist, Please try again.";
                     response.Success = false;
-                    return BadRequest(response);
+                    return Ok(response);
                 }
 
                 int timeDifference = (int)DateTime.Now.Subtract(OtpRecord.CreatedAt).TotalSeconds;
@@ -126,7 +126,7 @@ namespace UserApi.microservice.Controllers
                 {
                     response.Message = "OTP has Expired!" + timeDifference;
                     response.Success = false;
-                    return BadRequest(response);
+                    return Ok(response);
                 }
 
                 if (string.Equals(OtpRecord.otp, req.Otp))
@@ -148,7 +148,7 @@ namespace UserApi.microservice.Controllers
                 {
                     response.Message = "OTP doesn't match!" + timeDifference + "," + OtpRecord.otp + "," + req.Otp;
                     response.Success = false;
-                    return BadRequest(response);
+                    return Ok(response);
                 }
 
 

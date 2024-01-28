@@ -32,6 +32,7 @@ namespace UserApi.microservice.services
             };
 
             channel.BasicConsume("user", true, consumer);
+
         }
     }
 }

@@ -5,21 +5,23 @@ using Thread.microservice.Utils;
 using UserApi.microservice.Data;
 using UserApi.microservice.Models;
 using UserApi.microservice.Models.DTOs;
+using UserApi.microservice.services;
 using UserApi.microservice.Utils;
 
 namespace UserApi.microservice.Controllers
 {
-    [ApiController]
+    [ApiController,Route("Auth")]
     public class AuthController : ControllerBase
     {
         private readonly DbContextUsers db;
+        private readonly IMessageProducer messageProducer;
 
-
-        public AuthController(DbContextUsers _db)
+        public AuthController(DbContextUsers _db,IMessageProducer _messageProducer)
         {
             db = _db;
+            messageProducer = _messageProducer;
         }
-        [HttpPost, Route("auth/register")]
+        [HttpPost("register")]
         public async Task<ActionResult<ResponseDTO>> SignUp(SignupRequestDTO req)
         {
             ResponseDTO responseDTO = new ResponseDTO();
@@ -94,7 +96,7 @@ namespace UserApi.microservice.Controllers
         }
 
 
-        [HttpPost, Route("auth/login")]
+        [HttpPost("login")]
         public async Task<ActionResult<ResponseDTO>> Login(LoginRequestDTO req)
         {
             ResponseDTO responseDTO = new ResponseDTO();
@@ -201,7 +203,7 @@ namespace UserApi.microservice.Controllers
             }
         }
 
-        [HttpPost, Route("auth/username")]
+        [HttpPost("username")]
         public async Task<ActionResult<ResponseDTO>> CheckUserNameAvaibility(CheckUsernameAvaibilityDTO req)
         {
             ResponseDTO responseDTO = new ResponseDTO();
@@ -234,6 +236,13 @@ namespace UserApi.microservice.Controllers
             }
         }
 
+        [HttpGet("user/{id}")]
+        public async Task<ActionResult<ResponseDTO>> GetSingleUserProfileData()
+        {
+            messageProducer.SendingMessage("harsh");
+
+            return Ok();
+        }
 
     }
 }

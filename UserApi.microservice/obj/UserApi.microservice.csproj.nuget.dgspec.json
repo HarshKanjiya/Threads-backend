@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\UserApi.microservice\\UserApi.microservice.csproj": {}
+    "D:\\projects\\side\\thread\\backend\\UserApi.microservice\\UserApi.microservice.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\UserApi.microservice\\UserApi.microservice.csproj": {
+    "D:\\projects\\side\\thread\\backend\\UserApi.microservice\\UserApi.microservice.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\UserApi.microservice\\UserApi.microservice.csproj",
+        "projectUniqueName": "D:\\projects\\side\\thread\\backend\\UserApi.microservice\\UserApi.microservice.csproj",
         "projectName": "UserApi.microservice",
-        "projectPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\UserApi.microservice\\UserApi.microservice.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\UserApi.microservice\\obj\\",
+        "projectPath": "D:\\projects\\side\\thread\\backend\\UserApi.microservice\\UserApi.microservice.csproj",
+        "packagesPath": "C:\\Users\\asus\\.nuget\\packages\\",
+        "outputPath": "D:\\projects\\side\\thread\\backend\\UserApi.microservice\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -69,6 +69,10 @@
             "Microsoft.IdentityModel.Tokens": {
               "target": "Package",
               "version": "[7.1.2, )"
+            },
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[6.8.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

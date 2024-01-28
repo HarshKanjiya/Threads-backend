@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Notification.microservice\\Notification.microservice.csproj": {}
+    "D:\\projects\\side\\thread\\backend\\Notification.microservice\\Notification.microservice.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Notification.microservice\\Notification.microservice.csproj": {
+    "D:\\projects\\side\\thread\\backend\\Notification.microservice\\Notification.microservice.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Notification.microservice\\Notification.microservice.csproj",
+        "projectUniqueName": "D:\\projects\\side\\thread\\backend\\Notification.microservice\\Notification.microservice.csproj",
         "projectName": "Notification.microservice",
-        "projectPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Notification.microservice\\Notification.microservice.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Notification.microservice\\obj\\",
+        "projectPath": "D:\\projects\\side\\thread\\backend\\Notification.microservice\\Notification.microservice.csproj",
+        "packagesPath": "C:\\Users\\asus\\.nuget\\packages\\",
+        "outputPath": "D:\\projects\\side\\thread\\backend\\Notification.microservice\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -57,6 +57,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[8.0.1, )"
+            },
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[6.8.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",

@@ -310,3 +310,4 @@ D:\projects\side\thread\backend\Gateaway\obj\Debug\net8.0\refint\Gateway.dll
 D:\projects\side\thread\backend\Gateaway\obj\Debug\net8.0\Gateway.pdb
 D:\projects\side\thread\backend\Gateaway\obj\Debug\net8.0\Gateway.genruntimeconfig.cache
 D:\projects\side\thread\backend\Gateaway\obj\Debug\net8.0\ref\Gateway.dll
+C:\Users\Admin\Desktop\demo\threads\backend\Gateaway\bin\Debug\net8.0\RabbitMQ.Client.dll

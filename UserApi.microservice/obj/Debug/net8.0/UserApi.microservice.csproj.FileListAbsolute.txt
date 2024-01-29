@@ -291,3 +291,4 @@ D:\projects\side\thread\backend\UserApi.microservice\obj\Debug\net8.0\UserApi.mi
 D:\projects\side\thread\backend\UserApi.microservice\obj\Debug\net8.0\UserApi.microservice.genruntimeconfig.cache
 D:\projects\side\thread\backend\UserApi.microservice\obj\Debug\net8.0\ref\UserApi.microservice.dll
 D:\projects\side\thread\backend\UserApi.microservice\bin\Debug\net8.0\RabbitMQ.Client.dll
+C:\Users\Admin\Desktop\demo\threads\backend\UserApi.microservice\bin\Debug\net8.0\RabbitMQ.Client.dll

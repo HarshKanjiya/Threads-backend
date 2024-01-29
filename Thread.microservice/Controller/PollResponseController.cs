@@ -13,9 +13,9 @@ namespace Thread.microservice.Controller
 
         private readonly DBcontext db;
 
-        public PollResponseController(DBcontext db)
+        public PollResponseController(DBcontext _db)
         {
-            db = db;
+            db = _db;
         }
 
         [HttpPost]

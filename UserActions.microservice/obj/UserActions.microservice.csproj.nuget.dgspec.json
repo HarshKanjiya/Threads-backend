@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\projects\\side\\thread\\backend\\UserActions.microservice\\UserActions.microservice.csproj": {}
+    "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\UserActions.microservice\\UserActions.microservice.csproj": {}
   },
   "projects": {
-    "D:\\projects\\side\\thread\\backend\\UserActions.microservice\\UserActions.microservice.csproj": {
+    "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\UserActions.microservice\\UserActions.microservice.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\projects\\side\\thread\\backend\\UserActions.microservice\\UserActions.microservice.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\UserActions.microservice\\UserActions.microservice.csproj",
         "projectName": "UserActions.microservice",
-        "projectPath": "D:\\projects\\side\\thread\\backend\\UserActions.microservice\\UserActions.microservice.csproj",
-        "packagesPath": "C:\\Users\\asus\\.nuget\\packages\\",
-        "outputPath": "D:\\projects\\side\\thread\\backend\\UserActions.microservice\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\UserActions.microservice\\UserActions.microservice.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\UserActions.microservice\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -69,6 +69,10 @@
             "System.IdentityModel.Tokens.Jwt": {
               "target": "Package",
               "version": "[7.1.2, )"
+            },
+            "System.Net.Http": {
+              "target": "Package",
+              "version": "[4.3.4, )"
             }
           },
           "imports": [

@@ -122,6 +122,23 @@ namespace Thread.microservice.Migrations
                     b.ToTable("Threads");
                 });
 
+            modelBuilder.Entity("Thread.microservice.Model.Hashtags", b =>
+                {
+                    b.Property<int>("TagId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TagId"));
+
+                    b.Property<string>("Tags")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TagId");
+
+                    b.ToTable("Tags");
+                });
+
             modelBuilder.Entity("Thread.microservice.Model.PollResponseModel", b =>
                 {
                     b.Property<Guid>("PollResponseId")

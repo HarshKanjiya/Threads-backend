@@ -274,3 +274,4 @@ D:\projects\side\thread\backend\UserActions.microservice\obj\Debug\net8.0\refint
 D:\projects\side\thread\backend\UserActions.microservice\obj\Debug\net8.0\UserActions.microservice.pdb
 D:\projects\side\thread\backend\UserActions.microservice\obj\Debug\net8.0\UserActions.microservice.genruntimeconfig.cache
 D:\projects\side\thread\backend\UserActions.microservice\obj\Debug\net8.0\ref\UserActions.microservice.dll
+C:\Users\Admin\Desktop\demo\threads\backend\UserActions.microservice\bin\Debug\net8.0\RabbitMQ.Client.dll

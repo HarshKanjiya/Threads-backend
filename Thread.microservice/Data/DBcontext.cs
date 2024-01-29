@@ -14,6 +14,8 @@ namespace Thread.Data
 
         public DbSet<PollResponseModel> PollResponses { get; set; }
 
+        public DbSet<Hashtags> Tags { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

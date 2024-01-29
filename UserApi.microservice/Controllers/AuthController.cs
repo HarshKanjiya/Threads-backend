@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Any;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using System;
+using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
 using Thread.microservice.Utils;
 using UserApi.microservice.Data;
@@ -10,16 +14,18 @@ using UserApi.microservice.Utils;
 
 namespace UserApi.microservice.Controllers
 {
-    [ApiController,Route("Auth")]
+    [ApiController, Route("Auth")]
     public class AuthController : ControllerBase
     {
         private readonly DbContextUsers db;
         private readonly IMessageProducer messageProducer;
+        private readonly HttpClient httpClient;
 
-        public AuthController(DbContextUsers _db,IMessageProducer _messageProducer)
+        public AuthController(DbContextUsers _db, IMessageProducer _messageProducer, HttpClient _httpClient)
         {
             db = _db;
             messageProducer = _messageProducer;
+            httpClient = _httpClient;
         }
         [HttpPost("register")]
         public async Task<ActionResult<ResponseDTO>> SignUp(SignupRequestDTO req)
@@ -203,6 +209,7 @@ namespace UserApi.microservice.Controllers
             }
         }
 
+
         [HttpPost("username")]
         public async Task<ActionResult<ResponseDTO>> CheckUserNameAvaibility(CheckUsernameAvaibilityDTO req)
         {
@@ -236,12 +243,117 @@ namespace UserApi.microservice.Controllers
             }
         }
 
-        [HttpGet("user/{id}")]
-        public async Task<ActionResult<ResponseDTO>> GetSingleUserProfileData()
-        {
-            messageProducer.SendingMessage("harsh");
 
-            return Ok();
+        [HttpGet("user/{username}")]
+        public async Task<ActionResult<ResponseDTO>> GetSingleUserProfileData(string username)
+        {
+            // messageProducer.SendingMessage("harsh");
+            ResponseDTO responseDTO = new ResponseDTO();
+
+            try
+            {
+                var dbUser = db.Users.FirstOrDefault(u => u.UserName == username);
+                if (dbUser != null)
+                {
+
+                    ResponseDTO postsResponse = await httpClient.GetFromJsonAsync<ResponseDTO>("https://localhost:7202/thread/user/" + dbUser.UserId);
+
+                    UserProfileResponseDTO res = new UserProfileResponseDTO() { user = dbUser };
+
+                    if (postsResponse.Success == true)
+                    {
+                        res.posts = postsResponse.Data;
+                    }
+
+
+                    responseDTO.Success = true;
+                    responseDTO.Message = "User data found";
+                    responseDTO.Data = res;
+
+                    return Ok(responseDTO);
+                }
+                responseDTO.Success = false;
+                responseDTO.Message = "User data not found";
+                return BadRequest(responseDTO);
+
+            }
+            catch (Exception e)
+            {
+                responseDTO.Message = "Something went wrong :" + e.Message;
+                responseDTO.Success = false;
+                return BadRequest(responseDTO);
+
+
+            }
+
+
+
+        }
+        public class UserProfileResponseDTO
+        {
+            public UserModel user { get; set; }
+            public Object posts { get; set; }
+        }
+
+
+        [HttpPut("user")]
+        public async Task<ActionResult<ResponseDTO>> UpdateUserData(UserDataFieldUpdateDTO data)
+        {
+            ResponseDTO responseDTO = new ResponseDTO();
+            try
+            {
+                var user = db.Users.FirstOrDefault(u => u.UserId == data.UserId);
+
+                if (user != null)
+                {
+                    switch (data.message)
+                    {
+                        case "ADD_THREAD":
+                            user.PostsCount += 1;
+                            db.SaveChanges();
+                            break;
+                        case "REMOVE_THREAD":
+                            user.PostsCount -= 1;
+                            db.SaveChanges();
+                            break;
+
+                        case "ADD_FOLLOWER":
+                            user.FollowersCount += 1;
+                            break;
+                        case "REMOVE_FOLLOWER":
+                            user.FollowersCount -= 1;
+                            break;
+
+                        case "ADD_FOLLOWING":
+                            user.FollowingCount += 1;
+                            break;
+                        case "REMOVE_FOLLOWING":
+                            user.FollowingCount -= 1;
+                            break;
+                    }
+
+
+
+                    responseDTO.Message = "User Updated";
+                    responseDTO.Success = true;
+                    return Ok(responseDTO);
+                }
+                responseDTO.Message = "User not found";
+                responseDTO.Success = false;
+                return Ok(responseDTO);
+
+            }
+            catch (Exception e)
+            {
+                responseDTO.Message = "Internal Server Error : Auth Service " + e.Message;
+                responseDTO.Success = false;
+                return BadRequest(responseDTO);
+            }
+        }
+        public class UserDataFieldUpdateDTO
+        {
+            public Guid UserId { get; set; }
+            public string message { get; set; }
         }
 
     }

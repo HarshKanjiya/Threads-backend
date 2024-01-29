@@ -1,4 +1,5 @@
-﻿namespace UserApi.microservice.Models.DTOs
+﻿
+namespace UserApi.microservice.Models.DTOs
 {
     public class ResponseDTO
     {
@@ -7,5 +8,10 @@
         public Object? Data { get; set; }
         public string? AccessToken { get; set; }
         public string? RefreshToken { get; set; }
+
+        public static implicit operator HttpResponseMessage?(ResponseDTO? v)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

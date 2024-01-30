@@ -1,11 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.OpenApi.Any;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
-using Thread.microservice.Utils;
 using UserApi.microservice.Data;
 using UserApi.microservice.Models;
 using UserApi.microservice.Models.DTOs;
@@ -18,14 +12,14 @@ namespace UserApi.microservice.Controllers
     public class AuthController : ControllerBase
     {
         private readonly DbContextUsers db;
-        private readonly IMessageProducer messageProducer;
         private readonly HttpClient httpClient;
+        private readonly ILogger<AuthController> logger;
 
-        public AuthController(DbContextUsers _db, IMessageProducer _messageProducer, HttpClient _httpClient)
+        public AuthController(DbContextUsers _db, IMessageProducer _messageProducer, HttpClient _httpClient, ILogger<AuthController> _logger)
         {
             db = _db;
-            messageProducer = _messageProducer;
             httpClient = _httpClient;
+            logger = _logger;
         }
         [HttpPost("register")]
         public async Task<ActionResult<ResponseDTO>> SignUp(SignupRequestDTO req)
@@ -70,7 +64,8 @@ namespace UserApi.microservice.Controllers
                     Gender = req.Gender,
                     Email = req.Email,
                     Birthdate = req.BirthDate,
-                    Avatar = img.SecureUri.ToString(),
+                    AvatarURL = img.Url.ToString(),
+                    AvatarPublicID = img.PublicId
                 };
 
                 var user = await db.Users.AddAsync(newUser);
@@ -94,7 +89,7 @@ namespace UserApi.microservice.Controllers
             }
             catch (Exception e)
             {
-                responseDTO.Message = "Something went wrong";
+                responseDTO.Message = "Something went wrong :" + e.Message;
                 responseDTO.Success = false;
                 return BadRequest(responseDTO);
 
@@ -293,67 +288,6 @@ namespace UserApi.microservice.Controllers
         {
             public UserModel user { get; set; }
             public Object posts { get; set; }
-        }
-
-
-        [HttpPut("user")]
-        public async Task<ActionResult<ResponseDTO>> UpdateUserData(UserDataFieldUpdateDTO data)
-        {
-            ResponseDTO responseDTO = new ResponseDTO();
-            try
-            {
-                var user = db.Users.FirstOrDefault(u => u.UserId == data.UserId);
-
-                if (user != null)
-                {
-                    switch (data.message)
-                    {
-                        case "ADD_THREAD":
-                            user.PostsCount += 1;
-                            db.SaveChanges();
-                            break;
-                        case "REMOVE_THREAD":
-                            user.PostsCount -= 1;
-                            db.SaveChanges();
-                            break;
-
-                        case "ADD_FOLLOWER":
-                            user.FollowersCount += 1;
-                            break;
-                        case "REMOVE_FOLLOWER":
-                            user.FollowersCount -= 1;
-                            break;
-
-                        case "ADD_FOLLOWING":
-                            user.FollowingCount += 1;
-                            break;
-                        case "REMOVE_FOLLOWING":
-                            user.FollowingCount -= 1;
-                            break;
-                    }
-
-
-
-                    responseDTO.Message = "User Updated";
-                    responseDTO.Success = true;
-                    return Ok(responseDTO);
-                }
-                responseDTO.Message = "User not found";
-                responseDTO.Success = false;
-                return Ok(responseDTO);
-
-            }
-            catch (Exception e)
-            {
-                responseDTO.Message = "Internal Server Error : Auth Service " + e.Message;
-                responseDTO.Success = false;
-                return BadRequest(responseDTO);
-            }
-        }
-        public class UserDataFieldUpdateDTO
-        {
-            public Guid UserId { get; set; }
-            public string message { get; set; }
         }
 
     }

@@ -100,7 +100,21 @@ namespace UserApi.microservice.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Avatar")
+                    b.Property<string>("AvatarPublicID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AvatarURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BanDuration")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("BanStartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("BanStatus")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

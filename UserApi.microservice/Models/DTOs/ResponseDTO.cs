@@ -9,9 +9,6 @@ namespace UserApi.microservice.Models.DTOs
         public string? AccessToken { get; set; }
         public string? RefreshToken { get; set; }
 
-        public static implicit operator HttpResponseMessage?(ResponseDTO? v)
-        {
-            throw new NotImplementedException();
-        }
+
     }
 }

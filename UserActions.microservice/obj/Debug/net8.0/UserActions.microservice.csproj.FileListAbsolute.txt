@@ -275,3 +275,5 @@ D:\projects\side\thread\backend\UserActions.microservice\obj\Debug\net8.0\UserAc
 D:\projects\side\thread\backend\UserActions.microservice\obj\Debug\net8.0\UserActions.microservice.genruntimeconfig.cache
 D:\projects\side\thread\backend\UserActions.microservice\obj\Debug\net8.0\ref\UserActions.microservice.dll
 C:\Users\Admin\Desktop\demo\threads\backend\UserActions.microservice\bin\Debug\net8.0\RabbitMQ.Client.dll
+C:\Users\Admin\Desktop\demo\threads\backend\UserActions.microservice\bin\Debug\net8.0\Serilog.dll
+C:\Users\Admin\Desktop\demo\threads\backend\UserActions.microservice\bin\Debug\net8.0\Newtonsoft.Json.dll

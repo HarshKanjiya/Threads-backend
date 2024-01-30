@@ -18,7 +18,7 @@ namespace UserApi.microservice.Models.DTOs
     {
         public string ContentType { get; set; } = "TEXT";
         public string Text { get; set; }
-        public List<IFormFile>? Files { get; set; } = new List<IFormFile>();
+        public List<string>? Files { get; set; } = new List<string>();
         public List<ContentOptionDTO>? Options { get; set; } = new List<ContentOptionDTO>();
 
     }

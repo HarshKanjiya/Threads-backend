@@ -1,12 +1,16 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Net.Http.Json;
-using System.Threading;
+using System.Text.Json.Nodes;
+using System.Text;
 using Thread.Data;
 using Thread.Model;
 using UserApi.microservice.Models.DTOs;
+using Thread.microservice.Utils;
+using Azure;
 
 namespace Thread.microservice.Controller
 {
@@ -17,11 +21,13 @@ namespace Thread.microservice.Controller
 
         private readonly DBcontext db;
         private readonly HttpClient httpClient;
+        private readonly ILogger<ThreadController> logger;
 
-        public ThreadController(DBcontext _db, HttpClient _httpClient)
+        public ThreadController(DBcontext _db, HttpClient _httpClient, ILogger<ThreadController> _logger)
         {
             db = _db;
             httpClient = _httpClient;
+            logger = _logger;
         }
 
 
@@ -39,9 +45,31 @@ namespace Thread.microservice.Controller
 
                 if (req.Content.ContentType == "TEXT")
                 {
-                    newContent.Files = new List<string> {
-                        "https://images.unsplash.com/photo-1682686581312-506a8b53190e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fHx8", "https://images.unsplash.com/photo-1682686581312-506a8b53190e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHw2fHx8ZW58MHx8fHx8",
-                    };
+
+                    if (req.Content.Files.Count > 0)
+                    {
+
+                        ImageUpload Uploader = new ImageUpload();
+                        List<string> files = new List<string>();
+                        List<string> filesPublicIDs = new List<string>();
+
+                        foreach (var x in req.Content.Files)
+                        {
+                            var img = await Uploader.Upload(x);
+                            if (img == null)
+                            {
+                                response.Message = "Image Upload failed.";
+                                response.Success = false;
+                                return BadRequest(response);
+
+                            }
+                            files.Add(img.Url.ToString());
+                            filesPublicIDs.Add(img.PublicId);
+
+                        }
+                        newContent.Files = files;
+                        newContent.FilePublicIDs = filesPublicIDs;
+                    }
                 }
                 else
                 {
@@ -85,7 +113,9 @@ namespace Thread.microservice.Controller
                         message = "ADD_THREAD"
                     });
 
-                await httpClient.PutAsJsonAsync("https://localhost:7201/auth/user/", dataForAuthApi);
+                var content = new StringContent(dataForAuthApi.ToString(), Encoding.UTF8, "application/json");
+                var res = httpClient.PutAsync("https://localhost:7201/api/service/user", content).Result;
+
 
                 if (thread != null)
                 {
@@ -110,6 +140,48 @@ namespace Thread.microservice.Controller
             }
         }
 
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<ResponseDTO>> DeleteThread(Guid id)
+        {
+            ResponseDTO response = new ResponseDTO();
+            try
+            {
+                var thread = db.Threads.FirstOrDefault(t => t.ThreadId == id);
+
+                if (thread != null)
+                {
+                    db.Threads.Remove(thread);
+                    db.SaveChanges();
+
+                    var dataForAuthApi = JsonConvert.SerializeObject(
+                        new
+                        {
+                            UserId = thread.AuthorId,
+                            message = "REMOVE_THREAD"
+                        });
+
+                    var content = new StringContent(dataForAuthApi.ToString(), Encoding.UTF8, "application/json");
+                    var res = httpClient.PutAsync("https://localhost:7201/Auth/user", content).Result;
+
+                    response.Message = "Thread Removed.";
+                    response.Success = true;
+                    return Ok(response);
+
+
+                }
+                response.Message = "Please try again.";
+                response.Success = false;
+                return BadRequest(response);
+
+
+            }
+            catch (Exception e)
+            {
+                response.Success = false;
+                response.Message = "Internal Server error :" + e.Message;
+                return BadRequest(response);
+            }
+        }
 
         [HttpPost, Route("/file")]
         [Consumes("multipart/form-data")]
@@ -118,7 +190,33 @@ namespace Thread.microservice.Controller
             return Ok();
         }
 
+        [HttpDelete("deleteall")]
+        public async Task<ActionResult> DeleteAll()
+        {
+            ResponseDTO response = new ResponseDTO();
+            try
+            {
+                foreach (var thread in db.Threads)
+                {
+                    db.Threads.Remove(thread);
+                }
+                db.SaveChanges();
 
+                response.Message = "All posts deleted";
+                response.Success = true;
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                response.Success = false;
+                response.Message = "Internal Server error :" + e.Message;
+                return BadRequest(response);
+            }
+        }
+
+
+
+        // FOR OTHER SERVICES
         [HttpGet("user/{id}")]
         public async Task<ActionResult<ResponseDTO>> getThreadsOfUser(string id)
         {
@@ -141,29 +239,33 @@ namespace Thread.microservice.Controller
 
         }
 
-
-        [HttpDelete("deleteall")]
-        public async Task<ActionResult> DeleteAll()
+        [HttpGet("threadInfo/{id}")]
+        public async Task<ActionResult<ResponseDTO>> getThreadInfo(Guid id)
         {
             ResponseDTO response = new ResponseDTO();
+
             try
             {
-                foreach(var thread in db.Threads)
+                var thread = db.Threads.FirstOrDefault(t => t.ThreadId == id);
+                if (thread != null)
                 {
-                    db.Threads.Remove(thread);
+                    response.Success = true;
+                    response.Message = "Thread found";
+                    response.Data = thread;
+                    return Ok(response);
                 }
-                db.SaveChanges();
-
-                response.Message = "All posts deleted";
-                response.Success = true;
-                return Ok(response);
-            }
-            catch(Exception e)
-            {
                 response.Success = false;
-                response.Message = e.Message;
+                response.Message = "Thread not found";
+                return Ok(response);
+
+            }
+            catch (Exception e)
+            {
+                response.Message = "Internal server error.   " + e.Message;
+                response.Success = false;
                 return BadRequest(response);
             }
         }
+
     }
 }

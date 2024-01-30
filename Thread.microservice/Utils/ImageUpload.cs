@@ -9,27 +9,25 @@ namespace Thread.microservice.Utils
     public class ImageUpload
     {
         private readonly Cloudinary cld;
-        public ImageUpload(IOptions<CloudinarySettings> config)
+        public ImageUpload()
         {
 
-            var acc = new Account(config.Value.CloudName, config.Value.ApiKey, config.Value.ApiSecret);
+            var acc = new Account("dv9bbtpzb", "944233335766569", "bpgx_zqCoXD01YORG0tQwFpOPGk");
             cld = new Cloudinary(acc);
         }
 
-        public async Task<ImageUploadResult> Upload(IFormFile file)
+        public async Task<ImageUploadResult> Upload(string file)
         {
             var UploadResult = new ImageUploadResult();
-            if (file.Length > 0)
+
+            var UploadParams = new ImageUploadParams
             {
-                using var stream = file.OpenReadStream();
-                var UploadParams = new ImageUploadParams
-                {
-                    File = new FileDescription(file.FileName, stream)
-                };
+                File = new FileDescription(@"" + file)
+            };
 
-                UploadResult = await cld.UploadAsync(UploadParams);
+            UploadResult = cld.Upload(UploadParams);
 
-            }
+
             return UploadResult;
         }
 

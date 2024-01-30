@@ -14,6 +14,9 @@ namespace Thread.Model
 
         public required ThreadContent Content { get; set; }
 
+        public string BanStatus { get; set; } = "UNBAN";
+
+
     }
 
     public class ThreadContent
@@ -21,7 +24,8 @@ namespace Thread.Model
         [Key] public Guid ContentId { get; set; }
         public string ContentType { get; set; } = "TEXT";
         public required string Text { get; set; }
-        public List<String>? Files { get; set; }
+        public List<String> Files { get; set; } = new List<String>();
+        public List<String> FilePublicIDs { get; set; } = new List<String>();
         public ICollection<ThreadContentOptions>? Options { get; set; } = new List<ThreadContentOptions>();
         public ThreadContentRatings? Ratings { get; set; }
     }

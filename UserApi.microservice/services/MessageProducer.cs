@@ -1,5 +1,4 @@
-﻿using RabbitMQ.Client;
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 
 namespace UserApi.microservice.services
@@ -8,23 +7,23 @@ namespace UserApi.microservice.services
     {
         public void SendingMessage<T>(T message)
         {
-            var factory = new ConnectionFactory()
-            {
-                HostName = "localhost",
-                UserName = "user",
-                Password = "user",
-                VirtualHost = "/",
-            };
-            var connection = factory.CreateConnection();
+            /*  var factory = new ConnectionFactory()
+              {
+                  HostName = "localhost",
+                  UserName = "user",
+                  Password = "user",
+                  VirtualHost = "/",
+              };
+              var connection = factory.CreateConnection();
 
-            using var channel = connection.CreateModel();
+              using var channel = connection.CreateModel();
 
-            channel.QueueDeclare("user",durable:true,exclusive:true);
+              channel.QueueDeclare("user",durable:true,exclusive:true);
 
-            var jsonString  = JsonSerializer.Serialize(message);
-            var body = Encoding.UTF8.GetBytes(jsonString);
+              var jsonString  = JsonSerializer.Serialize(message);
+              var body = Encoding.UTF8.GetBytes(jsonString);
 
-            channel.BasicPublish("", "user",body:body);
+              channel.BasicPublish("", "user",body:body);*/
 
         }
     }

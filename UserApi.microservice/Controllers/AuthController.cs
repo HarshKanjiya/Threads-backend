@@ -5,6 +5,8 @@ using UserApi.microservice.Models;
 using UserApi.microservice.Models.DTOs;
 using UserApi.microservice.services;
 using UserApi.microservice.Utils;
+using UserAuthenticationManager;
+using UserAuthenticationManager.Model;
 
 namespace UserApi.microservice.Controllers
 {
@@ -15,12 +17,17 @@ namespace UserApi.microservice.Controllers
         private readonly HttpClient httpClient;
         private readonly ILogger<AuthController> logger;
 
-        public AuthController(DbContextUsers _db, IMessageProducer _messageProducer, HttpClient _httpClient, ILogger<AuthController> _logger)
+        private readonly JwtTokenHandler JWT;
+
+
+        public AuthController(DbContextUsers _db, IMessageProducer _messageProducer, HttpClient _httpClient, ILogger<AuthController> _logger, JwtTokenHandler _jwt)
         {
             db = _db;
             httpClient = _httpClient;
             logger = _logger;
+            JWT = _jwt;
         }
+
         [HttpPost("register")]
         public async Task<ActionResult<ResponseDTO>> SignUp(SignupRequestDTO req)
         {
@@ -73,10 +80,25 @@ namespace UserApi.microservice.Controllers
 
                 if (user != null)
                 {
+                    GenerateTokenRequestDTO tokenData = new GenerateTokenRequestDTO()
+                    {
+                        UserName = user.Entity.UserName,
+                        Role = user.Entity.Role
+                    };
+
+                    var TokenResp = JWT.GenerateJwtToken(tokenData);
+
+                    AccessTokenData accessTokenData = new AccessTokenData()
+                    {
+                        ExpiresIn = TokenResp.ExpiresIn,
+                        Token = TokenResp.Token
+                    };
+
                     responseDTO.Message = "Account Created Successfully.";
                     responseDTO.Success = true;
                     user.Entity.Password = "";
                     responseDTO.Data = user.Entity;
+                    responseDTO.AccessToken = accessTokenData;
                     return Ok(responseDTO);
                 }
                 else

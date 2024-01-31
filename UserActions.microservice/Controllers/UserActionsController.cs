@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
@@ -24,7 +25,7 @@ namespace UserActions.microservice.Controllers
             httpClient = _httpClient;
         }
 
-        [HttpPost("like")]
+        [HttpPost("like"),Authorize]
         public async Task<ActionResult<ResponseDTO>> LikeDislikeAction(LikeDislikeRequestDTO req)
         {
             ResponseDTO response = new ResponseDTO();

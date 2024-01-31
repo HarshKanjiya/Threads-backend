@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserApi.microservice", "Use
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Thread.microservice", "Thread.microservice\Thread.microservice.csproj", "{A951D6C6-CCD4-4695-8A62-456D365535FB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin.microservice", "Admin.microservice\Admin.microservice.csproj", "{F9A19608-FBE5-404A-A389-C361083FD4DA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.microservice", "Admin.microservice\Admin.microservice.csproj", "{F9A19608-FBE5-404A-A389-C361083FD4DA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserAuthenticationManager", "JwtAuthenticationManager\UserAuthenticationManager.csproj", "{E2DA57D4-02FA-481B-87EA-ECAEF6F8C8A0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{F9A19608-FBE5-404A-A389-C361083FD4DA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F9A19608-FBE5-404A-A389-C361083FD4DA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F9A19608-FBE5-404A-A389-C361083FD4DA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E2DA57D4-02FA-481B-87EA-ECAEF6F8C8A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2DA57D4-02FA-481B-87EA-ECAEF6F8C8A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E2DA57D4-02FA-481B-87EA-ECAEF6F8C8A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2DA57D4-02FA-481B-87EA-ECAEF6F8C8A0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{B4B49F22-309E-49B7-B4CD-38C0D349D16E} = {F9CDC214-874A-4DA5-92D7-26A74B01E057}
 		{A951D6C6-CCD4-4695-8A62-456D365535FB} = {F9CDC214-874A-4DA5-92D7-26A74B01E057}
 		{F9A19608-FBE5-404A-A389-C361083FD4DA} = {F9CDC214-874A-4DA5-92D7-26A74B01E057}
+		{E2DA57D4-02FA-481B-87EA-ECAEF6F8C8A0} = {F9CDC214-874A-4DA5-92D7-26A74B01E057}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D8048339-1456-4396-A146-0AC0B564CEB3}

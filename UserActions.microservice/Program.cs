@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using UserActions.microservice.Data;
-
+using UserAuthenticationManager;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +16,8 @@ builder.Services.AddDbContext<DBcontext>(o => o.UseSqlServer(builder.Configurati
 
 builder.Services.AddHttpClient();
 
+builder.Services.AddCustomJwtAuthentication();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -27,6 +29,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();

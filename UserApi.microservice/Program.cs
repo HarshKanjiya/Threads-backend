@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using UserApi.microservice.Data;
 using UserApi.microservice.Models;
 using UserApi.microservice.services;
+using UserAuthenticationManager;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,10 +13,12 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IMessageProducer,MessageProducer>();
+builder.Services.AddScoped<IMessageProducer, MessageProducer>();
 builder.Services.AddHttpClient();
 
 builder.Services.AddDbContext<DbContextUsers>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("conn")));
+
+builder.Services.AddSingleton<JwtTokenHandler>();
 
 builder.Services.Configure<KestrelServerOptions>(options =>
 {

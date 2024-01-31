@@ -1,0 +1,13 @@
+C:\Users\Admin\Desktop\demo\threads\backend\JwtAuthenticationManager\bin\Debug\net8.0\UserAuthenticationManager.deps.json
+C:\Users\Admin\Desktop\demo\threads\backend\JwtAuthenticationManager\bin\Debug\net8.0\UserAuthenticationManager.dll
+C:\Users\Admin\Desktop\demo\threads\backend\JwtAuthenticationManager\bin\Debug\net8.0\UserAuthenticationManager.pdb
+C:\Users\Admin\Desktop\demo\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.csproj.AssemblyReference.cache
+C:\Users\Admin\Desktop\demo\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Admin\Desktop\demo\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.AssemblyInfoInputs.cache
+C:\Users\Admin\Desktop\demo\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.AssemblyInfo.cs
+C:\Users\Admin\Desktop\demo\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Desktop\demo\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.sourcelink.json
+C:\Users\Admin\Desktop\demo\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.dll
+C:\Users\Admin\Desktop\demo\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\refint\UserAuthenticationManager.dll
+C:\Users\Admin\Desktop\demo\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.pdb
+C:\Users\Admin\Desktop\demo\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\ref\UserAuthenticationManager.dll

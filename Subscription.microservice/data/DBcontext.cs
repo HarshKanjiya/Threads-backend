@@ -8,15 +8,8 @@ namespace Subscription.microservice.data
         public DBcontext(DbContextOptions<DBcontext> options) : base(options) { }
 
         public DbSet<SubscriptionModel> Subscriptions { get; set; }
-
-        public DbSet<ReportCategory> ReportCategories { get; set; }
-        public DbSet<ReportMessages> ReportMessages { get; set; }
-        public DbSet<ReportModel> Reports { get; set; }
+        public DbSet<PackagesModel> Packages { get; set; }
 
 
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
-        }
     }
 }

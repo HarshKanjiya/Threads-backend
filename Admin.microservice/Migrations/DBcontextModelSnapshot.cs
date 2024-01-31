@@ -64,6 +64,25 @@ namespace Admin.microservice.Migrations
                     b.ToTable("CustomReports");
                 });
 
+            modelBuilder.Entity("Admin.microservice.Model.EnvVarModel", b =>
+                {
+                    b.Property<Guid>("VarId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Key")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("VarId");
+
+                    b.ToTable("EnvironmentVariables");
+                });
+
             modelBuilder.Entity("Admin.microservice.Model.FilesModel", b =>
                 {
                     b.Property<string>("FileId")

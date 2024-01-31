@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using static Subscription.microservice.Constants.Constants;
 
 namespace Subscription.microservice.Models
 {
@@ -8,9 +7,12 @@ namespace Subscription.microservice.Models
         [Key] public Guid OrderId { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
-        public required string UserId { get; set; }
-        public required string UserName { get; set; }
-        public SubscriptionStatusType OrderStatus { get; set; } = SubscriptionStatusType.PENDING;
+        public Guid UserId { get; set; }
+        public string UserName { get; set; }
+        public string PackageName { get; set; }
+        public string PurchasedPrice { get; set; }
+        public string ReceiptId { get; set; }
+        public string PurchaseStatus { get; set; } = "PENDING"; // PENDING, PURCHASED, CANCLED
 
     }
 }

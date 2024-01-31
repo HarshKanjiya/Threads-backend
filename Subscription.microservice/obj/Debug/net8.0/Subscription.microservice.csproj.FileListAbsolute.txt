@@ -277,3 +277,4 @@ C:\Users\Admin\Desktop\demo\threads\backend\Subscription.microservice\bin\Debug\
 C:\Users\Admin\Desktop\demo\threads\backend\Subscription.microservice\obj\Debug\net8.0\Subscription.microservice.sourcelink.json
 C:\Users\Admin\Desktop\demo\threads\backend\Subscription.microservice\bin\Debug\net8.0\Serilog.dll
 C:\Users\Admin\Desktop\demo\threads\backend\Subscription.microservice\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\Admin\Desktop\demo\threads\backend\Subscription.microservice\bin\Debug\net8.0\Stripe.net.dll

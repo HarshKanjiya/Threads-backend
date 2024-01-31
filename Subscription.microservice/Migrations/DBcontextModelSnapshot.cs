@@ -22,72 +22,38 @@ namespace Subscription.microservice.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Subscription.microservice.Models.ReportCategory", b =>
+            modelBuilder.Entity("Subscription.microservice.Models.PackagesModel", b =>
                 {
-                    b.Property<int>("CategoryId")
+                    b.Property<Guid>("PackageId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("uniqueidentifier");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
-
-                    b.Property<string>("CategoryName")
+                    b.Property<string>("AccentColor")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("CategoryId");
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
 
-                    b.ToTable("ReportCategories");
-                });
-
-            modelBuilder.Entity("Subscription.microservice.Models.ReportMessages", b =>
-                {
-                    b.Property<int>("MessageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("MessageId"));
-
-                    b.Property<int>("CategoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Message")
+                    b.Property<string>("Discount")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("MessageId");
-
-                    b.HasIndex("CategoryId");
-
-                    b.ToTable("ReportMessages");
-                });
-
-            modelBuilder.Entity("Subscription.microservice.Models.ReportModel", b =>
-                {
-                    b.Property<int>("ReportId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ReportId"));
-
-                    b.Property<string>("CasterId")
+                    b.Property<string>("PackageName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ReceiverId")
+                    b.Property<string>("PackagePrice")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("ReceiverPostId")
+                    b.Property<string>("Perks")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("ReportMessageId")
-                        .HasColumnType("int");
+                    b.HasKey("PackageId");
 
-                    b.HasKey("ReportId");
-
-                    b.HasIndex("ReportMessageId");
-
-                    b.ToTable("Reports");
+                    b.ToTable("Packages");
                 });
 
             modelBuilder.Entity("Subscription.microservice.Models.SubscriptionModel", b =>
@@ -99,12 +65,24 @@ namespace Subscription.microservice.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("OrderStatus")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
+                    b.Property<string>("PackageName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PurchaseStatus")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PurchasedPrice")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ReceiptId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("UserName")
                         .IsRequired()
@@ -113,28 +91,6 @@ namespace Subscription.microservice.Migrations
                     b.HasKey("OrderId");
 
                     b.ToTable("Subscriptions");
-                });
-
-            modelBuilder.Entity("Subscription.microservice.Models.ReportMessages", b =>
-                {
-                    b.HasOne("Subscription.microservice.Models.ReportCategory", "Category")
-                        .WithMany()
-                        .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Category");
-                });
-
-            modelBuilder.Entity("Subscription.microservice.Models.ReportModel", b =>
-                {
-                    b.HasOne("Subscription.microservice.Models.ReportMessages", "Report")
-                        .WithMany()
-                        .HasForeignKey("ReportMessageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Report");
                 });
 #pragma warning restore 612, 618
         }

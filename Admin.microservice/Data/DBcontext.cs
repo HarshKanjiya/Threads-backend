@@ -13,6 +13,8 @@ namespace Admin.microservice.Data
         public DbSet<CustomReportModel> CustomReports { get; set; }
         public DbSet<BugReportModel> BugReports { get; set; }
 
+
+        public DbSet<EnvVarModel> EnvironmentVariables { get; set; }
     }
 }
 

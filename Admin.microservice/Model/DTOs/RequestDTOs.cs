@@ -41,4 +41,12 @@ namespace Notification.microservice.Models.DTOs
         public string Text { get; set; }
         public List<string>? Files { get; set; }
     }
+
+
+    public class AddUpdateEnvVarRequestDTO
+    {
+        public required string Key { get; set; }
+        public required string Value { get; set; }
+    }
+
 }

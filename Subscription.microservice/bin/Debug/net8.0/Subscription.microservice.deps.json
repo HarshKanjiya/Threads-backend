@@ -15,6 +15,7 @@
           "Newtonsoft.Json": "13.0.3",
           "RabbitMQ.Client": "6.8.1",
           "Serilog": "3.1.1",
+          "Stripe.net": "43.12.0",
           "Swashbuckle.AspNetCore": "6.4.0",
           "System.IdentityModel.Tokens.Jwt": "7.1.2",
           "System.Net.Http": "4.3.4"
@@ -690,6 +691,18 @@
           "lib/net7.0/Serilog.dll": {
             "assemblyVersion": "2.0.0.0",
             "fileVersion": "3.1.1.0"
+          }
+        }
+      },
+      "Stripe.net/43.12.0": {
+        "dependencies": {
+          "Newtonsoft.Json": "13.0.3",
+          "System.Configuration.ConfigurationManager": "6.0.1"
+        },
+        "runtime": {
+          "lib/net6.0/Stripe.net.dll": {
+            "assemblyVersion": "43.12.0.0",
+            "fileVersion": "43.12.0.0"
           }
         }
       },
@@ -1731,6 +1744,13 @@
       "sha512": "sha512-P6G4/4Kt9bT635bhuwdXlJ2SCqqn2nhh4gqFqQueCOr9bK/e7W9ll/IoX1Ter948cV2Z/5+5v8pAfJYUISY03A==",
       "path": "serilog/3.1.1",
       "hashPath": "serilog.3.1.1.nupkg.sha512"
+    },
+    "Stripe.net/43.12.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-0cDEW1/wRJqXpBRcsZcDhQDHK1cEtdtYsh3bfW0hP/2TQQRvuXNzsV3N90coEO3/ziEhcx1FEZW3anwFdFFo/g==",
+      "path": "stripe.net/43.12.0",
+      "hashPath": "stripe.net.43.12.0.nupkg.sha512"
     },
     "Swashbuckle.AspNetCore/6.4.0": {
       "type": "package",

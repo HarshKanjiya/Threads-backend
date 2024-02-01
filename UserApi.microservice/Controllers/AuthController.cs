@@ -10,22 +10,24 @@ using UserAuthenticationManager.Model;
 
 namespace UserApi.microservice.Controllers
 {
-    [ApiController, Route("Auth")]
+    [ApiController, Route("api/v1/auth")]
     public class AuthController : ControllerBase
     {
         private readonly DbContextUsers db;
         private readonly HttpClient httpClient;
         private readonly ILogger<AuthController> logger;
+        private readonly ImageUpload Uploader;
 
         private readonly JwtTokenHandler JWT;
 
 
-        public AuthController(DbContextUsers _db, IMessageProducer _messageProducer, HttpClient _httpClient, ILogger<AuthController> _logger, JwtTokenHandler _jwt)
+        public AuthController(DbContextUsers _db, HttpClient _httpClient, ILogger<AuthController> _logger, JwtTokenHandler _jwt, ImageUpload uploader)
         {
             db = _db;
             httpClient = _httpClient;
             logger = _logger;
             JWT = _jwt;
+            Uploader = uploader;
         }
 
         [HttpPost("register")]
@@ -43,10 +45,6 @@ namespace UserApi.microservice.Controllers
                     responseDTO.Success = false;
                     return BadRequest(responseDTO);
                 }
-
-                //create user
-
-                ImageUpload Uploader = new ImageUpload();
 
                 var img = await Uploader.Upload(req.Avatar);
 
@@ -78,7 +76,7 @@ namespace UserApi.microservice.Controllers
                 var user = await db.Users.AddAsync(newUser);
                 await db.SaveChangesAsync();
 
-                if (user != null)
+                if (user.Entity != null)
                 {
                     GenerateTokenRequestDTO tokenData = new GenerateTokenRequestDTO()
                     {
@@ -140,6 +138,21 @@ namespace UserApi.microservice.Controllers
 
                         if (string.Equals(User.Password, encodingPasswordString))
                         {
+
+                            GenerateTokenRequestDTO tokenData = new GenerateTokenRequestDTO()
+                            {
+                                UserName = User.UserName,
+                                Role = User.Role
+                            };
+
+                            var TokenResp = JWT.GenerateJwtToken(tokenData);
+
+                            AccessTokenData accessTokenData = new AccessTokenData()
+                            {
+                                ExpiresIn = TokenResp.ExpiresIn,
+                                Token = TokenResp.Token
+                            };
+
                             responseDTO.Message = "Logged in Successfully.";
                             responseDTO.Success = true;
                             User.Password = "";
@@ -227,7 +240,7 @@ namespace UserApi.microservice.Controllers
         }
 
 
-        [HttpPost("username")]
+        [HttpPost("check/username")]
         public async Task<ActionResult<ResponseDTO>> CheckUserNameAvaibility(CheckUsernameAvaibilityDTO req)
         {
             ResponseDTO responseDTO = new ResponseDTO();
@@ -260,6 +273,144 @@ namespace UserApi.microservice.Controllers
             }
         }
 
+        [HttpPut("user/{UserId}")]
+        public async Task<ActionResult<ResponseDTO>> UpdateProfile(Guid UserId, UpdateProfileRequestDTO req)
+        {
+            ResponseDTO response = new ResponseDTO();
+            try
+            {
+                var user = db.Users.FirstOrDefault(u => u.UserId == UserId);
+
+                if (user == null)
+                {
+                    response.Success = false;
+                    response.Message = "User not found";
+                    return Ok(response);
+                }
+
+                if (!string.IsNullOrWhiteSpace(req.Email))
+                {
+                    var EmailExistance = db.Users.FirstOrDefault(u => u.Email == req.Email);
+                    if (EmailExistance != null)
+                    {
+                        response.Success = false;
+                        response.Message = "Email already in use";
+                        return Ok(response);
+                    }
+                    user.Email = req.Email;
+                }
+
+                if (!string.IsNullOrWhiteSpace(req.PhoneNumber))
+                {
+                    var PhoneExistance = db.Users.FirstOrDefault(u => u.PhoneNumber == req.PhoneNumber);
+                    if (PhoneExistance != null)
+                    {
+                        response.Success = false;
+                        response.Message = "Email already in use";
+                        return Ok(response);
+                    }
+                    user.PhoneNumber = req.PhoneNumber;
+                }
+
+                if (!string.IsNullOrWhiteSpace(req.UserName))
+                {
+                    var UserNameExistance = db.Users.FirstOrDefault(u => u.UserName == req.UserName);
+                    if (UserNameExistance != null)
+                    {
+                        response.Success = false;
+                        response.Message = "Email already in use";
+                        return Ok(response);
+                    }
+                    user.UserName = req.UserName;
+                }
+                if (!string.IsNullOrWhiteSpace(req.Avatar))
+                {
+                    var img = await Uploader.Upload(req.Avatar);
+
+                    if (img == null)
+                    {
+                        response.Message = "Image Upload failed.";
+                        response.Success = false;
+                        return BadRequest(response);
+                    }
+                    user.AvatarURL = img.Url.ToString();
+                    user.AvatarPublicID = img.PublicId;
+                }
+
+                user.Name = !string.IsNullOrWhiteSpace(req.Name) ? req.Name : user.Name;
+                user.UserName = !string.IsNullOrWhiteSpace(req.UserName) ? req.UserName : user.UserName;
+                user.Bio = !string.IsNullOrWhiteSpace(req.Bio) ? req.Bio : user.Bio;
+                user.Gender = !string.IsNullOrWhiteSpace(req.Gender) ? req.Gender : user.Gender;
+                user.Birthdate = !string.IsNullOrWhiteSpace(req.Birthdate) ? req.Birthdate : user.Birthdate;
+                user.Status = !string.IsNullOrWhiteSpace(req.Status) ? req.Status : user.Status;
+
+                db.SaveChanges();
+
+                response.Message = "User Updated";
+                response.Success = true;
+                response.Data = user;
+                return Ok(response);
+
+            }
+            catch (Exception e)
+            {
+                response.Message = "Internal server error";
+                response.Success = false;
+                return BadRequest(response);
+            }
+
+        }
+
+        [HttpPut("user/pass/{UserId}")]
+        public async Task<ActionResult<ResponseDTO>> UpdatePassword(Guid UserId, UpdatePasswordRequestDTO req)
+        {
+            ResponseDTO response = new ResponseDTO();
+            try
+            {
+                if (string.IsNullOrWhiteSpace(req.CurrentPassword) || string.IsNullOrWhiteSpace(req.NewPassword) || string.IsNullOrWhiteSpace(req.ConfirmPassword))
+                {
+                    response.Success = false;
+                    response.Message = "Please fill all the Data";
+                    return Ok(response);
+                }
+
+                if (string.Equals(req.NewPassword, req.ConfirmPassword))
+                {
+                    response.Success = false;
+                    response.Message = "both Passwords doesn't match";
+                    return Ok(response);
+                }
+
+                var user = db.Users.FirstOrDefault(u => u.UserId == UserId);
+
+                if (user == null)
+                {
+                    response.Success = false;
+                    response.Message = "User not found";
+                    return Ok(response);
+                }
+
+                var salt = PasswordUtils.GeneratePasswordSalt(10);
+                var encPassword = PasswordUtils.EncodePassword(req.NewPassword, salt);
+
+                user.PasswordSalt = salt;
+                user.Password = encPassword;
+
+                db.SaveChanges();
+
+                response.Message = "Password Updated";
+                response.Success = true;
+                return Ok(response);
+
+            }
+            catch (Exception e)
+            {
+                response.Message = "Internal server error";
+                response.Success = false;
+                return BadRequest(response);
+            }
+
+        }
 
         [HttpGet("user/{username}")]
         public async Task<ActionResult<ResponseDTO>> GetSingleUserProfileData(string username)
@@ -273,7 +424,7 @@ namespace UserApi.microservice.Controllers
                 if (dbUser != null)
                 {
 
-                    ResponseDTO postsResponse = await httpClient.GetFromJsonAsync<ResponseDTO>("https://localhost:7202/thread/user/" + dbUser.UserId);
+                    ResponseDTO postsResponse = await httpClient.GetFromJsonAsync<ResponseDTO>("https://localhost:7202/api/v1/thread/user/" + dbUser.UserId);
 
                     UserProfileResponseDTO res = new UserProfileResponseDTO() { user = dbUser };
 
@@ -299,8 +450,6 @@ namespace UserApi.microservice.Controllers
                 responseDTO.Message = "Something went wrong :" + e.Message;
                 responseDTO.Success = false;
                 return BadRequest(responseDTO);
-
-
             }
 
 

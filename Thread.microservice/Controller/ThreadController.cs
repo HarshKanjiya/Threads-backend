@@ -1,21 +1,17 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using System.Net.Http.Json;
-using System.Text.Json.Nodes;
 using System.Text;
 using Thread.Data;
 using Thread.Model;
 using UserApi.microservice.Models.DTOs;
 using Thread.microservice.Utils;
 using Azure;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Thread.microservice.Controller
 {
-    [Route("thread")]
-    [ApiController]
+    [Route("api/v1/thread")]
+    [ApiController, Authorize]
     public class ThreadController : ControllerBase
     {
 
@@ -114,10 +110,10 @@ namespace Thread.microservice.Controller
                     });
 
                 var content = new StringContent(dataForAuthApi.ToString(), Encoding.UTF8, "application/json");
-                var res = httpClient.PutAsync("https://localhost:7201/api/service/user", content).Result;
+                var res = httpClient.PutAsync("https://localhost:7201/api/v1/service/auth/usercounts", content).Result;
 
 
-                if (thread != null)
+                if (thread.Entity != null)
                 {
                     response.Message = "Thread Created";
                     response.Success = true;
@@ -140,32 +136,42 @@ namespace Thread.microservice.Controller
             }
         }
 
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<ResponseDTO>> DeleteThread(Guid id)
+        [HttpDelete("{UserId}/{ThreadId}")]
+        public async Task<ActionResult<ResponseDTO>> DeleteThread(Guid UserId, Guid ThreadId)
         {
             ResponseDTO response = new ResponseDTO();
             try
             {
-                var thread = db.Threads.FirstOrDefault(t => t.ThreadId == id);
+                var thread = db.Threads.FirstOrDefault(t => t.ThreadId == ThreadId);
 
                 if (thread != null)
                 {
-                    db.Threads.Remove(thread);
-                    db.SaveChanges();
 
-                    var dataForAuthApi = JsonConvert.SerializeObject(
-                        new
-                        {
-                            UserId = thread.AuthorId,
-                            message = "REMOVE_THREAD"
-                        });
+                    if (thread.AuthorId == UserId)
+                    {
+                        db.Threads.Remove(thread);
+                        db.SaveChanges();
 
-                    var content = new StringContent(dataForAuthApi.ToString(), Encoding.UTF8, "application/json");
-                    var res = httpClient.PutAsync("https://localhost:7201/Auth/user", content).Result;
+                        var dataForAuthApi = JsonConvert.SerializeObject(
+                            new
+                            {
+                                UserId = thread.AuthorId,
+                                message = "REMOVE_THREAD"
+                            });
 
-                    response.Message = "Thread Removed.";
-                    response.Success = true;
-                    return Ok(response);
+                        var content = new StringContent(dataForAuthApi.ToString(), Encoding.UTF8, "application/json");
+                        var res = httpClient.PutAsync("https://localhost:7201/Auth/user", content).Result;
+
+                        response.Message = "Thread Removed.";
+                        response.Success = true;
+                        return Ok(response);
+                    }
+                    else
+                    {
+                        response.Message = "You don't have right to perform this action.";
+                        response.Success = true;
+                        return Ok(response);
+                    }
 
 
                 }
@@ -183,12 +189,7 @@ namespace Thread.microservice.Controller
             }
         }
 
-        [HttpPost, Route("/file")]
-        [Consumes("multipart/form-data")]
-        public async Task<ActionResult> FileUpload(IFormFile file)
-        {
-            return Ok();
-        }
+
 
         [HttpDelete("deleteall")]
         public async Task<ActionResult> DeleteAll()
@@ -210,59 +211,6 @@ namespace Thread.microservice.Controller
             {
                 response.Success = false;
                 response.Message = "Internal Server error :" + e.Message;
-                return BadRequest(response);
-            }
-        }
-
-
-
-        // FOR OTHER SERVICES
-        [HttpGet("user/{id}")]
-        public async Task<ActionResult<ResponseDTO>> getThreadsOfUser(string id)
-        {
-            ResponseDTO response = new ResponseDTO();
-            try
-            {
-                var threads = db.Threads.Include(Thread => Thread.Content.Ratings).Include(Thread => Thread.Content.Options).Where(t => t.AuthorId == id).ToList();
-                response.Success = true;
-                response.Message = "Posts found";
-                response.Data = threads;
-                return Ok(response);
-
-            }
-            catch (Exception ex)
-            {
-                response.Message = "Internal server error.   " + ex.Message;
-                response.Success = false;
-                return BadRequest(response);
-            }
-
-        }
-
-        [HttpGet("threadInfo/{id}")]
-        public async Task<ActionResult<ResponseDTO>> getThreadInfo(Guid id)
-        {
-            ResponseDTO response = new ResponseDTO();
-
-            try
-            {
-                var thread = db.Threads.FirstOrDefault(t => t.ThreadId == id);
-                if (thread != null)
-                {
-                    response.Success = true;
-                    response.Message = "Thread found";
-                    response.Data = thread;
-                    return Ok(response);
-                }
-                response.Success = false;
-                response.Message = "Thread not found";
-                return Ok(response);
-
-            }
-            catch (Exception e)
-            {
-                response.Message = "Internal server error.   " + e.Message;
-                response.Success = false;
                 return BadRequest(response);
             }
         }

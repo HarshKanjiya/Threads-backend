@@ -10,7 +10,7 @@ namespace Subscription.microservice.Models
         public Guid UserId { get; set; }
         public string UserName { get; set; }
         public string PackageName { get; set; }
-        public string PurchasedPrice { get; set; }
+        public int PurchasedPrice { get; set; }
         public string ReceiptId { get; set; }
         public string PurchaseStatus { get; set; } = "PENDING"; // PENDING, PURCHASED, CANCLED
 

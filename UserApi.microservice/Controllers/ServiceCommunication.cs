@@ -5,7 +5,7 @@ using UserApi.microservice.Models.DTOs;
 
 namespace UserApi.microservice.Controllers
 {
-    [Route("api/service")]
+    [Route("api/v1/service/auth")]
     [ApiController]
     public class ServiceCommunication : ControllerBase
     {
@@ -21,7 +21,7 @@ namespace UserApi.microservice.Controllers
 
 
 
-        [HttpPut("user")]
+        [HttpPut("usercounts")]
         public async Task<ActionResult<ResponseDTO>> UpdateUserData(UserDataFieldUpdateDTO data)
         {
             ResponseDTO responseDTO = new ResponseDTO();
@@ -77,7 +77,7 @@ namespace UserApi.microservice.Controllers
             }
         }
 
-        [HttpGet("Userdata/{UserId}")]
+        [HttpGet("user/{UserId}")]
         public async Task<ActionResult<ResponseDTO>> getUserInformation(Guid UserId)
         {
             ResponseDTO responseDTO = new ResponseDTO();

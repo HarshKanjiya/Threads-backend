@@ -7,8 +7,8 @@ namespace UserActions.microservice.Models
         [Key] public Guid LikeId { get; set; }
         public DateTime CreateAt = DateTime.Now;
 
-        public required string ThreadId { get; set; }
-        public required string UserId { get; set; }
+        public required Guid ThreadId { get; set; }
+        public required Guid UserId { get; set; }
     }
 
     /*    public class PollResponseModel
@@ -23,9 +23,9 @@ namespace UserActions.microservice.Models
 
     public class RelationshipModel
     {
-        [Key] public string RelationId { get; set; }
-        public required string CasterId { get; set; }
-        public required string ReceiverId { get; set; }
+        [Key] public Guid RelationId { get; set; }
+        public required Guid CasterId { get; set; }
+        public required Guid ReceiverId { get; set; }
         public required string Type { get; set; }
     }
 }

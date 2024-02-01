@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Thread.Data;
 using Thread.microservice.Model;
@@ -6,8 +7,8 @@ using UserApi.microservice.Models.DTOs;
 
 namespace Thread.microservice.Controller
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [Route("api/v1/poll")]
+    [ApiController, Authorize]
     public class PollResponseController : ControllerBase
     {
 
@@ -25,11 +26,11 @@ namespace Thread.microservice.Controller
 
             try
             {
-                if (req.Selection != -1)
+                if (req.OptionId != null)
                 {
                     PollResponseModel pollRes = new()
                     {
-                        Selection = req.Selection,
+                        OptionId = req.OptionId,
                         ThreadId = req.ThreadId,
                         UserId = req.UserId
                     };

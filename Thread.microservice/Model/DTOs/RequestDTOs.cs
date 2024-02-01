@@ -6,9 +6,9 @@ namespace UserApi.microservice.Models.DTOs
     public class CreateRequestDTO
     {
 
-        public string UserId { get; set; }
+        public Guid UserId { get; set; }
         public string Type { get; set; } = "PARENT";
-        public string? ReferenceId { get; set; }
+        public Guid? ReferenceId { get; set; }
         public string ReplyAccess { get; set; } = "ANY";
         public required ContentDTO Content { get; set; }
 
@@ -31,9 +31,9 @@ namespace UserApi.microservice.Models.DTOs
 
     public class PollResponseDTO
     {
-        public required string ThreadId { get; set; }
-        public required string UserId { get; set; }
-        public required int Selection { get; set; }
+        public required Guid ThreadId { get; set; }
+        public required Guid UserId { get; set; }
+        public required Guid OptionId { get; set; }
     }
 
 }

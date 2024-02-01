@@ -7,7 +7,7 @@ namespace Subscription.microservice.Models.DTOs
         public Guid UserId { get; set; }
         public string UserName { get; set; }
         public string PackageName { get; set; }
-        public string Ammount { get; set; }
+        public int Ammount { get; set; }
     }
 
     public class CreateUpdatePackageRequestDTO

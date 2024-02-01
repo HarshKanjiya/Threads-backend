@@ -1,4 +1,5 @@
 ﻿using Azure.Core;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,8 +13,8 @@ using System.Net.Http;
 
 namespace Subscription.microservice.Controllers
 {
-    [Route("api/buy")]
-    [ApiController]
+    [Route("api/v1/buy")]
+    [ApiController, Authorize]
     public class PurchaseSubscriptionController : ControllerBase
     {
         private readonly DBcontext db;
@@ -25,13 +26,13 @@ namespace Subscription.microservice.Controllers
         }
 
 
-        [HttpPost]
+        [HttpPost("init")]
         public async Task<ActionResult<ResponseDTO>> PurchaseMembership(PaymentIntentRequestDTO req)
         {
             ResponseDTO response = new ResponseDTO();
             try
             {
-                StripeSecretKeyResponseDTO secretKeyRes = await httpClient.GetFromJsonAsync<StripeSecretKeyResponseDTO>("https://localhost:7200/api/env/STRIPE_SECRET");
+                StripeSecretKeyResponseDTO secretKeyRes = await httpClient.GetFromJsonAsync<StripeSecretKeyResponseDTO>("https://localhost:7200/api/v1/env/STRIPE_SECRET");
 
                 if (secretKeyRes?.Success == false)
                 {
@@ -46,8 +47,9 @@ namespace Subscription.microservice.Controllers
                     var paymentIntentService = new PaymentIntentService();
                     var paymentIntent = paymentIntentService.Create(new PaymentIntentCreateOptions
                     {
-                        Amount = 400,
+                        Amount = (int)req.Ammount * 100,
                         Currency = "inr",
+                        ReceiptEmail = "",
                         AutomaticPaymentMethods = new PaymentIntentAutomaticPaymentMethodsOptions
                         {
                             Enabled = true,

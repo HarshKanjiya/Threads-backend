@@ -13,7 +13,7 @@ namespace Notification.microservice.Model
         public required Guid CasterId { get; set; }
         public required string CasterUserName { get; set; }
         public required string CasterAvatarUrl { get; set; }
-        public string? HelperId { get; set; }
+        public Guid? HelperId { get; set; }
 
         public bool Seen { get; set; } = false;
 

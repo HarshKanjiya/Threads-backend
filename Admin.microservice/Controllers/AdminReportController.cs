@@ -1,13 +1,14 @@
 ﻿using Admin.microservice.Data;
 using Admin.microservice.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Notification.microservice.Models.DTOs;
 
 namespace Admin.microservice.Controllers
 {
-    [Route("api/admin")]
-    [ApiController]
+    [Route("api/v1/admin")]
+    [ApiController, Authorize("ADMIN")]
     public class AdminReportController : ControllerBase
     {
         private readonly DBcontext db;

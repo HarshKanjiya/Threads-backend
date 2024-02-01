@@ -32,4 +32,23 @@ namespace UserApi.microservice.Models.DTOs
     {
         public string UserName { get; set; }
     }
+
+    public class UpdateProfileRequestDTO
+    {
+        public string? Name { get; set; }
+        public string? UserName { get; set; }
+        public string? Email { get; set; } = string.Empty;
+        public string? Gender { get; set; }
+        public string? Bio { get; set; } = string.Empty;
+        public string? PhoneNumber { get; set; }
+        public string? Status { get; set; }
+        public string? Avatar { get; set; }
+        public string? Birthdate { get; set; }
+    }
+    public class UpdatePasswordRequestDTO
+    {
+        public string? CurrentPassword { get; set; }
+        public string? NewPassword { get; set; }
+        public string? ConfirmPassword { get; set; }
+    }
 }

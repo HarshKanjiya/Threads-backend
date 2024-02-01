@@ -7,7 +7,7 @@ using UserApi.microservice.Utils;
 namespace UserApi.microservice.Controllers
 {
 
-    [ApiController]
+    [ApiController, Route("api/v1/otp")]
     public class OtpController : ControllerBase
     {
         private readonly DbContextUsers db;
@@ -17,8 +17,7 @@ namespace UserApi.microservice.Controllers
             db = _db;
         }
 
-        [HttpPost]
-        [Route("otp/create")]
+        [HttpPost("create")]
         public async Task<ActionResult<ResponseDTO>> sendOtp(OtpCreateDTO req)
         {
             ResponseDTO response = new ResponseDTO();
@@ -95,7 +94,7 @@ namespace UserApi.microservice.Controllers
             }
         }
 
-        [HttpPost, Route("otp/verify")]
+        [HttpPost("verify")]
         public async Task<ActionResult<ResponseDTO>> verifyOtp(OtpVerifyDTO req)
         {
             ResponseDTO response = new ResponseDTO();

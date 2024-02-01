@@ -5,6 +5,7 @@ namespace Thread.microservice.Model
     public class Hashtags
     {
         [Key] public int TagId { get; set; }
-        public List<Guid> Tags { get; set; } = new List<Guid>();
+        public string TagName { get; set; }
+        public List<Guid> Threads { get; set; } = new List<Guid>();
     }
 }

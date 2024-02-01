@@ -1,13 +1,14 @@
 ﻿using Admin.microservice.Data;
 using Admin.microservice.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Notification.microservice.Models.DTOs;
 
 namespace Admin.microservice.Controllers
 {
-    [Route("api/env")]
-    [ApiController]
+    [Route("api/v1/admin/env")]
+    [ApiController, Authorize("ADMIN")]
     public class EnvVarController : ControllerBase
     {
         private readonly DBcontext db;

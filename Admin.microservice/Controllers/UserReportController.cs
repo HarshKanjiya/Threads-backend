@@ -1,5 +1,6 @@
 ﻿using Admin.microservice.Data;
 using Admin.microservice.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Notification.microservice.Models.DTOs;
@@ -7,8 +8,8 @@ using UserApi.microservice.Utils;
 
 namespace Admin.microservice.Controllers
 {
-    [Route("api/user")]
-    [ApiController]
+    [Route("api/v1/admin/report")]
+    [ApiController, Authorize]
     public class UserReportController : ControllerBase
     {
         private readonly DBcontext db;
@@ -18,7 +19,7 @@ namespace Admin.microservice.Controllers
             db = _db;
         }
 
-        [HttpPost("report/predefined")]
+        [HttpPost("predefined")]
         public async Task<ActionResult<ResponseDTO>> NewPredefinedUserReport(newPreDefinedReportDTO req)
         {
             ResponseDTO response = new ResponseDTO();
@@ -51,7 +52,7 @@ namespace Admin.microservice.Controllers
             }
         }
 
-        [HttpPost("report/custom")]
+        [HttpPost("custom")]
         public async Task<ActionResult<ResponseDTO>> NewCustomUserReport(newCustomReportDTO req)
         {
             ResponseDTO response = new ResponseDTO();
@@ -83,7 +84,7 @@ namespace Admin.microservice.Controllers
             }
         }
 
-        [HttpPost("report/bug")]
+        [HttpPost("bug")]
         public async Task<ActionResult<ResponseDTO>> NewBugReport(newBugReportDTO req)
         {
             ResponseDTO response = new ResponseDTO();

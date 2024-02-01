@@ -12,8 +12,8 @@ using UserActions.microservice.Models.DTOs;
 
 namespace UserActions.microservice.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
+    [Route("api/v1/action")]
+    [ApiController, Authorize]
     public class UserActionsController : ControllerBase
     {
         private readonly DBcontext db;
@@ -25,7 +25,7 @@ namespace UserActions.microservice.Controllers
             httpClient = _httpClient;
         }
 
-        [HttpPost("like"),Authorize]
+        [HttpPost("like")]
         public async Task<ActionResult<ResponseDTO>> LikeDislikeAction(LikeDislikeRequestDTO req)
         {
             ResponseDTO response = new ResponseDTO();
@@ -47,8 +47,8 @@ namespace UserActions.microservice.Controllers
                     if (LikeAction != null)
                     {
                         //getting thread owner and Caster Details
-                        getThreadInfoResponseDTO thread = await httpClient.GetFromJsonAsync<getThreadInfoResponseDTO>("https://localhost:7202/thread/threadInfo/" + req.ThreadId);
-                        getUserInfoResponseDTO caster = await httpClient.GetFromJsonAsync<getUserInfoResponseDTO>("https://localhost:7202/thread/threadInfo/" + req.UserId);
+                        getThreadInfoResponseDTO thread = await httpClient.GetFromJsonAsync<getThreadInfoResponseDTO>("https://localhost:7202/api/v1/service/thread/thread/" + req.ThreadId);
+                        getUserInfoResponseDTO caster = await httpClient.GetFromJsonAsync<getUserInfoResponseDTO>("https://localhost:7202/api/v1/service/auth/user/" + req.UserId);
 
 
                         if (thread.Success == true && caster.Success == true)
@@ -65,7 +65,7 @@ namespace UserActions.microservice.Controllers
                             });
 
                             var content = new StringContent(notificationData.ToString(), Encoding.UTF8, "application/json");
-                            var res = httpClient.PostAsync("https://localhost:7204/notification/sendnotif", content).Result;
+                            var res = httpClient.PostAsync("https://localhost:7204/api/v1/service/notification/sendnotif", content).Result;
                         }
 
                         response.Message = "Thread Liked";
@@ -76,33 +76,36 @@ namespace UserActions.microservice.Controllers
                 else
                 {
 
-                    //getting thread owner and Caster Details
-                    getThreadInfoResponseDTO thread = await httpClient.GetFromJsonAsync<getThreadInfoResponseDTO>("https://localhost:7202/thread/threadInfo/" + req.ThreadId);
-                    getUserInfoResponseDTO caster = await httpClient.GetFromJsonAsync<getUserInfoResponseDTO>("https://localhost:7202/thread/threadInfo/" + req.UserId);
-
-                    if (thread.Success == true && caster.Success == true)
+                    //deleting like
+                    var disLikeAction = db.Likes.FirstOrDefault(l => l.ThreadId == req.ThreadId && l.UserId == req.UserId);
+                    if (disLikeAction != null)
                     {
-                        var notificationData = JsonConvert.SerializeObject(
-                        new
+                        db.Likes.Remove(disLikeAction);
+                        db.SaveChanges();
+
+                        //getting thread owner and Caster Details
+                        getThreadInfoResponseDTO thread = await httpClient.GetFromJsonAsync<getThreadInfoResponseDTO>("https://localhost:7202/api/v1/service/thread/thread/" + req.ThreadId);
+                        getUserInfoResponseDTO caster = await httpClient.GetFromJsonAsync<getUserInfoResponseDTO>("https://localhost:7201/api/v1/service/auth/user/" + req.UserId);
+
+                        if (thread.Success == true && caster.Success == true)
                         {
-                            Type = "LIKE",
-                            ReceiverId = thread.Data.AuthorId,
-                            CasterId = caster.Data.UserId,
-                            HelperId = thread.Data.ThreadId
-                        });
+                            var notificationData = JsonConvert.SerializeObject(
+                            new
+                            {
+                                Type = "LIKE",
+                                ReceiverId = thread.Data.AuthorId,
+                                CasterId = caster.Data.UserId,
+                                HelperId = thread.Data.ThreadId
+                            });
 
-                        var content = new StringContent(notificationData.ToString(), Encoding.UTF8, "application/json");
-                        var res = httpClient.PostAsync("https://localhost:7204/notification/removenotif", content).Result;
+                            var content = new StringContent(notificationData.ToString(), Encoding.UTF8, "application/json");
+                            var res = httpClient.PostAsync("https://localhost:7204/api/v1/service/notification/removenotif", content).Result;
+                        }
+
+                        response.Message = "Thread Disliked";
+                        response.Success = true;
+                        return Ok(response);
                     }
-
-
-                    var LikeAction = db.Likes.FirstOrDefault(like => string.Equals(like.UserId, req.UserId) && string.Equals(like.ThreadId, req.ThreadId));
-                    db.Likes.Remove(LikeAction);
-                    db.SaveChanges();
-
-                    response.Message = "Thread Disliked";
-                    response.Success = true;
-                    return Ok(response);
                 }
 
                 response.Message = "Something went wrong";
@@ -137,7 +140,7 @@ namespace UserActions.microservice.Controllers
 
                     if (Follow != null)
                     {
-                        getUserInfoResponseDTO caster = await httpClient.GetFromJsonAsync<getUserInfoResponseDTO>("https://localhost:7202/thread/threadInfo/" + req.CasterId);
+                        getUserInfoResponseDTO caster = await httpClient.GetFromJsonAsync<getUserInfoResponseDTO>("https://localhost:7201/api/v1/service/auth/user/" + req.CasterId);
 
                         if (caster != null)
                         {
@@ -152,7 +155,7 @@ namespace UserActions.microservice.Controllers
                                 });
 
                             var content = new StringContent(notificationData.ToString(), Encoding.UTF8, "application/json");
-                            var res = httpClient.PostAsync("https://localhost:7204/notification/sendnotif", content).Result;
+                            var res = httpClient.PostAsync("https://localhost:7204/api/v1/service/notification/sendnotif", content).Result;
 
                         }
 
@@ -163,24 +166,34 @@ namespace UserActions.microservice.Controllers
                 }
                 else
                 {
-                    var notificationData = JsonConvert.SerializeObject(
-                        new
-                        {
-                            Type = "FOLLOW",
-                            ReceiverId = req.ReceiverId,
-                            CasterId = req.CasterId,
-                        });
+                    //deleting 
+                    var relation = db.Relationships.FirstOrDefault(r => (r.CasterId == req.CasterId) && (r.ReceiverId == req.ReceiverId) && (r.Type == req.Type));
 
-                    var content = new StringContent(notificationData.ToString(), Encoding.UTF8, "application/json");
-                    var res = httpClient.PostAsync("https://localhost:7204/notification/removenotif", content).Result;
+                    if (relation != null)
+                    {
 
-                    var follow = db.Relationships.FirstOrDefault(f => string.Equals(f.CasterId, req.CasterId) && string.Equals(f.ReceiverId, req.ReceiverId));
-                    db.Relationships.Remove(follow);
-                    db.SaveChanges();
+                        db.Relationships.Remove(relation);
+                        db.SaveChanges();
 
-                    response.Message = "Unfollowed";
-                    response.Success = true;
-                    return BadRequest(response);
+                        var notificationData = JsonConvert.SerializeObject(
+                            new
+                            {
+                                Type = "FOLLOW",
+                                ReceiverId = req.ReceiverId,
+                                CasterId = req.CasterId,
+                            });
+
+                        var content = new StringContent(notificationData.ToString(), Encoding.UTF8, "application/json");
+                        var res = httpClient.PostAsync("https://localhost:7204/api/v1/service/notification/removenotif", content).Result;
+
+
+
+                        response.Message = "Unfollowed";
+                        response.Success = true;
+                        return BadRequest(response);
+
+                    }
+
                 }
 
                 response.Message = "Something went wrong";
@@ -223,12 +236,15 @@ namespace UserActions.microservice.Controllers
                 else
                 {
                     var Mute = db.Relationships.FirstOrDefault(f => string.Equals(f.CasterId, req.CasterId) && string.Equals(f.ReceiverId, req.ReceiverId));
-                    db.Relationships.Remove(Mute);
-                    db.SaveChanges();
+                    if (Mute != null)
+                    {
+                        db.Relationships.Remove(Mute);
+                        db.SaveChanges();
 
-                    response.Message = "Unmuted";
-                    response.Success = true;
-                    return BadRequest(response);
+                        response.Message = "User Unmuted";
+                        response.Success = true;
+                        return BadRequest(response);
+                    }
                 }
 
                 response.Message = "Something went wrong";
@@ -263,7 +279,7 @@ namespace UserActions.microservice.Controllers
 
                     if (Block != null)
                     {
-                        response.Message = "Blocked";
+                        response.Message = "User added to blacklist";
                         response.Success = true;
                         return BadRequest(response);
                     }
@@ -271,12 +287,15 @@ namespace UserActions.microservice.Controllers
                 else
                 {
                     var Block = db.Relationships.FirstOrDefault(f => string.Equals(f.CasterId, req.CasterId) && string.Equals(f.ReceiverId, req.ReceiverId));
-                    db.Relationships.Remove(Block);
-                    db.SaveChanges();
+                    if (Block != null)
+                    {
+                        db.Relationships.Remove(Block);
+                        db.SaveChanges();
 
-                    response.Message = "Unblocked";
-                    response.Success = true;
-                    return BadRequest(response);
+                        response.Message = "User removed from blacklist";
+                        response.Success = true;
+                        return BadRequest(response);
+                    }
                 }
 
                 response.Message = "Something went wrong";

@@ -6,7 +6,7 @@ namespace Thread.Model
     {
         [Key] public Guid ThreadId { get; set; }
         public DateTime CreatedAt = DateTime.Now;
-        public required string AuthorId { get; set; }
+        public required Guid AuthorId { get; set; }
 
         public required string Type { get; set; } = "PARENT";
         public string? ReferenceId { get; set; }

@@ -12,8 +12,8 @@ using UserActions.microservice.Data;
 namespace UserActions.microservice.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    [Migration("20240123121449_inininfdss")]
-    partial class inininfdss
+    [Migration("20240202095749_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,13 +31,11 @@ namespace UserActions.microservice.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ThreadId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("ThreadId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("LikeId");
 
@@ -46,22 +44,21 @@ namespace UserActions.microservice.Migrations
 
             modelBuilder.Entity("UserActions.microservice.Models.RelationshipModel", b =>
                 {
-                    b.Property<string>("RelationId")
-                        .HasColumnType("nvarchar(450)");
+                    b.Property<Guid>("RelationshipId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("CasterId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("CasterId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ReceiverId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("ReceiverId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("RelationId");
+                    b.HasKey("RelationshipId");
 
                     b.ToTable("Relationships");
                 });

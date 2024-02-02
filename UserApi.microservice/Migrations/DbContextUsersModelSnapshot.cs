@@ -22,7 +22,7 @@ namespace UserApi.microservice.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("UserApi.microservice.Models.Device", b =>
+            modelBuilder.Entity("UserApi.microservice.Models.DeviceModel", b =>
                 {
                     b.Property<Guid>("DeviceId")
                         .ValueGeneratedOnAdd()
@@ -30,10 +30,6 @@ namespace UserApi.microservice.Migrations
 
                     b.Property<DateTime>("CreateAt")
                         .HasColumnType("datetime2");
-
-                    b.Property<string>("DeviceLocation")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("DeviceType")
                         .IsRequired()
@@ -50,7 +46,7 @@ namespace UserApi.microservice.Migrations
 
                     b.HasIndex("UserModelUserId");
 
-                    b.ToTable("Device");
+                    b.ToTable("Devices");
                 });
 
             modelBuilder.Entity("UserApi.microservice.Models.OtpModel", b =>
@@ -179,7 +175,7 @@ namespace UserApi.microservice.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("UserApi.microservice.Models.Device", b =>
+            modelBuilder.Entity("UserApi.microservice.Models.DeviceModel", b =>
                 {
                     b.HasOne("UserApi.microservice.Models.UserModel", null)
                         .WithMany("Devices")

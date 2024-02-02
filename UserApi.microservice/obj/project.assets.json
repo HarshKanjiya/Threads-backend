@@ -1800,6 +1800,25 @@
           }
         }
       },
+      "System.Net.Http.Json/8.0.0": {
+        "type": "package",
+        "dependencies": {
+          "System.Text.Json": "8.0.0"
+        },
+        "compile": {
+          "lib/net8.0/System.Net.Http.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net8.0/System.Net.Http.Json.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/net6.0/_._": {}
+        }
+      },
       "System.Net.Primitives/4.3.0": {
         "type": "package",
         "dependencies": {
@@ -2447,6 +2466,19 @@
           "runtimes/win/lib/net6.0/System.Windows.Extensions.dll": {
             "assetType": "runtime",
             "rid": "win"
+          }
+        }
+      },
+      "UAParser/3.1.47": {
+        "type": "package",
+        "compile": {
+          "lib/netcoreapp2.0/UAParser.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/netcoreapp2.0/UAParser.dll": {
+            "related": ".xml"
           }
         }
       },
@@ -5632,6 +5664,36 @@
         "system.net.http.nuspec"
       ]
     },
+    "System.Net.Http.Json/8.0.0": {
+      "sha512": "48Bxrd6zcGeQzS4GMEDVjuqCcAw/9wcEWnIu48FQJ5IzfKPiMR1nGtz9LrvGzU4+3TLbx/9FDlGmCUeLin1Eqg==",
+      "type": "package",
+      "path": "system.net.http.json/8.0.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Icon.png",
+        "LICENSE.TXT",
+        "PACKAGE.md",
+        "THIRD-PARTY-NOTICES.TXT",
+        "buildTransitive/net461/System.Net.Http.Json.targets",
+        "buildTransitive/net462/_._",
+        "buildTransitive/net6.0/_._",
+        "buildTransitive/netcoreapp2.0/System.Net.Http.Json.targets",
+        "lib/net462/System.Net.Http.Json.dll",
+        "lib/net462/System.Net.Http.Json.xml",
+        "lib/net6.0/System.Net.Http.Json.dll",
+        "lib/net6.0/System.Net.Http.Json.xml",
+        "lib/net7.0/System.Net.Http.Json.dll",
+        "lib/net7.0/System.Net.Http.Json.xml",
+        "lib/net8.0/System.Net.Http.Json.dll",
+        "lib/net8.0/System.Net.Http.Json.xml",
+        "lib/netstandard2.0/System.Net.Http.Json.dll",
+        "lib/netstandard2.0/System.Net.Http.Json.xml",
+        "system.net.http.json.8.0.0.nupkg.sha512",
+        "system.net.http.json.nuspec",
+        "useSharedDesignerContext.txt"
+      ]
+    },
     "System.Net.Primitives/4.3.0": {
       "sha512": "qOu+hDwFwoZPbzPvwut2qATe3ygjeQBDQj91xlsaqGFQUI5i4ZnZb8yyQuLGpDGivEPIt8EJkd1BVzVoP31FXA==",
       "type": "package",
@@ -7284,6 +7346,33 @@
         "useSharedDesignerContext.txt"
       ]
     },
+    "UAParser/3.1.47": {
+      "sha512": "I68Jl/Vs5RQZdz9BbmYtnXgujg0jVd61LhKbyNZOCm9lBxZFGxLbiQo6yFj21VYi7DzPvEvrVOmeC6v41AoLfw==",
+      "type": "package",
+      "path": "uaparser/3.1.47",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net20/UAParser.dll",
+        "lib/net20/UAParser.xml",
+        "lib/net35/UAParser.dll",
+        "lib/net35/UAParser.xml",
+        "lib/net40/UAParser.dll",
+        "lib/net40/UAParser.xml",
+        "lib/net45/UAParser.dll",
+        "lib/net45/UAParser.xml",
+        "lib/netcoreapp2.0/UAParser.dll",
+        "lib/netcoreapp2.0/UAParser.xml",
+        "lib/netstandard1.0/UAParser.dll",
+        "lib/netstandard1.0/UAParser.xml",
+        "lib/netstandard1.3/UAParser.dll",
+        "lib/netstandard1.3/UAParser.xml",
+        "lib/netstandard1.6/UAParser.dll",
+        "lib/netstandard1.6/UAParser.xml",
+        "uaparser.3.1.47.nupkg.sha512",
+        "uaparser.nuspec"
+      ]
+    },
     "UserAuthenticationManager/1.0.0": {
       "type": "project",
       "path": "../JwtAuthenticationManager/UserAuthenticationManager.csproj",
@@ -7300,6 +7389,8 @@
       "Newtonsoft.Json >= 13.0.3",
       "Swashbuckle.AspNetCore >= 6.4.0",
       "System.Net.Http >= 4.3.4",
+      "System.Net.Http.Json >= 8.0.0",
+      "UAParser >= 3.1.47",
       "UserAuthenticationManager >= 1.0.0"
     ]
   },
@@ -7379,6 +7470,14 @@
           "System.Net.Http": {
             "target": "Package",
             "version": "[4.3.4, )"
+          },
+          "System.Net.Http.Json": {
+            "target": "Package",
+            "version": "[8.0.0, )"
+          },
+          "UAParser": {
+            "target": "Package",
+            "version": "[3.1.47, )"
           }
         },
         "imports": [

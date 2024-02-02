@@ -26,19 +26,18 @@ namespace UserApi.microservice.Models
 
         public bool Verified { get; set; } = false;
 
-        public List<Device> Devices { get; set; } = new List<Device>();
+        public List<DeviceModel> Devices { get; set; } = new List<DeviceModel>();
 
         public string BanStatus { get; set; } = "UNBAN";
         public DateTime? BanStartTime { get; set; }
         public string? BanDuration { get; set; }
     }
 
-    public class Device
+    public class DeviceModel
     {
         [Key] public Guid DeviceId { get; set; }
-        public string DeviceType { get; set; }
-        public string DeviceLocation { get; set; }
-        public string RefreshToken { get; set; }
+        public required string DeviceType { get; set; }
+        public required string RefreshToken { get; set; }
         public DateTime CreateAt { get; set; } = DateTime.Now;
     }
 }

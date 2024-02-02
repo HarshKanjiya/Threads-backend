@@ -34,8 +34,6 @@ C:\Users\Admin\Desktop\demo\threads\backend\Admin.microservice\bin\Debug\net8.0\
 C:\Users\Admin\Desktop\demo\threads\backend\Admin.microservice\bin\Debug\net8.0\Microsoft.Win32.SystemEvents.dll
 C:\Users\Admin\Desktop\demo\threads\backend\Admin.microservice\bin\Debug\net8.0\Mono.TextTemplating.dll
 C:\Users\Admin\Desktop\demo\threads\backend\Admin.microservice\bin\Debug\net8.0\Newtonsoft.Json.dll
-C:\Users\Admin\Desktop\demo\threads\backend\Admin.microservice\bin\Debug\net8.0\RabbitMQ.Client.dll
-C:\Users\Admin\Desktop\demo\threads\backend\Admin.microservice\bin\Debug\net8.0\Serilog.dll
 C:\Users\Admin\Desktop\demo\threads\backend\Admin.microservice\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\Admin\Desktop\demo\threads\backend\Admin.microservice\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\Admin\Desktop\demo\threads\backend\Admin.microservice\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
@@ -140,3 +138,5 @@ C:\Users\Admin\Desktop\demo\threads\backend\Admin.microservice\obj\Debug\net8.0\
 C:\Users\Admin\Desktop\demo\threads\backend\Admin.microservice\obj\Debug\net8.0\Admin.microservice.genruntimeconfig.cache
 C:\Users\Admin\Desktop\demo\threads\backend\Admin.microservice\obj\Debug\net8.0\ref\Admin.microservice.dll
 C:\Users\Admin\Desktop\demo\threads\backend\Admin.microservice\bin\Debug\net8.0\CloudinaryDotNet.dll
+C:\Users\Admin\Desktop\demo\threads\backend\Admin.microservice\bin\Debug\net8.0\UserAuthenticationManager.dll
+C:\Users\Admin\Desktop\demo\threads\backend\Admin.microservice\bin\Debug\net8.0\UserAuthenticationManager.pdb

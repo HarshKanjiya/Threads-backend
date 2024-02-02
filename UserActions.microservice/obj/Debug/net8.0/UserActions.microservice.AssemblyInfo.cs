@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UserActions.microservice")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+82914d1826ffa9758219cde753d1b8f0f85a8525")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+29f5b90b842515b0152d2811628bc80f5a6a31d5")]
 [assembly: System.Reflection.AssemblyProductAttribute("UserActions.microservice")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UserActions.microservice")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

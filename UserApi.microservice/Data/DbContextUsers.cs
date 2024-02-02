@@ -9,6 +9,7 @@ namespace UserApi.microservice.Data
         public DbContextUsers(DbContextOptions<DbContextUsers> options) : base(options) { }
 
         public DbSet<UserModel> Users { get; set; }
+        public DbSet<DeviceModel> Devices { get; set; }
         public DbSet<OtpModel> Otps { get; set; }
         public DbSet<PasswordTokenModel> PasswordTokens { get; set; }
     }

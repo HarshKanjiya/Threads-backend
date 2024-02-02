@@ -1,5 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System.Net;
+using System.Text;
+using System.Text.Json;
 using System.Text.RegularExpressions;
+using UAParser;
 using UserApi.microservice.Data;
 using UserApi.microservice.Models;
 using UserApi.microservice.Models.DTOs;
@@ -16,48 +23,54 @@ namespace UserApi.microservice.Controllers
         private readonly DbContextUsers db;
         private readonly HttpClient httpClient;
         private readonly ILogger<AuthController> logger;
-        private readonly ImageUpload Uploader;
 
         private readonly JwtTokenHandler JWT;
+        private static readonly Random _random = new Random();
 
-
-        public AuthController(DbContextUsers _db, HttpClient _httpClient, ILogger<AuthController> _logger, JwtTokenHandler _jwt, ImageUpload uploader)
+        public AuthController(DbContextUsers _db, HttpClient _httpClient, ILogger<AuthController> _logger, JwtTokenHandler _jwt)
         {
             db = _db;
             httpClient = _httpClient;
             logger = _logger;
             JWT = _jwt;
-            Uploader = uploader;
         }
 
-        [HttpPost("register")]
+        [HttpPost("register"), AllowAnonymous]
         public async Task<ActionResult<ResponseDTO>> SignUp(SignupRequestDTO req)
         {
             ResponseDTO responseDTO = new ResponseDTO();
             try
             {
-                var existance = db.Users.FirstOrDefault(u => string.Equals(u.UserName, req.UserName));
 
-                if (existance != null)
+                var userNameExistance = db.Users.FirstOrDefault(u => string.Equals(u.UserName, req.UserName));
+
+                if (userNameExistance != null)
                 {
-
                     responseDTO.Message = "Username Already taken.";
                     responseDTO.Success = false;
-                    return BadRequest(responseDTO);
+                    return Ok(responseDTO);
                 }
 
-                var img = await Uploader.Upload(req.Avatar);
+                var EmailExistance = db.Users.FirstOrDefault(u => string.Equals(u.Email, req.Email));
 
-                if (img == null)
+                if (EmailExistance != null)
                 {
-                    responseDTO.Message = "Image Upload failed.";
+                    responseDTO.Message = "Email already in use";
                     responseDTO.Success = false;
-                    return BadRequest(responseDTO);
+                    return Ok(responseDTO);
+                }
+
+                var PhoneExistance = db.Users.FirstOrDefault(u => string.Equals(u.Email, req.Email));
+
+                if (PhoneExistance != null)
+                {
+                    responseDTO.Message = "Phone Number already in use";
+                    responseDTO.Success = false;
+                    return Ok(responseDTO);
                 }
 
                 var salt = PasswordUtils.GeneratePasswordSalt(10);
                 var encPassword = PasswordUtils.EncodePassword(req.Password, salt);
-
 
                 UserModel newUser = new UserModel()
                 {
@@ -69,9 +82,43 @@ namespace UserApi.microservice.Controllers
                     Gender = req.Gender,
                     Email = req.Email,
                     Birthdate = req.BirthDate,
-                    AvatarURL = img.Url.ToString(),
-                    AvatarPublicID = img.PublicId
+                    AvatarURL = null,
+                    AvatarPublicID = null
                 };
+
+                if (!string.IsNullOrWhiteSpace(req.Avatar))
+                {
+                    ImageUpload Uploader = new ImageUpload();
+                    var img = await Uploader.Upload(req.Avatar);
+
+                    if (img == null)
+                    {
+                        responseDTO.Message = "Image Upload failed.";
+                        responseDTO.Success = false;
+                        return Ok(responseDTO);
+                    }
+
+                    newUser.AvatarURL = img.Url.ToString();
+                    newUser.AvatarPublicID = img.PublicId;
+                }
+
+                var userAgent = HttpContext.Request.Headers["User-Agent"];
+                var uaParser = Parser.GetDefault();
+                ClientInfo c = uaParser.Parse(userAgent);
+
+                var rToken = GenerateRandomString(30);
+
+                List<DeviceModel> devices = new List<DeviceModel>()
+                {
+                    new DeviceModel()
+                    {
+                        DeviceType = c.OS.Family,
+                        RefreshToken = rToken,
+                    }
+                };
+
+                newUser.Devices = devices;
+
 
                 var user = await db.Users.AddAsync(newUser);
                 await db.SaveChangesAsync();
@@ -92,18 +139,31 @@ namespace UserApi.microservice.Controllers
                         Token = TokenResp.Token
                     };
 
+                    CookieOptions options = new CookieOptions();
+                    options.Expires = DateTime.Now.AddDays(7);
+                    CookieOptions optionsJWT = new CookieOptions();
+                    optionsJWT.Expires = DateTime.Now.AddMinutes(20);
+                    Response.Cookies.Append("RefreshToken", rToken, options);
+                    Response.Cookies.Append("AccessToken", rToken, optionsJWT);
+                    Response.Cookies.Append("UserName", user.Entity.UserName, options);
+
+                    foreach (var d in user.Entity.Devices)
+                    {
+                        d.RefreshToken = null;
+                    }
+
                     responseDTO.Message = "Account Created Successfully.";
                     responseDTO.Success = true;
-                    user.Entity.Password = "";
+                    user.Entity.Password = null;
+                    user.Entity.PasswordSalt = null;
                     responseDTO.Data = user.Entity;
-                    responseDTO.AccessToken = accessTokenData;
                     return Ok(responseDTO);
                 }
                 else
                 {
-                    responseDTO.Message = "Account creating failed.";
+                    responseDTO.Message = "Failed to create new Account.";
                     responseDTO.Success = false;
-                    return BadRequest(responseDTO);
+                    return Ok(responseDTO);
 
                 }
             }
@@ -117,7 +177,7 @@ namespace UserApi.microservice.Controllers
         }
 
 
-        [HttpPost("login")]
+        [HttpPost("login"), AllowAnonymous]
         public async Task<ActionResult<ResponseDTO>> Login(LoginRequestDTO req)
         {
             ResponseDTO responseDTO = new ResponseDTO();
@@ -153,10 +213,37 @@ namespace UserApi.microservice.Controllers
                                 Token = TokenResp.Token
                             };
 
+                            var userAgent = HttpContext.Request.Headers["User-Agent"];
+                            var uaParser = Parser.GetDefault();
+                            ClientInfo c = uaParser.Parse(userAgent);
+
+                            var rToken = GenerateRandomString(30);
+
+                            DeviceModel device = new DeviceModel()
+                            {
+                                DeviceType = c.OS.Family,
+                                RefreshToken = rToken,
+                            };
+                            User.Devices.Add(device);
+                            db.SaveChanges();
+
+                            CookieOptions options = new CookieOptions();
+                            options.Expires = DateTime.Now.AddDays(7);
+                            CookieOptions optionsJWT = new CookieOptions();
+                            optionsJWT.Expires = DateTime.Now.AddMinutes(20);
+                            Response.Cookies.Append("RefreshToken", rToken, options);
+                            Response.Cookies.Append("AccessToken", TokenResp.Token, optionsJWT);
+                            Response.Cookies.Append("UserName", User.UserName, options);
+
+                            foreach (var d in User.Devices)
+                            {
+                                d.RefreshToken = null;
+                            }
+
                             responseDTO.Message = "Logged in Successfully.";
                             responseDTO.Success = true;
-                            User.Password = "";
-                            User.PasswordSalt = "";
+                            User.Password = null;
+                            User.PasswordSalt = null;
                             responseDTO.Data = User;
 
                             return Ok(responseDTO);
@@ -181,6 +268,42 @@ namespace UserApi.microservice.Controllers
 
                         if (string.Equals(User.Password, encodingPasswordString))
                         {
+                            GenerateTokenRequestDTO tokenData = new GenerateTokenRequestDTO()
+                            {
+                                UserName = User.UserName,
+                                Role = User.Role
+                            };
+
+                            var TokenResp = JWT.GenerateJwtToken(tokenData);
+
+
+                            var userAgent = HttpContext.Request.Headers["User-Agent"];
+                            var uaParser = Parser.GetDefault();
+                            ClientInfo c = uaParser.Parse(userAgent);
+
+                            var rToken = GenerateRandomString(30);
+
+                            DeviceModel device = new DeviceModel()
+                            {
+                                DeviceType = c.OS.Family,
+                                RefreshToken = rToken,
+                            };
+                            User.Devices.Add(device);
+                            db.SaveChanges();
+
+                            CookieOptions options = new CookieOptions();
+                            options.Expires = DateTime.Now.AddDays(7);
+                            CookieOptions optionsJWT = new CookieOptions();
+                            optionsJWT.Expires = DateTime.Now.AddMinutes(20);
+                            Response.Cookies.Append("RefreshToken", rToken, options);
+                            Response.Cookies.Append("AccessToken", TokenResp.Token, optionsJWT);
+                            Response.Cookies.Append("UserName", User.UserName, options);
+
+                            foreach (var d in User.Devices)
+                            {
+                                d.RefreshToken = null;
+                            }
+
                             responseDTO.Message = "Logged in Successfully.";
                             responseDTO.Success = true;
                             User.Password = "";
@@ -207,6 +330,42 @@ namespace UserApi.microservice.Controllers
 
                         if (string.Equals(User.Password, encodingPasswordString))
                         {
+                            GenerateTokenRequestDTO tokenData = new GenerateTokenRequestDTO()
+                            {
+                                UserName = User.UserName,
+                                Role = User.Role
+                            };
+
+                            var TokenResp = JWT.GenerateJwtToken(tokenData);
+
+
+                            var userAgent = HttpContext.Request.Headers["User-Agent"];
+                            var uaParser = Parser.GetDefault();
+                            ClientInfo c = uaParser.Parse(userAgent);
+
+                            var rToken = GenerateRandomString(30);
+
+                            DeviceModel device = new DeviceModel()
+                            {
+                                DeviceType = c.OS.Family,
+                                RefreshToken = rToken,
+                            };
+                            User.Devices.Add(device);
+                            db.SaveChanges();
+
+                            CookieOptions options = new CookieOptions();
+                            options.Expires = DateTime.Now.AddDays(7);
+                            CookieOptions optionsJWT = new CookieOptions();
+                            optionsJWT.Expires = DateTime.Now.AddMinutes(20);
+                            Response.Cookies.Append("RefreshToken", rToken, options);
+                            Response.Cookies.Append("AccessToken", TokenResp.Token, optionsJWT);
+                            Response.Cookies.Append("UserName", User.UserName, options);
+
+                            foreach (var d in User.Devices)
+                            {
+                                d.RefreshToken = null;
+                            }
+
                             responseDTO.Message = "Logged in Successfully.";
                             responseDTO.Success = true;
                             User.Password = "";
@@ -240,7 +399,7 @@ namespace UserApi.microservice.Controllers
         }
 
 
-        [HttpPost("check/username")]
+        [HttpPost("check/username"), AllowAnonymous]
         public async Task<ActionResult<ResponseDTO>> CheckUserNameAvaibility(CheckUsernameAvaibilityDTO req)
         {
             ResponseDTO responseDTO = new ResponseDTO();
@@ -273,7 +432,7 @@ namespace UserApi.microservice.Controllers
             }
         }
 
-        [HttpPut("user/{UserId}")]
+        [HttpPut("user/{UserId}"), Authorize]
         public async Task<ActionResult<ResponseDTO>> UpdateProfile(Guid UserId, UpdateProfileRequestDTO req)
         {
             ResponseDTO response = new ResponseDTO();
@@ -325,6 +484,8 @@ namespace UserApi.microservice.Controllers
                 }
                 if (!string.IsNullOrWhiteSpace(req.Avatar))
                 {
+                    ImageUpload Uploader = new ImageUpload();
+
                     var img = await Uploader.Upload(req.Avatar);
 
                     if (img == null)
@@ -361,7 +522,7 @@ namespace UserApi.microservice.Controllers
 
         }
 
-        [HttpPut("user/pass/{UserId}")]
+        [HttpPut("user/pass/{UserId}"), Authorize]
         public async Task<ActionResult<ResponseDTO>> UpdatePassword(Guid UserId, UpdatePasswordRequestDTO req)
         {
             ResponseDTO response = new ResponseDTO();
@@ -459,6 +620,70 @@ namespace UserApi.microservice.Controllers
         {
             public UserModel user { get; set; }
             public Object posts { get; set; }
+        }
+
+        [HttpGet("token")]
+        public async Task<ActionResult<ResponseDTO>> getNewAccessToken()
+        {
+            ResponseDTO response = new ResponseDTO();
+            try
+            {
+                var UserName = Request.Cookies["UserName"];
+                var RefreshToken = Request.Cookies["RefreshToken"];
+                var user = db.Users.FirstOrDefault(u => string.Equals(u.UserName, UserName));
+
+                var tokenExistance = user.Devices.FirstOrDefault(t => string.Equals(t.RefreshToken, RefreshToken));
+                if (user != null)
+                {
+                    GenerateTokenRequestDTO tokenData = new GenerateTokenRequestDTO()
+                    {
+                        UserName = user.UserName,
+                        Role = user.Role
+                    };
+
+                    var TokenResp = JWT.GenerateJwtToken(tokenData);
+
+
+
+                    CookieOptions optionsJWT = new CookieOptions();
+                    optionsJWT.Expires = DateTime.Now.AddMinutes(20);
+
+                    Response.Cookies.Append("AccessToken", TokenResp.Token, optionsJWT);
+
+                    response.Success = true;
+                    response.Message = "Token Sent";
+                    return Ok(response);
+
+                }
+                response.Success = false;
+                response.Message = "Token Expired";
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                response.Message = "Something went wrong :" + e.Message;
+                response.Success = false;
+                return BadRequest(response);
+            }
+        }
+
+
+
+
+
+
+        // :: FOR RANDOM STRING ::
+        public static string GenerateRandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            StringBuilder stringBuilder = new StringBuilder(length);
+
+            for (int i = 0; i < length; i++)
+            {
+                stringBuilder.Append(chars[_random.Next(chars.Length)]);
+            }
+
+            return stringBuilder.ToString();
         }
 
     }

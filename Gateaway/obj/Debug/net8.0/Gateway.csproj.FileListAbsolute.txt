@@ -12,7 +12,6 @@ C:\Users\Admin\Desktop\demo\threads\backend\Gateaway\bin\Debug\net8.0\FluentVali
 C:\Users\Admin\Desktop\demo\threads\backend\Gateaway\bin\Debug\net8.0\Humanizer.dll
 C:\Users\Admin\Desktop\demo\threads\backend\Gateaway\bin\Debug\net8.0\IPAddressRange.dll
 C:\Users\Admin\Desktop\demo\threads\backend\Gateaway\bin\Debug\net8.0\Kros.Utils.dll
-C:\Users\Admin\Desktop\demo\threads\backend\Gateaway\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 C:\Users\Admin\Desktop\demo\threads\backend\Gateaway\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 C:\Users\Admin\Desktop\demo\threads\backend\Gateaway\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 C:\Users\Admin\Desktop\demo\threads\backend\Gateaway\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
@@ -310,5 +309,3 @@ D:\projects\side\thread\backend\Gateaway\obj\Debug\net8.0\refint\Gateway.dll
 D:\projects\side\thread\backend\Gateaway\obj\Debug\net8.0\Gateway.pdb
 D:\projects\side\thread\backend\Gateaway\obj\Debug\net8.0\Gateway.genruntimeconfig.cache
 D:\projects\side\thread\backend\Gateaway\obj\Debug\net8.0\ref\Gateway.dll
-C:\Users\Admin\Desktop\demo\threads\backend\Gateaway\bin\Debug\net8.0\RabbitMQ.Client.dll
-C:\Users\Admin\Desktop\demo\threads\backend\Gateaway\bin\Debug\net8.0\Serilog.dll

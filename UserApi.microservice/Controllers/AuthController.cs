@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Text;
 using System.Text.Json;
@@ -399,13 +400,13 @@ namespace UserApi.microservice.Controllers
         }
 
 
-        [HttpPost("check/username"), AllowAnonymous]
-        public async Task<ActionResult<ResponseDTO>> CheckUserNameAvaibility(CheckUsernameAvaibilityDTO req)
+        [HttpGet("check/{UserName}"), AllowAnonymous]
+        public async Task<ActionResult<ResponseDTO>> CheckUserNameAvaibility(string UserName)
         {
             ResponseDTO responseDTO = new ResponseDTO();
             try
             {
-                var user = db.Users.FirstOrDefault(user => user.UserName == req.UserName);
+                var user = db.Users.FirstOrDefault(user => user.UserName == UserName);
                 if (user == null)
                 {
                     responseDTO.Message = "Username is Available.";
@@ -669,6 +670,45 @@ namespace UserApi.microservice.Controllers
 
 
 
+        [HttpGet("signout")]
+        public async Task<ActionResult<ResponseDTO>> logout()
+        {
+            ResponseDTO response = new ResponseDTO();
+            try
+            {
+                CookieOptions options = new CookieOptions();
+                options.Expires = DateTime.Now;
+
+                if (Request.Cookies["UserName"] == null)
+                {
+                    response.Success = true;
+                    response.Message = "Already Signed Out";
+                    Response.Cookies.Append("RefreshToken", "", options);
+                    Response.Cookies.Append("AccessToken", "", options);
+                    Response.Cookies.Append("UserName", "", options);
+
+                    return Ok(response);
+                }
+
+                CookieOptions options2 = new CookieOptions();
+                options2.Expires = DateTime.Now.AddDays(2);
+
+                Response.Cookies.Append("RefreshToken", "", options);
+                Response.Cookies.Append("AccessToken", "", options);
+                Response.Cookies.Append("UserName", "", options);
+                Response.Cookies.Append("Previous", string.IsNullOrWhiteSpace(Request.Cookies["Previous"]) ? "" : Request.Cookies["Previous"] + "," + Request.Cookies["UserName"], options2);
+
+                response.Message = "dsd";
+                response.Success = true;
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                response.Message = "Something went wrong :" + e.Message;
+                response.Success = false;
+                return BadRequest(response);
+            }
+        }
 
 
 

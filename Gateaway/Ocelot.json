@@ -1,18 +1,180 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/auth",
+      "DownstreamPathTemplate": "/api/v1/admin/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 7218
+          "Port": 7200
         }
       ],
-      "UpstreamPathTemplate": "/auth",
-      "UpstreamHttpMethod": [ "Get" ],
-      "SwaggerKey": "contacts"
+      "UpstreamPathTemplate": "/api/admin/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Put", "Post", "Delete" ],
+      "SwaggerKey": "Admin"
+    },
 
+    {
+      "DownstreamPathTemplate": "/api/v1/auth/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7201
+        }
+      ],
+      "UpstreamPathTemplate": "/api/auth/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Put", "Post", "Delete" ],
+      "SwaggerKey": "Auth"
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/v1/otp/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7201
+        }
+      ],
+      "UpstreamPathTemplate": "/api/otp/{everything}",
+      "UpstreamHttpMethod": [ "Post" ],
+      "SwaggerKey": "Auth"
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/v1/poll",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7202
+        }
+      ],
+      "UpstreamPathTemplate": "/api/poll",
+      "UpstreamHttpMethod": [ "Post" ],
+      "SwaggerKey": "Thread"
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/v1/thread/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7202
+        }
+      ],
+      "UpstreamPathTemplate": "/api/otp/thread/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Put", "Post", "Delete" ],
+      "SwaggerKey": "Thread"
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/v1/action/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7203
+        }
+      ],
+      "UpstreamPathTemplate": "/api/otp/action/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Put", "Post", "Delete" ],
+      "SwaggerKey": "Action"
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/v1/notification/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7204
+        }
+      ],
+      "UpstreamPathTemplate": "/api/otp/notification/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Put", "Post", "Delete" ],
+      "SwaggerKey": "Notif"
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/v1/package/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7205
+        }
+      ],
+      "UpstreamPathTemplate": "/api/otp/package/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Put", "Post", "Delete" ],
+      "SwaggerKey": "Package"
     }
-  ]
+  ],
+  "SwaggerEndPoints": [
+    {
+      "Key": "Admin",
+      "Config": [
+        {
+          "Name": "Admin API",
+          "Version": "v1",
+          "Url": "http://localhost:7200/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "Auth",
+      "Config": [
+        {
+          "Name": "Auth API",
+          "Version": "v1",
+          "Url": "http://localhost:7201/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "Thread",
+      "Config": [
+        {
+          "Name": "Thread API",
+          "Version": "v1",
+          "Url": "http://localhost:7202/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "Action",
+      "Config": [
+        {
+          "Name": "Action API",
+          "Version": "v1",
+          "Url": "http://localhost:7203/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "Notif",
+      "Config": [
+        {
+          "Name": "Notif API",
+          "Version": "v1",
+          "Url": "http://localhost:7204/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "Package",
+      "Config": [
+        {
+          "Name": "Package API",
+          "Version": "v1",
+          "Url": "http://localhost:7205/swagger/v1/swagger.json"
+        }
+      ]
+    }
+  ],
+  "GlobalConfiguration": {
+    "BaseUrl": "http://localhost:7210"
+  }
 }

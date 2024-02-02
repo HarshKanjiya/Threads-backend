@@ -73,9 +73,8 @@ namespace Subscription.microservice.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PurchasedPrice")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PurchasedPrice")
+                        .HasColumnType("int");
 
                     b.Property<string>("ReceiptId")
                         .IsRequired()

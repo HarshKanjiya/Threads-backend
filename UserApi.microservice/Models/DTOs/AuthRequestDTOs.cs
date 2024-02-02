@@ -26,7 +26,10 @@ namespace UserApi.microservice.Models.DTOs
     {
         public string Email { get; set; }
     }
-    public class SignOutRequestDTO { }
+    public class SignOutRequestDTO
+    {
+        public string UserName { get; set; }
+    }
 
     public class CheckUsernameAvaibilityDTO
     {

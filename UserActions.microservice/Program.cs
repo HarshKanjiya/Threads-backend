@@ -36,6 +36,8 @@ app.MapControllers();
 
 
 Migration();
+app.UseCors(o => o.AllowAnyHeader().AllowAnyOrigin().AllowAnyOrigin());
+
 
 app.Run();
 

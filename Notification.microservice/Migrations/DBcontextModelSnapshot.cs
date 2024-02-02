@@ -42,8 +42,8 @@ namespace Notification.microservice.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("HelperId")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid?>("HelperId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("ReceiverId")
                         .HasColumnType("uniqueidentifier");

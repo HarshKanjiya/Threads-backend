@@ -102,9 +102,8 @@ namespace Thread.microservice.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AuthorId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("BanStatus")
                         .IsRequired()
@@ -139,7 +138,11 @@ namespace Thread.microservice.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TagId"));
 
-                    b.Property<string>("Tags")
+                    b.Property<string>("TagName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Threads")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -154,16 +157,14 @@ namespace Thread.microservice.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Selection")
-                        .HasColumnType("int");
+                    b.Property<Guid>("OptionId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ThreadId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("ThreadId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("PollResponseId");
 

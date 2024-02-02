@@ -7,7 +7,7 @@ using Subscription.microservice.Models.DTOs;
 
 namespace Subscription.microservice.Controllers
 {
-    [Route("api/v1/admin/package")]
+    [Route("api/v1/package/admin")]
     [ApiController, Authorize("ADMIN")]
     public class AdminOperationController : ControllerBase
     {

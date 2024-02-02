@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
@@ -23,12 +24,14 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
-    app.UseSwaggerForOcelotUI(opt =>
-    {
-        opt.PathToSwaggerGenerator = "/swagger/docs";
-    });
+    app.UseSwaggerForOcelotUI(builder.Configuration);
+
 }
 
+app.UseSwaggerUI(c =>
+{
+    c.SwaggerEndpoint("/Ocelot.json", "Ocelot");
+});
 
 app.UseOcelot().Wait();
 app.UseHttpsRedirection();
@@ -36,5 +39,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors(o => o.AllowAnyHeader().AllowAnyOrigin().AllowAnyOrigin());
 
 app.Run();

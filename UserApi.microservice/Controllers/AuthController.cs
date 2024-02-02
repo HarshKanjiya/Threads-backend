@@ -3,15 +3,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
-using System.Net;
 using System.Text;
-using System.Text.Json;
 using System.Text.RegularExpressions;
 using UAParser;
 using UserApi.microservice.Data;
 using UserApi.microservice.Models;
 using UserApi.microservice.Models.DTOs;
-using UserApi.microservice.services;
 using UserApi.microservice.Utils;
 using UserAuthenticationManager;
 using UserAuthenticationManager.Model;
@@ -142,10 +139,17 @@ namespace UserApi.microservice.Controllers
 
                     CookieOptions options = new CookieOptions();
                     options.Expires = DateTime.Now.AddDays(7);
+                    options.SameSite = SameSiteMode.None;
+                    options.Secure = true;
+
                     CookieOptions optionsJWT = new CookieOptions();
                     optionsJWT.Expires = DateTime.Now.AddMinutes(20);
+                    optionsJWT.SameSite = SameSiteMode.None;
+                    optionsJWT.Secure = true;
+
+
                     Response.Cookies.Append("RefreshToken", rToken, options);
-                    Response.Cookies.Append("AccessToken", rToken, optionsJWT);
+                    Response.Cookies.Append("AccessToken", TokenResp.Token, optionsJWT);
                     Response.Cookies.Append("UserName", user.Entity.UserName, options);
 
                     foreach (var d in user.Entity.Devices)
@@ -230,8 +234,15 @@ namespace UserApi.microservice.Controllers
 
                             CookieOptions options = new CookieOptions();
                             options.Expires = DateTime.Now.AddDays(7);
+                            options.SameSite = SameSiteMode.None;
+                            options.Secure = true;
+
                             CookieOptions optionsJWT = new CookieOptions();
                             optionsJWT.Expires = DateTime.Now.AddMinutes(20);
+                            optionsJWT.SameSite = SameSiteMode.None;
+                            optionsJWT.Secure = true;
+
+
                             Response.Cookies.Append("RefreshToken", rToken, options);
                             Response.Cookies.Append("AccessToken", TokenResp.Token, optionsJWT);
                             Response.Cookies.Append("UserName", User.UserName, options);
@@ -294,8 +305,15 @@ namespace UserApi.microservice.Controllers
 
                             CookieOptions options = new CookieOptions();
                             options.Expires = DateTime.Now.AddDays(7);
+                            options.SameSite = SameSiteMode.None;
+                            options.Secure = true;
+
                             CookieOptions optionsJWT = new CookieOptions();
                             optionsJWT.Expires = DateTime.Now.AddMinutes(20);
+                            optionsJWT.SameSite = SameSiteMode.None;
+                            optionsJWT.Secure = true;
+
+
                             Response.Cookies.Append("RefreshToken", rToken, options);
                             Response.Cookies.Append("AccessToken", TokenResp.Token, optionsJWT);
                             Response.Cookies.Append("UserName", User.UserName, options);
@@ -356,8 +374,15 @@ namespace UserApi.microservice.Controllers
 
                             CookieOptions options = new CookieOptions();
                             options.Expires = DateTime.Now.AddDays(7);
+                            options.SameSite = SameSiteMode.None;
+                            options.Secure = true;
+
                             CookieOptions optionsJWT = new CookieOptions();
                             optionsJWT.Expires = DateTime.Now.AddMinutes(20);
+                            optionsJWT.SameSite = SameSiteMode.None;
+                            optionsJWT.Secure = true;
+
+
                             Response.Cookies.Append("RefreshToken", rToken, options);
                             Response.Cookies.Append("AccessToken", TokenResp.Token, optionsJWT);
                             Response.Cookies.Append("UserName", User.UserName, options);
@@ -668,6 +693,77 @@ namespace UserApi.microservice.Controllers
             }
         }
 
+        [HttpGet("session")]
+        public async Task<ActionResult<ResponseDTO>> GetMyData()
+        {
+            ResponseDTO response = new ResponseDTO();
+            try
+            {
+                if (string.IsNullOrWhiteSpace(Request.Cookies["UserName"]) || string.IsNullOrWhiteSpace(Request.Cookies["RefreshToken"]))
+                {
+                    response.Message = "Failed to get data from cookie";
+                    response.Success = false;
+                    return Ok(response);
+                }
+
+                var user = db.Users.Include(u=>u.Devices).FirstOrDefault(u => string.Equals(u.UserName ,Request.Cookies["UserName"]));
+
+                if (user == null)
+                {
+                    response.Message = "Failed to get user";
+                    response.Success = false;
+                    return Ok(response);
+                }
+
+                var session = user.Devices.FirstOrDefault(d => string.Equals(d.RefreshToken,Request.Cookies["RefreshToken"]));
+
+                if (session == null)
+                {
+                    response.Message = "Failed to get session :"+ session?.RefreshToken;
+                    response.Success = false;
+                    response.Data = user;
+                    return Ok(user);
+                }
+
+                user.Password = null;
+                user.PasswordSalt = null;
+               
+
+                GenerateTokenRequestDTO tokenData = new GenerateTokenRequestDTO()
+                {
+                    UserName = user.UserName,
+                    Role = user.Role
+                };
+
+                var TokenResp = JWT.GenerateJwtToken(tokenData);
+
+
+                CookieOptions optionsJWT = new CookieOptions();
+                optionsJWT.Expires = DateTime.Now.AddMinutes(20);
+                optionsJWT.SameSite = SameSiteMode.None;
+                optionsJWT.Secure = true;
+
+
+                Response.Cookies.Append("AccessToken", TokenResp.Token, optionsJWT);
+
+                foreach (var d in user.Devices)
+                {
+                    d.RefreshToken = null;
+                }
+
+                response.Message = "Success";
+                response.Success = true;
+                response.Data = user;
+                return Ok(response);
+
+            }
+            catch (Exception e)
+            {
+                response.Message = "Something went wrong :" + e.Message;
+                response.Success = false;
+                return BadRequest(response);
+            }
+        }
 
 
         [HttpGet("signout")]
@@ -698,7 +794,7 @@ namespace UserApi.microservice.Controllers
                 Response.Cookies.Append("UserName", "", options);
                 Response.Cookies.Append("Previous", string.IsNullOrWhiteSpace(Request.Cookies["Previous"]) ? "" : Request.Cookies["Previous"] + "," + Request.Cookies["UserName"], options2);
 
-                response.Message = "dsd";
+                response.Message = "Signed Out";
                 response.Success = true;
                 return Ok(response);
             }

@@ -7,7 +7,7 @@ using UserApi.microservice.Models.DTOs;
 
 namespace Thread.microservice.Controller
 {
-    [Route("api/v1/poll")]
+    [Route("api/v1/thread")]
     [ApiController, Authorize]
     public class PollResponseController : ControllerBase
     {
@@ -19,7 +19,7 @@ namespace Thread.microservice.Controller
             db = _db;
         }
 
-        [HttpPost]
+        [HttpPost("poll")]
         public async Task<ActionResult<ResponseDTO>> responseToPoll(PollResponseDTO req)
         {
             ResponseDTO response = new ResponseDTO();

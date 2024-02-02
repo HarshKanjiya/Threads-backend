@@ -17,6 +17,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddOcelot();
 builder.Services.AddSwaggerForOcelot(builder.Configuration);
 
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -30,16 +32,19 @@ if (app.Environment.IsDevelopment())
 
 app.UseSwaggerUI(c =>
 {
-    c.SwaggerEndpoint("/Ocelot.json", "Ocelot");
+    c.SwaggerEndpoint("Ocelot.json", "Ocelot");
 });
 
+app.UseCors(o => o.AllowAnyHeader().AllowAnyMethod().SetIsOriginAllowed(origin => true).AllowCredentials());
 app.UseOcelot().Wait();
 app.UseHttpsRedirection();
+
+//app.UseCors(o => o.AllowAnyHeader().WithOrigins("http://localhost:4200/"));
+
 
 app.UseAuthorization();
 
 app.MapControllers();
 
-app.UseCors(o => o.AllowAnyHeader().AllowAnyOrigin().AllowAnyOrigin());
 
 app.Run();

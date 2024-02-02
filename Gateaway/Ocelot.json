@@ -43,20 +43,6 @@
     },
 
     {
-      "DownstreamPathTemplate": "/api/v1/poll",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7202
-        }
-      ],
-      "UpstreamPathTemplate": "/api/poll",
-      "UpstreamHttpMethod": [ "Post" ],
-      "SwaggerKey": "Thread"
-    },
-
-    {
       "DownstreamPathTemplate": "/api/v1/thread/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [

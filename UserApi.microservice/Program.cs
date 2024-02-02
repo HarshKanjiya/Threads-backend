@@ -25,6 +25,7 @@ builder.Services.Configure<KestrelServerOptions>(options =>
     options.Limits.MaxRequestBodySize = 52428800; // Set the limit to 50 MB (in bytes)
 });
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

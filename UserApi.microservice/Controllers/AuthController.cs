@@ -774,6 +774,9 @@ namespace UserApi.microservice.Controllers
             {
                 CookieOptions options = new CookieOptions();
                 options.Expires = DateTime.Now;
+                options.SameSite = SameSiteMode.None;
+                options.Secure = true;
+
 
                 if (Request.Cookies["UserName"] == null)
                 {
@@ -788,6 +791,8 @@ namespace UserApi.microservice.Controllers
 
                 CookieOptions options2 = new CookieOptions();
                 options2.Expires = DateTime.Now.AddDays(2);
+                options2.SameSite = SameSiteMode.None;
+                options2.Secure = true;
 
                 Response.Cookies.Append("RefreshToken", "", options);
                 Response.Cookies.Append("AccessToken", "", options);

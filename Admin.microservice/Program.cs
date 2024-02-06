@@ -1,5 +1,6 @@
 using Admin.microservice.Data;
 using Microsoft.EntityFrameworkCore;
+using UserAuthenticationManager;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<DBcontext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("conn")));
 
 builder.Services.AddHttpClient();
+builder.Services.AddCustomJwtAuthentication();
+
 
 var app = builder.Build();
 

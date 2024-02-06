@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -599,7 +600,7 @@ namespace UserApi.microservice.Controllers
 
         }
 
-        [HttpGet("user/{username}")]
+        [HttpGet("user/{username}"), AllowAnonymous]
         public async Task<ActionResult<ResponseDTO>> GetSingleUserProfileData(string username)
         {
             // messageProducer.SendingMessage("harsh");
@@ -610,7 +611,6 @@ namespace UserApi.microservice.Controllers
                 var dbUser = db.Users.FirstOrDefault(u => u.UserName == username);
                 if (dbUser != null)
                 {
-
                     ResponseDTO postsResponse = await httpClient.GetFromJsonAsync<ResponseDTO>("https://localhost:7202/api/v1/thread/user/" + dbUser.UserId);
 
                     UserProfileResponseDTO res = new UserProfileResponseDTO() { user = dbUser };
@@ -629,7 +629,7 @@ namespace UserApi.microservice.Controllers
                 }
                 responseDTO.Success = false;
                 responseDTO.Message = "User data not found";
-                return BadRequest(responseDTO);
+                return Ok(responseDTO);
 
             }
             catch (Exception e)
@@ -706,7 +706,7 @@ namespace UserApi.microservice.Controllers
                     return Ok(response);
                 }
 
-                var user = db.Users.Include(u=>u.Devices).FirstOrDefault(u => string.Equals(u.UserName ,Request.Cookies["UserName"]));
+                var user = db.Users.Include(u => u.Devices).FirstOrDefault(u => string.Equals(u.UserName, Request.Cookies["UserName"]));
 
                 if (user == null)
                 {
@@ -715,11 +715,11 @@ namespace UserApi.microservice.Controllers
                     return Ok(response);
                 }
 
-                var session = user.Devices.FirstOrDefault(d => string.Equals(d.RefreshToken,Request.Cookies["RefreshToken"]));
+                var session = user.Devices.FirstOrDefault(d => string.Equals(d.RefreshToken, Request.Cookies["RefreshToken"]));
 
                 if (session == null)
                 {
-                    response.Message = "Failed to get session :"+ session?.RefreshToken;
+                    response.Message = "Failed to get session :" + session?.RefreshToken;
                     response.Success = false;
                     response.Data = user;
                     return Ok(user);
@@ -727,7 +727,7 @@ namespace UserApi.microservice.Controllers
 
                 user.Password = null;
                 user.PasswordSalt = null;
-               
+
 
                 GenerateTokenRequestDTO tokenData = new GenerateTokenRequestDTO()
                 {

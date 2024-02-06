@@ -7,11 +7,12 @@ using UserApi.microservice.Models.DTOs;
 using Thread.microservice.Utils;
 using Azure;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace Thread.microservice.Controller
 {
     [Route("api/v1/thread")]
-    [ApiController, Authorize]
+    [ApiController]
     public class ThreadController : ControllerBase
     {
 
@@ -189,6 +190,48 @@ namespace Thread.microservice.Controller
             }
         }
 
+        [HttpGet("user/{UserID}"),AllowAnonymous]
+        public async Task<ActionResult<ResponseDTO>> GetUsersPosts(Guid UserId)
+        {
+            ResponseDTO response = new ResponseDTO();
+            try
+            {
+                int pageSize = int.Parse(Request.Query["pageSize"]);
+                int pageNumber = int.Parse(Request.Query["pageNumber"]);
+
+                var allThreads = await db.Threads.Select(t=>t.Content).ToListAsync();
+                response.Data = allThreads;
+                return response;
+
+                var threads = db.Threads
+                    .Where(t => string.Equals(t.AuthorId, UserId))
+                    .Skip((pageNumber - 1) * pageSize)
+                    .Take(pageSize)
+                    .Include(t=> t.Content)
+                    .ToList();
+
+                if (threads == null)
+                {
+                    response.Message = "Threads not Found.";
+                    response.Success = false;
+                    return Ok(response);
+                }
+                else
+                {
+                    response.Success = true;
+                    response.Message = "Threads found";
+                    response.Data = threads;
+                    return Ok(response);
+                }
+
+            }
+            catch (Exception e)
+            {
+                response.Success = false;
+                response.Message = "Internal Server error :" + e.Message;
+                return BadRequest(response);
+            }
+        }
 
 
         [HttpDelete("deleteall")]

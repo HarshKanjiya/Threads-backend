@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Notification.microservice.data;
+using UserAuthenticationManager;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<DBcontext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("conn")));
 
+builder.Services.AddCustomJwtAuthentication();
 
 var app = builder.Build();
 

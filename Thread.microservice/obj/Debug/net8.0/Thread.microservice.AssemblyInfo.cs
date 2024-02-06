@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Thread.microservice")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+73b929d3e3f0395dcea29e2b75ea045a9d1c50b5")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1a7f086c4b986ef517ff4bc4cddf8f2dd8e59bf6")]
 [assembly: System.Reflection.AssemblyProductAttribute("Thread.microservice")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Thread.microservice")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

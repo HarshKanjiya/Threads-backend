@@ -55,6 +55,33 @@
       "UpstreamHttpMethod": [ "Get", "Put", "Post", "Delete" ],
       "SwaggerKey": "Thread"
     },
+    {
+      "DownstreamPathTemplate": "/api/v1/thread/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7202
+        }
+      ],
+      "UpstreamPathTemplate": "/api/thread/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Put", "Post", "Delete" ],
+      "SwaggerKey": "Thread"
+    }, 
+    
+    {
+      "DownstreamPathTemplate": "/api/v1/thread/user/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7202
+        }
+      ],
+      "UpstreamPathTemplate": "/api/thread/user/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Put", "Post", "Delete" ],
+      "SwaggerKey": "Thread"
+    },
 
     {
       "DownstreamPathTemplate": "/api/v1/action/{everything}",

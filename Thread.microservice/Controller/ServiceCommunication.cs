@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Thread.Data;
@@ -7,7 +8,7 @@ using UserApi.microservice.Models.DTOs;
 namespace Thread.microservice.Controller
 {
     [Route("api/v1/service/thread")]
-    [ApiController]
+    [ApiController,AllowAnonymous]
     public class ServiceCommunication : ControllerBase
     {
         private readonly DBcontext db;
@@ -22,7 +23,9 @@ namespace Thread.microservice.Controller
             ResponseDTO response = new ResponseDTO();
             try
             {
-                var threads = db.Threads.Include(Thread => Thread.Content.Ratings).Include(Thread => Thread.Content.Options).Where(t => t.AuthorId == id).ToList();
+                var threads = db.Threads
+                    .Where(t => string.Equals(t.AuthorId,id))
+                    .Include(Thread => Thread.Content).ToList();
                 response.Success = true;
                 response.Message = "Posts found";
                 response.Data = threads;

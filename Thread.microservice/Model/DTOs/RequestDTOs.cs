@@ -36,4 +36,10 @@ namespace UserApi.microservice.Models.DTOs
         public required Guid OptionId { get; set; }
     }
 
+    public class QueryParameters
+    {
+        public int pageSize { get; set; }
+        public int pageNumber { get; set; }
+    }
+
 }

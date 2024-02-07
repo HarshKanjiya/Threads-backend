@@ -8,7 +8,7 @@ namespace UserApi.microservice.Models.DTOs
 
         public Guid UserId { get; set; }
         public string Type { get; set; } = "PARENT";
-        public Guid? ReferenceId { get; set; }
+        public string? ReferenceId { get; set; }
         public string ReplyAccess { get; set; } = "ANY";
         public required ContentDTO Content { get; set; }
 

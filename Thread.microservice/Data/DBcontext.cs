@@ -11,6 +11,8 @@ namespace Thread.Data
         public DbSet<ThreadModel> Threads { get; set; }
 
         public DbSet<ThreadContent> Contents { get; set; }
+        public DbSet<ThreadContentOptions> Options { get; set; }
+        public DbSet<ThreadContentRatings> Ratings { get; set; }
 
         public DbSet<PollResponseModel> PollResponses { get; set; }
 

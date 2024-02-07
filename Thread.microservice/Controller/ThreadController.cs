@@ -8,6 +8,7 @@ using Thread.microservice.Utils;
 using Azure;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using System.Threading;
 
 namespace Thread.microservice.Controller
 {
@@ -29,7 +30,7 @@ namespace Thread.microservice.Controller
 
 
         [HttpPost]
-        public async Task<ActionResult<ResponseDTO>> CreateThread([FromBody] CreateRequestDTO req)
+        public async Task<ActionResult<ResponseDTO>> CreateThread(CreateRequestDTO req)
         {
             ResponseDTO response = new ResponseDTO();
             try
@@ -97,8 +98,13 @@ namespace Thread.microservice.Controller
                     AuthorId = req.UserId,
                     ReplyAccess = req.ReplyAccess,
                     Type = req.Type,
-                    Content = newContent,
+                    Content = newContent
                 };
+
+                if (req.Type != "PARENT")
+                {
+                    newThreadData.ReferenceId = req.ReferenceId;
+                }
 
                 var thread = await db.Threads.AddAsync(newThreadData);
                 await db.SaveChangesAsync();
@@ -136,6 +142,39 @@ namespace Thread.microservice.Controller
                 return BadRequest(response);
             }
         }
+
+        [HttpGet("{ThreadId}")]
+        public async Task<ActionResult<ResponseDTO>> GetThread(Guid ThreadId)
+        {
+            ResponseDTO response = new ResponseDTO();
+            try
+            {
+                var thread = db.Threads
+                    .Include(t => t.Content).ThenInclude(t => t.Ratings)
+                    .Include(t => t.Content).ThenInclude(t => t.Options)
+                    .FirstOrDefault(t => t.ThreadId == ThreadId);
+
+                if (thread != null)
+                {
+                    response.Success = true;
+                    response.Message = "Thread found";
+                    response.Data = thread;
+                    return Ok(response);
+                }
+                response.Message = "Please try again.";
+                response.Success = false;
+                return BadRequest(response);
+
+
+            }
+            catch (Exception e)
+            {
+                response.Success = false;
+                response.Message = "Internal Server error :" + e.Message;
+                return BadRequest(response);
+            }
+        }
+
 
         [HttpDelete("{UserId}/{ThreadId}")]
         public async Task<ActionResult<ResponseDTO>> DeleteThread(Guid UserId, Guid ThreadId)
@@ -190,7 +229,7 @@ namespace Thread.microservice.Controller
             }
         }
 
-        [HttpGet("user/{UserID}"),AllowAnonymous]
+        [HttpGet("user/{UserId}")]
         public async Task<ActionResult<ResponseDTO>> GetUsersPosts(Guid UserId)
         {
             ResponseDTO response = new ResponseDTO();
@@ -199,20 +238,16 @@ namespace Thread.microservice.Controller
                 int pageSize = int.Parse(Request.Query["pageSize"]);
                 int pageNumber = int.Parse(Request.Query["pageNumber"]);
 
-                var allThreads = await db.Threads.Select(t=>t.Content).ToListAsync();
-                response.Data = allThreads;
-                return response;
-
                 var threads = db.Threads
-                    .Where(t => string.Equals(t.AuthorId, UserId))
-                    .Skip((pageNumber - 1) * pageSize)
-                    .Take(pageSize)
-                    .Include(t=> t.Content)
-                    .ToList();
+                    .OrderByDescending(t => t.CreatedAt)
+                       .Include(t => t.Content).ThenInclude(t => t.Ratings)
+                       .Include(t => t.Content).ThenInclude(t => t.Options)
+                    .Where(t => t.AuthorId == UserId).ToList();
+
 
                 if (threads == null)
                 {
-                    response.Message = "Threads not Found.";
+                    response.Message = "Threads couldn't be Found.";
                     response.Success = false;
                     return Ok(response);
                 }
@@ -243,6 +278,18 @@ namespace Thread.microservice.Controller
                 foreach (var thread in db.Threads)
                 {
                     db.Threads.Remove(thread);
+                }
+                foreach (var content in db.Contents)
+                {
+                    db.Contents.Remove(content);
+                }
+                foreach (var rating in db.Ratings)
+                {
+                    db.Ratings.Remove(rating);
+                }
+                foreach (var option in db.Options)
+                {
+                    db.Options.Remove(option);
                 }
                 db.SaveChanges();
 

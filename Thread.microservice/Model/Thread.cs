@@ -5,14 +5,15 @@ namespace Thread.Model
     public class ThreadModel
     {
         [Key] public Guid ThreadId { get; set; }
-        public DateTime CreatedAt = DateTime.Now;
+
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public required Guid AuthorId { get; set; }
-
         public required string Type { get; set; } = "PARENT";
-        public string? ReferenceId { get; set; }
+        public string? ReferenceId { get; set; } = string.Empty;
         public required string ReplyAccess { get; set; } = "ANY";
-
         public required ThreadContent Content { get; set; }
+        public int Replies { get; set; } = 0;
+        public int Likes { get; set; } = 0;
 
         public string BanStatus { get; set; } = "UNBAN";
 

@@ -11,3 +11,16 @@ C:\Users\Admin\Desktop\demo\threads\backend\JwtAuthenticationManager\obj\Debug\n
 C:\Users\Admin\Desktop\demo\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\refint\UserAuthenticationManager.dll
 C:\Users\Admin\Desktop\demo\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.pdb
 C:\Users\Admin\Desktop\demo\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\ref\UserAuthenticationManager.dll
+D:\projects\side\thread\backend\JwtAuthenticationManager\bin\Debug\net8.0\UserAuthenticationManager.deps.json
+D:\projects\side\thread\backend\JwtAuthenticationManager\bin\Debug\net8.0\UserAuthenticationManager.dll
+D:\projects\side\thread\backend\JwtAuthenticationManager\bin\Debug\net8.0\UserAuthenticationManager.pdb
+D:\projects\side\thread\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.csproj.AssemblyReference.cache
+D:\projects\side\thread\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.GeneratedMSBuildEditorConfig.editorconfig
+D:\projects\side\thread\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.AssemblyInfoInputs.cache
+D:\projects\side\thread\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.AssemblyInfo.cs
+D:\projects\side\thread\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.csproj.CoreCompileInputs.cache
+D:\projects\side\thread\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.sourcelink.json
+D:\projects\side\thread\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.dll
+D:\projects\side\thread\backend\JwtAuthenticationManager\obj\Debug\net8.0\refint\UserAuthenticationManager.dll
+D:\projects\side\thread\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.pdb
+D:\projects\side\thread\backend\JwtAuthenticationManager\obj\Debug\net8.0\ref\UserAuthenticationManager.dll

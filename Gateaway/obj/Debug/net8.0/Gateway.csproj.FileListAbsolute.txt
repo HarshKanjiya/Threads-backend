@@ -167,7 +167,6 @@ D:\projects\side\thread\backend\Gateaway\bin\Debug\net8.0\FluentValidation.dll
 D:\projects\side\thread\backend\Gateaway\bin\Debug\net8.0\Humanizer.dll
 D:\projects\side\thread\backend\Gateaway\bin\Debug\net8.0\IPAddressRange.dll
 D:\projects\side\thread\backend\Gateaway\bin\Debug\net8.0\Kros.Utils.dll
-D:\projects\side\thread\backend\Gateaway\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\projects\side\thread\backend\Gateaway\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.Internal.dll
 D:\projects\side\thread\backend\Gateaway\bin\Debug\net8.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
 D:\projects\side\thread\backend\Gateaway\bin\Debug\net8.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll

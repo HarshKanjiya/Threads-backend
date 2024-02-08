@@ -109,6 +109,13 @@ namespace Thread.microservice.Controller
                 var thread = await db.Threads.AddAsync(newThreadData);
                 await db.SaveChangesAsync();
 
+                if(thread.Entity.Type == "REPLY")
+                {
+                    var replyUpdate = db.Threads.FirstOrDefault();
+                    replyUpdate.Replies += 1;
+                    db.SaveChanges();
+                }
+
                 var dataForAuthApi = JsonConvert.SerializeObject(
                     new
                     {
@@ -235,14 +242,16 @@ namespace Thread.microservice.Controller
             ResponseDTO response = new ResponseDTO();
             try
             {
+                string postType = Request.Query["type"];
                 int pageSize = int.Parse(Request.Query["pageSize"]);
                 int pageNumber = int.Parse(Request.Query["pageNumber"]);
+
 
                 var threads = db.Threads
                     .OrderByDescending(t => t.CreatedAt)
                        .Include(t => t.Content).ThenInclude(t => t.Ratings)
                        .Include(t => t.Content).ThenInclude(t => t.Options)
-                    .Where(t => t.AuthorId == UserId).ToList();
+                    .Where(t => string.Equals(t.AuthorId ,UserId) && string.Equals(t.Type, postType)).ToList();
 
 
                 if (threads == null)

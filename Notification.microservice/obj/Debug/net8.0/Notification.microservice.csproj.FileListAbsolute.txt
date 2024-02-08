@@ -277,3 +277,6 @@ D:\projects\side\thread\backend\Notification.microservice\obj\Debug\net8.0\ref\N
 C:\Users\Admin\Desktop\demo\threads\backend\Notification.microservice\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Users\Admin\Desktop\demo\threads\backend\Notification.microservice\bin\Debug\net8.0\UserAuthenticationManager.dll
 C:\Users\Admin\Desktop\demo\threads\backend\Notification.microservice\bin\Debug\net8.0\UserAuthenticationManager.pdb
+D:\projects\side\thread\backend\Notification.microservice\bin\Debug\net8.0\Newtonsoft.Json.dll
+D:\projects\side\thread\backend\Notification.microservice\bin\Debug\net8.0\UserAuthenticationManager.dll
+D:\projects\side\thread\backend\Notification.microservice\bin\Debug\net8.0\UserAuthenticationManager.pdb

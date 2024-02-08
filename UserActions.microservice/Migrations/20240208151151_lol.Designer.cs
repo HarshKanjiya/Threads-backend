@@ -12,8 +12,8 @@ using UserActions.microservice.Data;
 namespace UserActions.microservice.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    [Migration("20240202095749_init")]
-    partial class init
+    [Migration("20240208151151_lol")]
+    partial class lol
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

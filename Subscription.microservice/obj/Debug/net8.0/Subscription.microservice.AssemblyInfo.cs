@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Subscription.microservice")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a38dc678d7172dcd57e299723923f38d95b4742f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ea4269c52f6eeae7097123b5a177946f95a1dd96")]
 [assembly: System.Reflection.AssemblyProductAttribute("Subscription.microservice")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Subscription.microservice")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

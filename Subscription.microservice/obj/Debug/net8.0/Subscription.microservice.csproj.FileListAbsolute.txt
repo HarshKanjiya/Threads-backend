@@ -278,3 +278,7 @@ C:\Users\Admin\Desktop\demo\threads\backend\Subscription.microservice\bin\Debug\
 C:\Users\Admin\Desktop\demo\threads\backend\Subscription.microservice\bin\Debug\net8.0\Stripe.net.dll
 C:\Users\Admin\Desktop\demo\threads\backend\Subscription.microservice\bin\Debug\net8.0\UserAuthenticationManager.dll
 C:\Users\Admin\Desktop\demo\threads\backend\Subscription.microservice\bin\Debug\net8.0\UserAuthenticationManager.pdb
+D:\projects\side\thread\backend\Subscription.microservice\bin\Debug\net8.0\Newtonsoft.Json.dll
+D:\projects\side\thread\backend\Subscription.microservice\bin\Debug\net8.0\Stripe.net.dll
+D:\projects\side\thread\backend\Subscription.microservice\bin\Debug\net8.0\UserAuthenticationManager.dll
+D:\projects\side\thread\backend\Subscription.microservice\bin\Debug\net8.0\UserAuthenticationManager.pdb

@@ -7003,19 +7003,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\asus\\.nuget\\packages\\": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\projects\\side\\thread\\backend\\Notification.microservice\\Notification.microservice.csproj",
+      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Notification.microservice\\Notification.microservice.csproj",
       "projectName": "Notification.microservice",
-      "projectPath": "D:\\projects\\side\\thread\\backend\\Notification.microservice\\Notification.microservice.csproj",
-      "packagesPath": "C:\\Users\\asus\\.nuget\\packages\\",
-      "outputPath": "D:\\projects\\side\\thread\\backend\\Notification.microservice\\obj\\",
+      "projectPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Notification.microservice\\Notification.microservice.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Notification.microservice\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7029,8 +7029,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "D:\\projects\\side\\thread\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj": {
-              "projectPath": "D:\\projects\\side\\thread\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj"
+            "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj": {
+              "projectPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj"
             }
           }
         }

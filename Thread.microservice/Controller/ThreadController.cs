@@ -109,11 +109,14 @@ namespace Thread.microservice.Controller
                 var thread = await db.Threads.AddAsync(newThreadData);
                 await db.SaveChangesAsync();
 
-                if(thread.Entity.Type == "REPLY")
+                if (req.Type == "REPLY")
                 {
-                    var replyUpdate = db.Threads.FirstOrDefault();
-                    replyUpdate.Replies += 1;
-                    db.SaveChanges();
+                    var replyUpdate = db.Threads.FirstOrDefault(t => t.ThreadId.ToString() == req.ReferenceId);
+                    if (replyUpdate != null)
+                    {
+                        replyUpdate.Replies += 1;
+                        db.SaveChanges();
+                    }
                 }
 
                 var dataForAuthApi = JsonConvert.SerializeObject(
@@ -166,6 +169,39 @@ namespace Thread.microservice.Controller
                     response.Success = true;
                     response.Message = "Thread found";
                     response.Data = thread;
+                    return Ok(response);
+                }
+                response.Message = "Please try again.";
+                response.Success = false;
+                return BadRequest(response);
+
+
+            }
+            catch (Exception e)
+            {
+                response.Success = false;
+                response.Message = "Internal Server error :" + e.Message;
+                return BadRequest(response);
+            }
+        }
+
+        [HttpGet("replies/{ThreadId}")]
+        public async Task<ActionResult<ResponseDTO>> GetThreadReplies(Guid ThreadId)
+        {
+            ResponseDTO response = new ResponseDTO();
+            try
+            {
+                string REPLY = "REPLY";
+                var threads = db.Threads
+                    .Include(t => t.Content).ThenInclude(t => t.Ratings)
+                    .Include(t => t.Content).ThenInclude(t => t.Options)
+                    .Where(t => (t.ReferenceId == ThreadId.ToString()) && (t.Type == REPLY));
+
+                if (threads != null)
+                {
+                    response.Success = true;
+                    response.Message = "Replies found";
+                    response.Data = threads;
                     return Ok(response);
                 }
                 response.Message = "Please try again.";
@@ -251,7 +287,7 @@ namespace Thread.microservice.Controller
                     .OrderByDescending(t => t.CreatedAt)
                        .Include(t => t.Content).ThenInclude(t => t.Ratings)
                        .Include(t => t.Content).ThenInclude(t => t.Options)
-                    .Where(t => string.Equals(t.AuthorId ,UserId) && string.Equals(t.Type, postType)).ToList();
+                    .Where(t => string.Equals(t.AuthorId, UserId) && string.Equals(t.Type, postType)).ToList();
 
 
                 if (threads == null)

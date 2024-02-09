@@ -35,9 +35,9 @@ app.UseAuthorization();
 app.MapControllers();
 
 
-Migration();
 app.UseCors(o => o.AllowAnyHeader().AllowAnyOrigin().AllowAnyOrigin());
 
+Migration();
 
 app.Run();
 

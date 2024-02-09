@@ -47,4 +47,19 @@ app.MapControllers();
 
 app.UseCors(o => o.AllowAnyHeader().AllowAnyOrigin().AllowAnyOrigin());
 
+
+Migration();
+
 app.Run();
+
+void Migration()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var _db = scope.ServiceProvider.GetRequiredService<DbContextUsers>();
+        if (_db.Database.GetPendingMigrations().Count() > 0)
+        {
+            _db.Database.Migrate();
+        }
+    }
+}

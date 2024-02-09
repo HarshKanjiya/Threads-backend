@@ -1,18 +1,18 @@
 {
   "version": 2,
-  "dgSpecHash": "wOTZTEiRBW6RvFuZ8fG/cj/zc3xjmyohjZgFAmPkmUnlbwL3W1N2PQyknuKrm7hCu0Ij61SxdW2e/zKmNx/ccw==",
+  "dgSpecHash": "62IzxfuBNfuE39Rs3oH3oaKu1HT8t7TrPhmuDci2k8BbWfUEFu0JOkQUSLE9mW3djIVL2YKkRza3WG/+XS0/4Q==",
   "success": true,
-  "projectFilePath": "D:\\projects\\side\\thread\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj",
+  "projectFilePath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\asus\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.1\\microsoft.aspnetcore.authentication.jwtbearer.8.0.1.nupkg.sha512",
-    "C:\\Users\\asus\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
-    "C:\\Users\\asus\\.nuget\\packages\\microsoft.identitymodel.abstractions\\7.3.0\\microsoft.identitymodel.abstractions.7.3.0.nupkg.sha512",
-    "C:\\Users\\asus\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\7.3.0\\microsoft.identitymodel.jsonwebtokens.7.3.0.nupkg.sha512",
-    "C:\\Users\\asus\\.nuget\\packages\\microsoft.identitymodel.logging\\7.3.0\\microsoft.identitymodel.logging.7.3.0.nupkg.sha512",
-    "C:\\Users\\asus\\.nuget\\packages\\microsoft.identitymodel.protocols\\7.1.2\\microsoft.identitymodel.protocols.7.1.2.nupkg.sha512",
-    "C:\\Users\\asus\\.nuget\\packages\\microsoft.identitymodel.protocols.openidconnect\\7.1.2\\microsoft.identitymodel.protocols.openidconnect.7.1.2.nupkg.sha512",
-    "C:\\Users\\asus\\.nuget\\packages\\microsoft.identitymodel.tokens\\7.3.0\\microsoft.identitymodel.tokens.7.3.0.nupkg.sha512",
-    "C:\\Users\\asus\\.nuget\\packages\\system.identitymodel.tokens.jwt\\7.3.0\\system.identitymodel.tokens.jwt.7.3.0.nupkg.sha512"
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.1\\microsoft.aspnetcore.authentication.jwtbearer.8.0.1.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.identitymodel.abstractions\\7.3.0\\microsoft.identitymodel.abstractions.7.3.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\7.3.0\\microsoft.identitymodel.jsonwebtokens.7.3.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.identitymodel.logging\\7.3.0\\microsoft.identitymodel.logging.7.3.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.identitymodel.protocols\\7.1.2\\microsoft.identitymodel.protocols.7.1.2.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.identitymodel.protocols.openidconnect\\7.1.2\\microsoft.identitymodel.protocols.openidconnect.7.1.2.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\microsoft.identitymodel.tokens\\7.3.0\\microsoft.identitymodel.tokens.7.3.0.nupkg.sha512",
+    "C:\\Users\\Admin\\.nuget\\packages\\system.identitymodel.tokens.jwt\\7.3.0\\system.identitymodel.tokens.jwt.7.3.0.nupkg.sha512"
   ],
   "logs": []
 }

@@ -218,6 +218,40 @@ namespace Thread.microservice.Controller
             }
         }
 
+        [HttpGet("feed/{UserId}")]
+        public async Task<ActionResult<ResponseDTO>> GetFeed(Guid UserId)
+        {
+            ResponseDTO response = new ResponseDTO();
+            try
+            {
+                string REPLY = "REPLY";
+
+                var threads = db.Threads
+                    .Include(t => t.Content).ThenInclude(t => t.Ratings)
+                    .Include(t => t.Content).ThenInclude(t => t.Options)
+                    .Where(t => (t.Type != REPLY));
+
+                if (threads != null)
+                {
+                    response.Success = true;
+                    response.Message = "feed found";
+                    response.Data = threads;
+                    return Ok(response);
+                }
+                response.Message = "Please try again.";
+                response.Success = false;
+                return BadRequest(response);
+
+
+            }
+            catch (Exception e)
+            {
+                response.Success = false;
+                response.Message = "Internal Server error :" + e.Message;
+                return BadRequest(response);
+            }
+        }
+
 
         [HttpDelete("{UserId}/{ThreadId}")]
         public async Task<ActionResult<ResponseDTO>> DeleteThread(Guid UserId, Guid ThreadId)

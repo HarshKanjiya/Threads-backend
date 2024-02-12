@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Ocelot.DependencyInjection;
@@ -17,6 +18,10 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddOcelot();
 builder.Services.AddSwaggerForOcelot(builder.Configuration);
 
+builder.Services.Configure<KestrelServerOptions>(options =>
+{
+    options.Limits.MaxRequestBodySize = 52428800; // Set the limit to 50 MB (in bytes)
+});
 
 
 var app = builder.Build();

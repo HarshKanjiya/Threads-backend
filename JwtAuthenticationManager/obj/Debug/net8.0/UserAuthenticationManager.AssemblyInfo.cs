@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("UserAuthenticationManager")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+942f244d595d979f8cd3f5ab06bda7e27163460d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0011e659163b892cde3fc05641f9bc27e13e18b0")]
 [assembly: System.Reflection.AssemblyProductAttribute("UserAuthenticationManager")]
 [assembly: System.Reflection.AssemblyTitleAttribute("UserAuthenticationManager")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

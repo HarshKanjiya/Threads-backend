@@ -41,6 +41,7 @@ namespace UserApi.microservice.Controllers
             try
             {
 
+
                 var userNameExistance = db.Users.FirstOrDefault(u => string.Equals(u.UserName, req.UserName));
 
                 if (userNameExistance != null)

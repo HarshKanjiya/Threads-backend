@@ -67,8 +67,8 @@
       "UpstreamPathTemplate": "/api/thread/{everything}",
       "UpstreamHttpMethod": [ "Get", "Put", "Post", "Delete" ],
       "SwaggerKey": "Thread"
-    }, 
-    
+    },
+
     {
       "DownstreamPathTemplate": "/api/v1/thread/user/{everything}",
       "DownstreamScheme": "https",
@@ -92,7 +92,7 @@
           "Port": 7203
         }
       ],
-      "UpstreamPathTemplate": "/api/otp/action/{everything}",
+      "UpstreamPathTemplate": "/api/action/{everything}",
       "UpstreamHttpMethod": [ "Get", "Put", "Post", "Delete" ],
       "SwaggerKey": "Action"
     },
@@ -106,13 +106,13 @@
           "Port": 7204
         }
       ],
-      "UpstreamPathTemplate": "/api/otp/notification/{everything}",
+      "UpstreamPathTemplate": "/api/notification/{everything}",
       "UpstreamHttpMethod": [ "Get", "Put", "Post", "Delete" ],
       "SwaggerKey": "Notif"
     },
 
     {
-      "DownstreamPathTemplate": "/api/v1/package/{everything}",
+      "DownstreamPathTemplate": "/api/v1/packages",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -120,7 +120,21 @@
           "Port": 7205
         }
       ],
-      "UpstreamPathTemplate": "/api/otp/package/{everything}",
+      "UpstreamPathTemplate": "/api/packages",
+      "UpstreamHttpMethod": [ "Get" ],
+      "SwaggerKey": "Package"
+    },
+
+    {
+      "DownstreamPathTemplate": "/api/v1/packages/{x}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7205
+        }
+      ],
+      "UpstreamPathTemplate": "/api/packages/{x}",
       "UpstreamHttpMethod": [ "Get", "Put", "Post", "Delete" ],
       "SwaggerKey": "Package"
     }

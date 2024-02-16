@@ -14,4 +14,10 @@ namespace UserActions.microservice.Models.DTOs
         public required Guid ReceiverId { get; set; }
         public required string Type { get; set; }  // FOLLOW, MUTE, BLOCK
     }
+
+    public class CkeckLikedDTO
+    {
+        public Guid UserId { get; set; }
+        public Guid ThreadId { get; set; }
+    }
 }

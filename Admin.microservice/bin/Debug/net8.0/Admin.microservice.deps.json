@@ -1304,7 +1304,8 @@
           "Microsoft.AspNetCore.Authentication.JwtBearer": "8.0.1",
           "Microsoft.Extensions.DependencyInjection.Abstractions": "8.0.0",
           "Microsoft.IdentityModel.Tokens": "7.3.0",
-          "System.IdentityModel.Tokens.Jwt": "7.3.0"
+          "System.IdentityModel.Tokens.Jwt": "7.3.0",
+          "System.Net.Http": "4.3.4"
         },
         "runtime": {
           "UserAuthenticationManager.dll": {}

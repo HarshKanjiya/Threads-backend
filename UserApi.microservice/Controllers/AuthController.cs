@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using UAParser;
@@ -23,13 +24,14 @@ namespace UserApi.microservice.Controllers
         private readonly HttpClient httpClient;
         private readonly ILogger<AuthController> logger;
 
+
         private readonly JwtTokenHandler JWT;
         private static readonly Random _random = new Random();
 
-        public AuthController(DbContextUsers _db, HttpClient _httpClient, ILogger<AuthController> _logger, JwtTokenHandler _jwt)
+        public AuthController(DbContextUsers _db, IHttpClientFactory httpClientFactory, ILogger<AuthController> _logger, JwtTokenHandler _jwt)
         {
             db = _db;
-            httpClient = _httpClient;
+            httpClient = httpClientFactory.CreateClient();
             logger = _logger;
             JWT = _jwt;
         }
@@ -601,8 +603,8 @@ namespace UserApi.microservice.Controllers
 
         }
 
-        [HttpGet("user/{username}"), AllowAnonymous]
-        public async Task<ActionResult<ResponseDTO>> GetSingleUserProfileData(string username)
+        [HttpGet("user/{userId}/{username}"), AllowAnonymous]
+        public async Task<ActionResult<ResponseDTO>> GetSingleUserProfileData(Guid userId, string username)
         {
             // messageProducer.SendingMessage("harsh");
             ResponseDTO responseDTO = new ResponseDTO();
@@ -612,7 +614,10 @@ namespace UserApi.microservice.Controllers
                 var dbUser = db.Users.FirstOrDefault(u => u.UserName == username);
                 if (dbUser != null)
                 {
-                    ResponseDTO postsResponse = await httpClient.GetFromJsonAsync<ResponseDTO>("https://localhost:7202/api/v1/thread/user/" + dbUser.UserId);
+                    ResponseDTO postsResponse = await httpClient.GetFromJsonAsync<ResponseDTO>("https://localhost:7202/api/v1/service/thread/user/" + userId + "/" + dbUser.UserId);
+                    // HttpResponseMessage postsResponse = await httpClient.GetAsync("https://localhost:7202/api/v1/service/thread/user/" + userId + "/" + dbUser.UserId);
+
+                    // postsResponse.EnsureSuccessStatusCode();
 
                     UserProfileResponseDTO res = new UserProfileResponseDTO() { user = dbUser };
 
@@ -620,6 +625,10 @@ namespace UserApi.microservice.Controllers
                     {
                         res.posts = postsResponse.Data;
                     }
+
+                    // string responseBody = await postsResponse.Content.ReadAsStringAsync();
+
+
 
 
                     responseDTO.Success = true;

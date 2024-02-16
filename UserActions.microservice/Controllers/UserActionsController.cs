@@ -19,10 +19,10 @@ namespace UserActions.microservice.Controllers
         private readonly DBcontext db;
         private readonly HttpClient httpClient;
 
-        public UserActionsController(DBcontext _db, HttpClient _httpClient)
+        public UserActionsController(DBcontext _db, IHttpClientFactory httpClientFactory)
         {
             db = _db;
-            httpClient = _httpClient;
+            httpClient = httpClientFactory.CreateClient();
         }
 
         [HttpPost("like")]
@@ -44,34 +44,38 @@ namespace UserActions.microservice.Controllers
                     await db.SaveChangesAsync();
 
 
-                    if (LikeAction != null)
-                    {
-                        //getting thread owner and Caster Details
-                        getThreadInfoResponseDTO thread = await httpClient.GetFromJsonAsync<getThreadInfoResponseDTO>("https://localhost:7202/api/v1/service/thread/thread/" + req.ThreadId);
-                        getUserInfoResponseDTO caster = await httpClient.GetFromJsonAsync<getUserInfoResponseDTO>("https://localhost:7202/api/v1/service/auth/user/" + req.UserId);
+                    /* if (LikeAction != null)
+                     {
+                         //getting thread owner and Caster Details
+                         getThreadInfoResponseDTO thread = await httpClient.GetFromJsonAsync<getThreadInfoResponseDTO>("https://localhost:7202/api/v1/service/thread/thread/" + req.ThreadId);
+                         getUserInfoResponseDTO caster = await httpClient.GetFromJsonAsync<getUserInfoResponseDTO>("https://localhost:7201/api/v1/service/auth/user/" + req.UserId);
 
 
-                        if (thread.Success == true && caster.Success == true)
-                        {
-                            var notificationData = JsonConvert.SerializeObject(
-                            new
-                            {
-                                Type = "LIKE",
-                                ReceiverId = thread.Data.AuthorId,
-                                CasterId = caster.Data.UserId,
-                                CasterUserName = caster.Data.UserName,
-                                CasterAvatarUrl = caster.Data.AvatarURL,
-                                HelperId = thread.Data.ThreadId
-                            });
+                         if (thread.Success == true && caster.Success == true)
+                         {
+                             var notificationData = JsonConvert.SerializeObject(
+                             new
+                             {
+                                 Type = "LIKE",
+                                 ReceiverId = thread.Data.AuthorId,
+                                 CasterId = caster.Data.UserId,
+                                 CasterUserName = caster.Data.UserName,
+                                 CasterAvatarUrl = caster.Data.AvatarURL,
+                                 HelperId = thread.Data.ThreadId
+                             });
 
-                            var content = new StringContent(notificationData.ToString(), Encoding.UTF8, "application/json");
-                            var res = httpClient.PostAsync("https://localhost:7204/api/v1/service/notification/sendnotif", content).Result;
-                        }
+                             var content = new StringContent(notificationData.ToString(), Encoding.UTF8, "application/json");
+                             var res = httpClient.PostAsync("https://localhost:7204/api/v1/service/notification/sendnotif", content).Result;
+                         }
+                     }*/
 
-                        response.Message = "Thread Liked";
-                        response.Success = true;
-                        return Ok(response);
-                    }
+                    ResponseDTO likemanage = await httpClient.GetFromJsonAsync<ResponseDTO>("https://localhost:7202/api/v1/service/thread/likecount/add/" + req.ThreadId);
+
+
+                    response.Message = "Thread Liked";
+                    response.Success = true;
+                    response.Data = likemanage;
+                    return Ok(response);
                 }
                 else
                 {
@@ -83,27 +87,30 @@ namespace UserActions.microservice.Controllers
                         db.Likes.Remove(disLikeAction);
                         db.SaveChanges();
 
-                        //getting thread owner and Caster Details
-                        getThreadInfoResponseDTO thread = await httpClient.GetFromJsonAsync<getThreadInfoResponseDTO>("https://localhost:7202/api/v1/service/thread/thread/" + req.ThreadId);
-                        getUserInfoResponseDTO caster = await httpClient.GetFromJsonAsync<getUserInfoResponseDTO>("https://localhost:7201/api/v1/service/auth/user/" + req.UserId);
+                        /*  //getting thread owner and Caster Details
+                          getThreadInfoResponseDTO thread = await httpClient.GetFromJsonAsync<getThreadInfoResponseDTO>("https://localhost:7202/api/v1/service/thread/thread/" + req.ThreadId);
+                          getUserInfoResponseDTO caster = await httpClient.GetFromJsonAsync<getUserInfoResponseDTO>("https://localhost:7201/api/v1/service/auth/user/" + req.UserId);
 
-                        if (thread.Success == true && caster.Success == true)
-                        {
-                            var notificationData = JsonConvert.SerializeObject(
-                            new
-                            {
-                                Type = "LIKE",
-                                ReceiverId = thread.Data.AuthorId,
-                                CasterId = caster.Data.UserId,
-                                HelperId = thread.Data.ThreadId
-                            });
+                          if (thread.Success == true && caster.Success == true)
+                          {
+                              var notificationData = JsonConvert.SerializeObject(
+                              new
+                              {
+                                  Type = "LIKE",
+                                  ReceiverId = thread.Data.AuthorId,
+                                  CasterId = caster.Data.UserId,
+                                  HelperId = thread.Data.ThreadId
+                              });
 
-                            var content = new StringContent(notificationData.ToString(), Encoding.UTF8, "application/json");
-                            var res = httpClient.PostAsync("https://localhost:7204/api/v1/service/notification/removenotif", content).Result;
-                        }
+                              var content = new StringContent(notificationData.ToString(), Encoding.UTF8, "application/json");
+                              var res = httpClient.PostAsync("https://localhost:7204/api/v1/service/notification/removenotif", content).Result;
+                          }*/
+                        ResponseDTO likemanage = await httpClient.GetFromJsonAsync<ResponseDTO>("https://localhost:7202/api/v1/service/thread/likecount/less/" + req.ThreadId);
 
                         response.Message = "Thread Disliked";
                         response.Success = true;
+                        response.Data = likemanage;
+
                         return Ok(response);
                     }
                 }

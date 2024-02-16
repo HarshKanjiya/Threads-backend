@@ -153,8 +153,8 @@ namespace Thread.microservice.Controller
             }
         }
 
-        [HttpGet("{ThreadId}")]
-        public async Task<ActionResult<ResponseDTO>> GetThread(Guid ThreadId)
+        [HttpGet("{UserId}/{ThreadId}")]
+        public async Task<ActionResult<ResponseDTO>> GetThread(Guid ThreadId, Guid UserId)
         {
             ResponseDTO response = new ResponseDTO();
             try
@@ -166,9 +166,41 @@ namespace Thread.microservice.Controller
 
                 if (thread != null)
                 {
+                    ThreadResponseDTO ThreadRes = new()
+                    {
+                        Content = thread.Content,
+                        AuthorId = thread.AuthorId,
+                        BanStatus = thread.BanStatus,
+                        CreatedAt = thread.CreatedAt,
+                        Likes = thread.Likes,
+                        ReferenceId = thread.ReferenceId,
+                        Replies = thread.Replies,
+                        ReplyAccess = thread.ReplyAccess,
+                        ThreadId = thread.ThreadId,
+                        Type = thread.Type,
+                    };
+
+                    if (UserId != null)
+                    {
+                        ResponseDTO res = await httpClient.GetFromJsonAsync<ResponseDTO>("https://localhost:7203/api/v1/service/action/like/" + UserId + "/" + ThreadId);
+
+                        if (res.Success)
+                        {
+                            if(res.Message == "notliked")
+                            {
+                                ThreadRes.LikedByMe = false;
+                            }
+                            else
+                            {
+                                ThreadRes.LikedByMe = true;
+                            }
+                        }
+
+                    }
+
                     response.Success = true;
                     response.Message = "Thread found";
-                    response.Data = thread;
+                    response.Data = ThreadRes;
                     return Ok(response);
                 }
                 response.Message = "Please try again.";
@@ -185,8 +217,8 @@ namespace Thread.microservice.Controller
             }
         }
 
-        [HttpGet("replies/{ThreadId}")]
-        public async Task<ActionResult<ResponseDTO>> GetThreadReplies(Guid ThreadId)
+        [HttpGet("replies/{UserId}/{ThreadId}")]
+        public async Task<ActionResult<ResponseDTO>> GetThreadReplies(Guid ThreadId,Guid UserId)
         {
             ResponseDTO response = new ResponseDTO();
             try
@@ -195,13 +227,52 @@ namespace Thread.microservice.Controller
                 var threads = db.Threads
                     .Include(t => t.Content).ThenInclude(t => t.Ratings)
                     .Include(t => t.Content).ThenInclude(t => t.Options)
-                    .Where(t => (t.ReferenceId == ThreadId.ToString()) && (t.Type == REPLY));
+                    .Where(t => (t.ReferenceId == ThreadId.ToString()) && (t.Type == REPLY))
+                    .ToList();
 
                 if (threads != null)
                 {
+                    List<ThreadResponseDTO> threadsRes = new List<ThreadResponseDTO>();
+                    foreach (var thread in threads)
+                    {
+                        ThreadResponseDTO temp = new()
+                        {
+                            Content = thread.Content,
+                            AuthorId = thread.AuthorId,
+                            BanStatus = thread.BanStatus,
+                            CreatedAt = thread.CreatedAt,
+                            Likes = thread.Likes,
+                            ReferenceId = thread.ReferenceId,
+                            Replies = thread.Replies,
+                            ReplyAccess = thread.ReplyAccess,
+                            ThreadId = thread.ThreadId,
+                            Type = thread.Type,
+                        };
+
+                        if (UserId != null)
+                        {
+                            ResponseDTO res = await httpClient.GetFromJsonAsync<ResponseDTO>("https://localhost:7203/api/v1/service/action/like/" + UserId + "/" + ThreadId);
+
+                            if (res.Success)
+                            {
+                                if (res.Message == "notliked")
+                                {
+                                    temp.LikedByMe = false;
+                                }
+                                else
+                                {
+                                    temp.LikedByMe = true;
+                                }
+                            }
+
+                        }
+
+                        threadsRes.Add(temp);
+                    }
+
                     response.Success = true;
                     response.Message = "Replies found";
-                    response.Data = threads;
+                    response.Data = threadsRes;
                     return Ok(response);
                 }
                 response.Message = "Please try again.";
@@ -306,8 +377,8 @@ namespace Thread.microservice.Controller
             }
         }
 
-        [HttpGet("user/{UserId}")]
-        public async Task<ActionResult<ResponseDTO>> GetUsersPosts(Guid UserId)
+        [HttpGet("user/{RequesterId}/{UserId}")]
+        public async Task<ActionResult<ResponseDTO>> GetUsersPosts(Guid RequesterId,Guid UserId)
         {
             ResponseDTO response = new ResponseDTO();
             try
@@ -332,9 +403,48 @@ namespace Thread.microservice.Controller
                 }
                 else
                 {
+
+                    List<ThreadResponseDTO> threadsRes = new List<ThreadResponseDTO>();
+                    foreach (var thread in threads)
+                    {
+                        ThreadResponseDTO temp = new()
+                        {
+                            Content = thread.Content,
+                            AuthorId = thread.AuthorId,
+                            BanStatus = thread.BanStatus,
+                            CreatedAt = thread.CreatedAt,
+                            Likes = thread.Likes,
+                            ReferenceId = thread.ReferenceId,
+                            Replies = thread.Replies,
+                            ReplyAccess = thread.ReplyAccess,
+                            ThreadId = thread.ThreadId,
+                            Type = thread.Type,
+                        };
+                        if (RequesterId != null)
+                        {
+                            ResponseDTO res = await httpClient.GetFromJsonAsync<ResponseDTO>("https://localhost:7203/api/v1/service/action/like/" + RequesterId + "/" + thread.ThreadId);
+
+                            if (res.Success)
+                            {
+                                if (res.Message == "notliked")
+                                {
+                                    temp.LikedByMe = false;
+                                }
+                                else
+                                {
+                                    temp.LikedByMe = true;
+                                }
+                            }
+
+                        }
+
+                        threadsRes.Add(temp);
+                    }
+
+
                     response.Success = true;
                     response.Message = "Threads found";
-                    response.Data = threads;
+                    response.Data = threadsRes;
                     return Ok(response);
                 }
 

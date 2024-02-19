@@ -8,7 +8,8 @@ using Notification.microservice.Models.DTOs;
 namespace Admin.microservice.Controllers
 {
     [Route("api/v1/admin/env")]
-    [ApiController, Authorize("ADMIN")]
+    [ApiController]
+/*     [Authorize("admin")]*/
     public class EnvVarController : ControllerBase
     {
         private readonly DBcontext db;

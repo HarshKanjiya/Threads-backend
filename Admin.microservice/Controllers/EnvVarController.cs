@@ -152,13 +152,13 @@ namespace Admin.microservice.Controllers
         }
 
 
-        [HttpDelete("{Key}")]
-        public async Task<ActionResult<ResponseDTO>> RemoveEnvVar(string Key)
+        [HttpDelete("{VarId}")]
+        public async Task<ActionResult<ResponseDTO>> RemoveEnvVar(Guid VarId)
         {
             ResponseDTO response = new ResponseDTO();
             try
             {
-                var Variable = db.EnvironmentVariables.FirstOrDefault(x => x.Key == Key);
+                var Variable = db.EnvironmentVariables.FirstOrDefault(x => x.VarId == VarId);
                 if (Variable != null)
                 {
                     db.EnvironmentVariables.Remove(Variable);

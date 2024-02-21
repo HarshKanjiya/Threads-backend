@@ -43,10 +43,19 @@ namespace Notification.microservice.Models.DTOs
     }
 
 
-    public class AddUpdateEnvVarRequestDTO
+    public class AddEnvVarRequestDTO
     {
         public required string Key { get; set; }
         public required string Value { get; set; }
+        public bool SecretKey { get; set; }
+    }
+
+    public class UpdateEnvVarRequestDTO
+    {
+        public required Guid VarId { get; set; }
+        public required string Key { get; set; }
+        public required string Value { get; set; }
+        public bool SecretKey { get; set; }
     }
 
 }

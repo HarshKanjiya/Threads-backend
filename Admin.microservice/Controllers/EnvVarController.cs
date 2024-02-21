@@ -9,7 +9,7 @@ namespace Admin.microservice.Controllers
 {
     [Route("api/v1/admin/env")]
     [ApiController]
-/*     [Authorize("admin")]*/
+    /*     [Authorize("admin")]*/
     public class EnvVarController : ControllerBase
     {
         private readonly DBcontext db;
@@ -18,7 +18,7 @@ namespace Admin.microservice.Controllers
             db = _db;
         }
         [HttpPost]
-        public async Task<ActionResult<ResponseDTO>> AddUpdateEnvVar(AddUpdateEnvVarRequestDTO req)
+        public async Task<ActionResult<ResponseDTO>> AddEnvVar(AddEnvVarRequestDTO req)
         {
             ResponseDTO response = new ResponseDTO();
             try
@@ -26,17 +26,13 @@ namespace Admin.microservice.Controllers
                 var existing = db.EnvironmentVariables.FirstOrDefault(var => var.Key == req.Key);
                 if (existing != null)
                 {
-                    existing.Value = req.Value;
-                    db.SaveChanges();
 
-                    response.Message = "Key Updated Successfully";
-                    response.Success = true;
-                    response.Data = existing;
-
+                    response.Message = "Key already exists";
+                    response.Success = false;
                 }
                 else
                 {
-                    EnvVarModel newVarData = new EnvVarModel() { Value = req.Value, Key = req.Key };
+                    EnvVarModel newVarData = new EnvVarModel() { Value = req.Value, Key = req.Key, SecretKey = req.SecretKey };
                     var newVar = await db.EnvironmentVariables.AddAsync(newVarData);
                     await db.SaveChangesAsync();
 
@@ -62,6 +58,38 @@ namespace Admin.microservice.Controllers
             }
         }
 
+        [HttpPost("new")]
+        public async Task<ActionResult<ResponseDTO>> UpdateEnvVar(UpdateEnvVarRequestDTO req)
+        {
+            ResponseDTO response = new ResponseDTO();
+            try
+            {
+                var existing = db.EnvironmentVariables.FirstOrDefault(var => var.VarId == req.VarId);
+                if (existing == null)
+                {
+                    response.Message = "Variable doesnot Exist";
+                    response.Success = false;
+                }
+
+                existing.Value = req.Value;
+                existing.Key = req.Key;
+                existing.SecretKey = req.SecretKey;
+                db.SaveChanges();
+
+                response.Success = true;
+                response.Message = "Variable Updated";
+                response.Data = existing;
+
+                return (response);
+            }
+            catch (Exception e)
+            {
+                response.Message = "Internal server error : Admin";
+                response.Success = false;
+                return BadRequest(response);
+            }
+        }
+
         [HttpGet]
         public async Task<ActionResult<ResponseDTO>> GetAllEnvVar()
         {
@@ -69,6 +97,18 @@ namespace Admin.microservice.Controllers
             try
             {
                 var variables = db.EnvironmentVariables.ToList();
+
+                /*                var secrets =new()["STRIPE_SECRET", "JWT_SECRET", "CLOUDINARY_SECRET"];
+                */
+
+                foreach (var variable in variables)
+                {
+                    if (string.Equals(variable.Key, "STRIPE_SECRET") || string.Equals(variable.Key, "CLOUDINARY_SECRET") || string.Equals(variable.Key, "JWT_SECRET"))
+                    {
+                        variable.Value = "";
+                    }
+                }
+
                 response.Success = true;
                 response.Message = "Variables Fetched";
                 response.Data = variables;

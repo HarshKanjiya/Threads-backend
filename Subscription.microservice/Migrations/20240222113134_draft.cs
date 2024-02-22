@@ -2,17 +2,17 @@
 
 #nullable disable
 
-namespace Admin.microservice.Migrations
+namespace Subscription.microservice.Migrations
 {
     /// <inheritdoc />
-    public partial class qwwqwqqw : Migration
+    public partial class draft : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<bool>(
-                name: "SecretKey",
-                table: "EnvironmentVariables",
+                name: "Published",
+                table: "Packages",
                 type: "bit",
                 nullable: false,
                 defaultValue: false);
@@ -22,8 +22,8 @@ namespace Admin.microservice.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "SecretKey",
-                table: "EnvironmentVariables");
+                name: "Published",
+                table: "Packages");
         }
     }
 }

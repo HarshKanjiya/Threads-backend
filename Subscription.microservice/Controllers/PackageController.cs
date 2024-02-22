@@ -23,7 +23,7 @@ namespace Subscription.microservice.Controllers
 
             try
             {
-                var packages = db.Packages.Where(p => p.Active == true).ToList();
+                var packages = db.Packages.Where(p => p.Published == true).ToList();
 
                 if (packages != null)
                 {

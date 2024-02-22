@@ -12,8 +12,9 @@ namespace Admin.microservice.Model
     public class ReportModel
     {
         [Key] public Guid ReportId { get; set; }
-        public Guid CategoryId { get; set; }
+        public Guid ReportCategoryId { get; set; }
         public string Text { get; set; }
+        public List<UserReportModel> UserReports { get; set; }
     }
     public class CustomReportModel
     {
@@ -27,8 +28,8 @@ namespace Admin.microservice.Model
 
     public class BugReportModel
     {
-        public Guid UserId { get; set; }
         [Key] public Guid ReportId { get; set; }
+        public Guid UserId { get; set; }
         public string? Text { get; set; } = string.Empty;
         public List<FilesModel>? Files { get; set; }
     }

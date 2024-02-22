@@ -1,14 +1,16 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.OpenApi.Any;
 using Subscription.microservice.data;
 using Subscription.microservice.Models;
 using Subscription.microservice.Models.DTOs;
 
 namespace Subscription.microservice.Controllers
 {
-    [Route("api/v1/package/admin")]
-    [ApiController, Authorize("ADMIN")]
+    [Route("api/v1/packages/admin")]
+    [ApiController]
+    /*    [Authorize("ADMIN")]*/
     public class AdminOperationController : ControllerBase
     {
         private readonly DBcontext db;
@@ -18,28 +20,86 @@ namespace Subscription.microservice.Controllers
         }
 
         // FOR ADMIN
-        [HttpGet]
-        public async Task<ActionResult<ResponseDTO>> getAllPackages()
+        [HttpGet("all/{type}")]
+        public async Task<ActionResult<ResponseDTO>> getAllPackages(string type)
         {
             ResponseDTO response = new ResponseDTO();
 
             try
             {
-                var packages = db.Packages.ToList();
+                if (type == "active")
+                {
+                    var packages = db.Packages.Where(t => t.Published == true).ToList();
+                    if (packages != null)
+                    {
+                        response.Message = "Packages Fetched";
+                        response.Success = true;
+                        response.Data = packages;
+                        return Ok(response);
+                    }
+                    else
+                    {
+                        response.Message = "Packages not found";
+                        response.Success = false;
+                        return Ok(response);
+                    }
+                }
+                if (type == "inactive")
+                {
+                    var packages = db.Packages.Where(t => t.Active == false).ToList();
+                    if (packages != null)
+                    {
+                        response.Message = "Packages Fetched";
+                        response.Success = true;
+                        response.Data = packages;
+                        return Ok(response);
+                    }
+                    else
+                    {
+                        response.Message = "Packages not found";
+                        response.Success = false;
+                        return Ok(response);
+                    }
+                }
+                if (type == "draft")
+                {
+                    var packages = db.Packages.Where(t => t.Published == false && t.Active == true).ToList();
+                    if (packages != null)
+                    {
+                        response.Message = "Packages Fetched";
+                        response.Success = true;
+                        response.Data = packages;
+                        return Ok(response);
+                    }
+                    else
+                    {
+                        response.Message = "Packages not found";
+                        response.Success = false;
+                        return Ok(response);
+                    }
+                }
+                if (type == "all")
+                {
+                    var packages = db.Packages.ToList();
+                    if (packages != null)
+                    {
+                        response.Message = "Packages Fetched";
+                        response.Success = true;
+                        response.Data = packages;
+                        return Ok(response);
+                    }
+                    else
+                    {
+                        response.Message = "Packages not found";
+                        response.Success = false;
+                        return Ok(response);
+                    }
+                }
 
-                if (packages != null)
-                {
-                    response.Message = "Packages Fetched";
-                    response.Success = true;
-                    response.Data = packages;
-                    return Ok(response);
-                }
-                else
-                {
-                    response.Message = "Packages not found";
-                    response.Success = false;
-                    return Ok(response);
-                }
+
+                response.Message = "Packages not found";
+                response.Success = false;
+                return Ok(response);
 
             }
             catch (Exception e)

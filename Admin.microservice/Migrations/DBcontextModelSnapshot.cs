@@ -106,7 +106,7 @@ namespace Admin.microservice.Migrations
 
                     b.HasIndex("BugReportModelReportId");
 
-                    b.ToTable("FilesModel");
+                    b.ToTable("BugProofs");
                 });
 
             modelBuilder.Entity("Admin.microservice.Model.ReportCategoryModel", b =>
@@ -130,7 +130,7 @@ namespace Admin.microservice.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("CategoryId")
+                    b.Property<Guid>("ReportCategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("ReportCategoryModelReportCategoryId")
@@ -159,6 +159,9 @@ namespace Admin.microservice.Migrations
                     b.Property<Guid>("ReportId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("ReportModelReportId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -167,6 +170,8 @@ namespace Admin.microservice.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UserReportId");
+
+                    b.HasIndex("ReportModelReportId");
 
                     b.ToTable("UserReports");
                 });
@@ -185,6 +190,13 @@ namespace Admin.microservice.Migrations
                         .HasForeignKey("ReportCategoryModelReportCategoryId");
                 });
 
+            modelBuilder.Entity("Admin.microservice.Model.UserReportModel", b =>
+                {
+                    b.HasOne("Admin.microservice.Model.ReportModel", null)
+                        .WithMany("UserReports")
+                        .HasForeignKey("ReportModelReportId");
+                });
+
             modelBuilder.Entity("Admin.microservice.Model.BugReportModel", b =>
                 {
                     b.Navigation("Files");
@@ -193,6 +205,11 @@ namespace Admin.microservice.Migrations
             modelBuilder.Entity("Admin.microservice.Model.ReportCategoryModel", b =>
                 {
                     b.Navigation("Reports");
+                });
+
+            modelBuilder.Entity("Admin.microservice.Model.ReportModel", b =>
+                {
+                    b.Navigation("UserReports");
                 });
 #pragma warning restore 612, 618
         }

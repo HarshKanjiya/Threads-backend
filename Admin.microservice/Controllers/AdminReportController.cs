@@ -58,7 +58,7 @@ namespace Admin.microservice.Controllers
                 ReportModel report = new ReportModel()
                 {
                     Text = req.text,
-                    CategoryId = req.CategoryId
+                    ReportCategoryId = req.CategoryId
                 };
                 var category = await db.AvailableReports.AddAsync(report);
                 db.SaveChangesAsync();

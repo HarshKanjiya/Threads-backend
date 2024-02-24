@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Thread.microservice\\Thread.microservice.csproj": {}
+    "D:\\projects\\side\\thread\\backend\\Thread.microservice\\Thread.microservice.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj": {
+    "D:\\projects\\side\\thread\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj",
+        "projectUniqueName": "D:\\projects\\side\\thread\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj",
         "projectName": "UserAuthenticationManager",
-        "projectPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\JwtAuthenticationManager\\obj\\",
+        "projectPath": "D:\\projects\\side\\thread\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj",
+        "packagesPath": "C:\\Users\\asus\\.nuget\\packages\\",
+        "outputPath": "D:\\projects\\side\\thread\\backend\\JwtAuthenticationManager\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -34,6 +34,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -77,21 +82,21 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Thread.microservice\\Thread.microservice.csproj": {
+    "D:\\projects\\side\\thread\\backend\\Thread.microservice\\Thread.microservice.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Thread.microservice\\Thread.microservice.csproj",
+        "projectUniqueName": "D:\\projects\\side\\thread\\backend\\Thread.microservice\\Thread.microservice.csproj",
         "projectName": "Thread.microservice",
-        "projectPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Thread.microservice\\Thread.microservice.csproj",
-        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Thread.microservice\\obj\\",
+        "projectPath": "D:\\projects\\side\\thread\\backend\\Thread.microservice\\Thread.microservice.csproj",
+        "packagesPath": "C:\\Users\\asus\\.nuget\\packages\\",
+        "outputPath": "D:\\projects\\side\\thread\\backend\\Thread.microservice\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -105,8 +110,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj": {
-                "projectPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj"
+              "D:\\projects\\side\\thread\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj": {
+                "projectPath": "D:\\projects\\side\\thread\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj"
               }
             }
           }
@@ -115,6 +120,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -175,7 +185,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

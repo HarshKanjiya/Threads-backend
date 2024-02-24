@@ -54,4 +54,9 @@ namespace UserApi.microservice.Models.DTOs
         public string? NewPassword { get; set; }
         public string? ConfirmPassword { get; set; }
     }
+
+    public class SearchReqDTO
+    {
+        public string? UserName { get; set; } = "";
+    }
 }

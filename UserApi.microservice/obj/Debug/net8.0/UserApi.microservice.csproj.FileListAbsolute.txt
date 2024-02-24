@@ -284,7 +284,6 @@ D:\projects\side\thread\backend\UserApi.microservice\obj\Debug\net8.0\staticweba
 D:\projects\side\thread\backend\UserApi.microservice\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.UserApi.microservice.props
 D:\projects\side\thread\backend\UserApi.microservice\obj\Debug\net8.0\staticwebassets.pack.json
 D:\projects\side\thread\backend\UserApi.microservice\obj\Debug\net8.0\scopedcss\bundle\UserApi.microservice.styles.css
-D:\projects\side\thread\backend\UserApi.microservice\obj\Debug\net8.0\UserApi.microservice.csproj.CopyComplete
 D:\projects\side\thread\backend\UserApi.microservice\obj\Debug\net8.0\UserApi.microservice.dll
 D:\projects\side\thread\backend\UserApi.microservice\obj\Debug\net8.0\refint\UserApi.microservice.dll
 D:\projects\side\thread\backend\UserApi.microservice\obj\Debug\net8.0\UserApi.microservice.pdb
@@ -298,3 +297,4 @@ D:\projects\side\thread\backend\UserApi.microservice\bin\Debug\net8.0\libman.jso
 D:\projects\side\thread\backend\UserApi.microservice\bin\Debug\net8.0\UAParser.dll
 D:\projects\side\thread\backend\UserApi.microservice\bin\Debug\net8.0\UserAuthenticationManager.dll
 D:\projects\side\thread\backend\UserApi.microservice\bin\Debug\net8.0\UserAuthenticationManager.pdb
+D:\projects\side\thread\backend\UserApi.microservice\obj\Debug\net8.0\UserApi..5761F527.Up2Date

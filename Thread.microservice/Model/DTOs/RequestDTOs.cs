@@ -6,7 +6,7 @@ namespace UserApi.microservice.Models.DTOs
     public class CreateRequestDTO
     {
 
-        public Guid UserId { get; set; }
+        public Guid AuthorId { get; set; }
         public string Type { get; set; } = "PARENT";
         public string? ReferenceId { get; set; }
         public string ReplyAccess { get; set; } = "ANY";

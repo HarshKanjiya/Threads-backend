@@ -41,9 +41,8 @@
       "UpstreamHttpMethod": [ "Post" ],
       "SwaggerKey": "Auth"
     },
-
     {
-      "DownstreamPathTemplate": "/api/v1/thread/{everything}",
+      "DownstreamPathTemplate": "/api/v1/thread",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -51,7 +50,7 @@
           "Port": 7202
         }
       ],
-      "UpstreamPathTemplate": "/api/otp/thread/{everything}",
+      "UpstreamPathTemplate": "/api/thread",
       "UpstreamHttpMethod": [ "Get", "Put", "Post", "Delete" ],
       "SwaggerKey": "Thread"
     },

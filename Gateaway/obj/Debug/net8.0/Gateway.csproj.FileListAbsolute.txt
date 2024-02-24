@@ -302,9 +302,9 @@ D:\projects\side\thread\backend\Gateaway\obj\Debug\net8.0\staticwebassets\msbuil
 D:\projects\side\thread\backend\Gateaway\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Gateway.props
 D:\projects\side\thread\backend\Gateaway\obj\Debug\net8.0\staticwebassets.pack.json
 D:\projects\side\thread\backend\Gateaway\obj\Debug\net8.0\scopedcss\bundle\Gateway.styles.css
-D:\projects\side\thread\backend\Gateaway\obj\Debug\net8.0\Gateway.csproj.CopyComplete
 D:\projects\side\thread\backend\Gateaway\obj\Debug\net8.0\Gateway.dll
 D:\projects\side\thread\backend\Gateaway\obj\Debug\net8.0\refint\Gateway.dll
 D:\projects\side\thread\backend\Gateaway\obj\Debug\net8.0\Gateway.pdb
 D:\projects\side\thread\backend\Gateaway\obj\Debug\net8.0\Gateway.genruntimeconfig.cache
 D:\projects\side\thread\backend\Gateaway\obj\Debug\net8.0\ref\Gateway.dll
+D:\projects\side\thread\backend\Gateaway\obj\Debug\net8.0\Gateway.csproj.Up2Date

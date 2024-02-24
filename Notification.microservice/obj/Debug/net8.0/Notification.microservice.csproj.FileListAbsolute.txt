@@ -268,7 +268,6 @@ D:\projects\side\thread\backend\Notification.microservice\obj\Debug\net8.0\stati
 D:\projects\side\thread\backend\Notification.microservice\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Notification.microservice.props
 D:\projects\side\thread\backend\Notification.microservice\obj\Debug\net8.0\staticwebassets.pack.json
 D:\projects\side\thread\backend\Notification.microservice\obj\Debug\net8.0\scopedcss\bundle\Notification.microservice.styles.css
-D:\projects\side\thread\backend\Notification.microservice\obj\Debug\net8.0\Notification.microservice.csproj.CopyComplete
 D:\projects\side\thread\backend\Notification.microservice\obj\Debug\net8.0\Notification.microservice.dll
 D:\projects\side\thread\backend\Notification.microservice\obj\Debug\net8.0\refint\Notification.microservice.dll
 D:\projects\side\thread\backend\Notification.microservice\obj\Debug\net8.0\Notification.microservice.pdb
@@ -280,3 +279,4 @@ C:\Users\Admin\Desktop\demo\threads\backend\Notification.microservice\bin\Debug\
 D:\projects\side\thread\backend\Notification.microservice\bin\Debug\net8.0\Newtonsoft.Json.dll
 D:\projects\side\thread\backend\Notification.microservice\bin\Debug\net8.0\UserAuthenticationManager.dll
 D:\projects\side\thread\backend\Notification.microservice\bin\Debug\net8.0\UserAuthenticationManager.pdb
+D:\projects\side\thread\backend\Notification.microservice\obj\Debug\net8.0\Notifica.493F4479.Up2Date

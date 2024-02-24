@@ -95,7 +95,7 @@ namespace Thread.microservice.Controller
 
                 ThreadModel newThreadData = new()
                 {
-                    AuthorId = req.UserId,
+                    AuthorId = req.AuthorId,
                     ReplyAccess = req.ReplyAccess,
                     Type = req.Type,
                     Content = newContent
@@ -122,7 +122,7 @@ namespace Thread.microservice.Controller
                 var dataForAuthApi = JsonConvert.SerializeObject(
                     new
                     {
-                        UserId = req.UserId,
+                        UserId = req.AuthorId,
                         message = "ADD_THREAD"
                     });
 
@@ -298,9 +298,11 @@ namespace Thread.microservice.Controller
                 string REPLY = "REPLY";
 
                 var threads = db.Threads
-                    .Include(t => t.Content).ThenInclude(t => t.Ratings)
+                    .OrderByDescending(t => t.CreatedAt)
                     .Include(t => t.Content).ThenInclude(t => t.Options)
-                    .Where(t => (t.Type != REPLY));
+                    .Include(t => t.Content).ThenInclude(t => t.Ratings)
+                    .Where(t => (t.Type != REPLY))
+                    .ToList();
 
                 if (threads != null)
                 {

@@ -462,6 +462,8 @@ namespace UserApi.microservice.Controllers
             }
         }
 
+
+
         [HttpPut("user/{UserId}"), Authorize]
         public async Task<ActionResult<ResponseDTO>> UpdateProfile(Guid UserId, UpdateProfileRequestDTO req)
         {
@@ -821,6 +823,64 @@ namespace UserApi.microservice.Controllers
             }
         }
 
+        
+
+        [HttpPost("search"), AllowAnonymous]
+        public async Task<ActionResult<ResponseDTO>> searchUser([FromBody] SearchReqDTO req)
+        {
+            ResponseDTO responseDTO = new ResponseDTO();
+            try
+            {
+                if(req.UserName.Length > 0)
+                {
+                    var users = db.Users.Where(user => user.UserName.Contains(req.UserName) || user.Name.Contains(req.UserName)).ToList();
+                    //var users = db.Users.ToList();
+                    if (users != null)
+                    {
+                        responseDTO.Message = "users found.";
+                        responseDTO.Success = true;
+                        responseDTO.Data = users;
+                        return Ok(responseDTO);
+
+                    }
+                    else
+                    {
+                        responseDTO.Message = "users not found.";
+                        responseDTO.Success = false;
+
+                        return BadRequest(responseDTO);
+                    }
+                }
+                else
+                {
+                    //var users = db.Users.Where(user => user.UserName.Contains(req.UserName) || user.Name.Contains(req.UserName)).ToList();
+                    var users = db.Users.ToList();
+                    if (users != null)
+                    {
+                        responseDTO.Message = "users found.";
+                        responseDTO.Success = true;
+                        responseDTO.Data = users;
+                        return Ok(responseDTO);
+
+                    }
+                    else
+                    {
+                        responseDTO.Message = "users not found.";
+                        responseDTO.Success = false;
+
+                        return BadRequest(responseDTO);
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                responseDTO.Message = "Something went wrong";
+                responseDTO.Success = false;
+                return BadRequest(responseDTO);
+
+
+            }
+        }
 
 
         // :: FOR RANDOM STRING ::

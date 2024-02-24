@@ -276,9 +276,9 @@ D:\projects\side\thread\backend\Admin.microservice\obj\Debug\net8.0\staticwebass
 D:\projects\side\thread\backend\Admin.microservice\obj\Debug\net8.0\staticwebassets\msbuild.buildTransitive.Admin.microservice.props
 D:\projects\side\thread\backend\Admin.microservice\obj\Debug\net8.0\staticwebassets.pack.json
 D:\projects\side\thread\backend\Admin.microservice\obj\Debug\net8.0\scopedcss\bundle\Admin.microservice.styles.css
-D:\projects\side\thread\backend\Admin.microservice\obj\Debug\net8.0\Admin.microservice.csproj.CopyComplete
 D:\projects\side\thread\backend\Admin.microservice\obj\Debug\net8.0\Admin.microservice.dll
 D:\projects\side\thread\backend\Admin.microservice\obj\Debug\net8.0\refint\Admin.microservice.dll
 D:\projects\side\thread\backend\Admin.microservice\obj\Debug\net8.0\Admin.microservice.pdb
 D:\projects\side\thread\backend\Admin.microservice\obj\Debug\net8.0\Admin.microservice.genruntimeconfig.cache
 D:\projects\side\thread\backend\Admin.microservice\obj\Debug\net8.0\ref\Admin.microservice.dll
+D:\projects\side\thread\backend\Admin.microservice\obj\Debug\net8.0\Admin.mi.8822120D.Up2Date

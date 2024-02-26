@@ -9,7 +9,7 @@ namespace Notification.microservice.Models.DTOs
         public required Guid CasterId { get; set; }
         public required string CasterUserName { get; set; }
         public required string CasterAvatarUrl { get; set; }
-        public Guid? HelperId { get; set; }
+        public string? HelperId { get; set; }
 
     }
     public class RemoveNotifDTO
@@ -17,6 +17,6 @@ namespace Notification.microservice.Models.DTOs
         public required string Type { get; set; } // FOLLOWER, REPLY, MENTIONED, REPOST, QUOTED
         public required Guid ReceiverId { get; set; }
         public required Guid CasterId { get; set; }
-        public Guid? HelperId { get; set; }
+        public string? HelperId { get; set; }
     }
 }

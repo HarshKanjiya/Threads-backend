@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "D:\\projects\\side\\thread\\backend\\Gateaway\\Gateway.csproj": {}
+    "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Gateaway\\Gateway.csproj": {}
   },
   "projects": {
-    "D:\\projects\\side\\thread\\backend\\Gateaway\\Gateway.csproj": {
+    "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Gateaway\\Gateway.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\projects\\side\\thread\\backend\\Gateaway\\Gateway.csproj",
+        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Gateaway\\Gateway.csproj",
         "projectName": "Gateway",
-        "projectPath": "D:\\projects\\side\\thread\\backend\\Gateaway\\Gateway.csproj",
-        "packagesPath": "C:\\Users\\asus\\.nuget\\packages\\",
-        "outputPath": "D:\\projects\\side\\thread\\backend\\Gateaway\\obj\\",
+        "projectPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Gateaway\\Gateway.csproj",
+        "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Gateaway\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -34,11 +34,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -107,7 +102,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Notification.microservice.data;
 using Notification.microservice.Model;
 using Notification.microservice.Models.DTOs;
@@ -6,7 +7,7 @@ using Notification.microservice.Models.DTOs;
 namespace Notification.microservice.Controllers
 {
 
-    [ApiController]
+    [ApiController,AllowAnonymous]
     [Route("api/v1/service/notification")]
     public class ServiceCommunication : ControllerBase
     {
@@ -29,6 +30,7 @@ namespace Notification.microservice.Controllers
                     CasterAvatarUrl = req.CasterAvatarUrl,
                     CasterUserName = req.CasterUserName,
                     ReceiverId = req.ReceiverId,
+                    HelperId = req.HelperId,
                     Type = req.Type,
                 };
 

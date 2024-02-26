@@ -12,8 +12,8 @@ using Thread.Data;
 namespace Thread.microservice.Migrations
 {
     [DbContext(typeof(DBcontext))]
-    [Migration("20240126114144_ewew")]
-    partial class ewew
+    [Migration("20240226091324_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -35,7 +35,12 @@ namespace Thread.microservice.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("FilePublicIDs")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Files")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("RatingsId")
@@ -73,7 +78,7 @@ namespace Thread.microservice.Migrations
 
                     b.HasIndex("ThreadContentContentId");
 
-                    b.ToTable("ThreadContentOptions");
+                    b.ToTable("Options");
                 });
 
             modelBuilder.Entity("Thread.Model.ThreadContentRatings", b =>
@@ -91,7 +96,7 @@ namespace Thread.microservice.Migrations
 
                     b.HasKey("RatingsId");
 
-                    b.ToTable("ThreadContentRatings");
+                    b.ToTable("Ratings");
                 });
 
             modelBuilder.Entity("Thread.Model.ThreadModel", b =>
@@ -100,15 +105,39 @@ namespace Thread.microservice.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("AuthorId")
+                    b.Property<string>("AuthorAvatarURL")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("AuthorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("AuthorName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AuthorUserName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("BanStatus")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("ContentId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Likes")
+                        .HasColumnType("int");
+
                     b.Property<string>("ReferenceId")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Replies")
+                        .HasColumnType("int");
 
                     b.Property<string>("ReplyAccess")
                         .IsRequired()
@@ -125,22 +154,41 @@ namespace Thread.microservice.Migrations
                     b.ToTable("Threads");
                 });
 
+            modelBuilder.Entity("Thread.microservice.Model.Hashtags", b =>
+                {
+                    b.Property<int>("TagId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TagId"));
+
+                    b.Property<string>("TagName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Threads")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("TagId");
+
+                    b.ToTable("Tags");
+                });
+
             modelBuilder.Entity("Thread.microservice.Model.PollResponseModel", b =>
                 {
                     b.Property<Guid>("PollResponseId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("Selection")
-                        .HasColumnType("int");
+                    b.Property<Guid>("OptionId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("ThreadId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("ThreadId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("UserId")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("PollResponseId");
 

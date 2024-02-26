@@ -98,7 +98,10 @@ namespace Thread.microservice.Controller
                     AuthorId = req.AuthorId,
                     ReplyAccess = req.ReplyAccess,
                     Type = req.Type,
-                    Content = newContent
+                    Content = newContent,
+                    AuthorAvatarURL = req.AuthorAvatarURL,
+                    AuthorName = req.AuthorName,
+                    AuthorUserName = req.AuthorUserName
                 };
 
                 if (req.Type != "PARENT")
@@ -109,6 +112,65 @@ namespace Thread.microservice.Controller
                 var thread = await db.Threads.AddAsync(newThreadData);
                 await db.SaveChangesAsync();
 
+                if (thread.Entity == null)
+                {
+                    response.Message = "Please try again";
+                    response.Success = false;
+                    return Ok(response);
+                }
+
+                if (req.Child.Count > 0)
+                {
+                    foreach (var child in req.Child)
+                    {
+
+                        ThreadContent childContent = new ThreadContent()
+                        {
+                            Text = child.Content.Text,
+                            ContentType = req.Content.ContentType
+                        };
+
+                        if (req.Content.ContentType == "POLL")
+                        {
+                            newContent.Options = req.Content?.Options?.Select(opt => new ThreadContentOptions()
+                            {
+                                Option = opt.Option,
+                                Value = opt.Value
+                            }).ToList();
+
+
+                            if (req.Content?.Options?.Count != 0)
+                            {
+                                var _temp = new List<int>();
+                                foreach (var item in req.Content.Options)
+                                {
+                                    _temp.Add(0);
+                                }
+                                newContent.Ratings = new ThreadContentRatings()
+                                {
+                                    TotalResponse = 0,
+                                    Responses = _temp
+                                };
+                            }
+                        }
+
+                        ThreadModel childData = new()
+                        {
+                            AuthorAvatarURL = req.AuthorAvatarURL,
+                            AuthorId = req.AuthorId,
+                            AuthorName = req.AuthorName,
+                            AuthorUserName = req.AuthorUserName,
+                            ReplyAccess = "ANY",
+                            Type = "REPLY",
+                            ReferenceId = thread.Entity.ThreadId.ToString(),
+                            Content = childContent
+                        };
+
+                        db.Threads.Add(childData);
+                    }
+                }
+
+
                 if (req.Type == "REPLY")
                 {
                     var replyUpdate = db.Threads.FirstOrDefault(t => t.ThreadId.ToString() == req.ReferenceId);
@@ -117,6 +179,19 @@ namespace Thread.microservice.Controller
                         replyUpdate.Replies += 1;
                         db.SaveChanges();
                     }
+
+                    SendNotifDTO notifData = new()
+                    {
+                        CasterAvatarUrl = req.AuthorAvatarURL,
+                        CasterId = req.AuthorId,
+                        CasterUserName = req.AuthorUserName,
+                        ReceiverId = replyUpdate.AuthorId,
+                        Type = "REPLY",
+                        HelperId = req.ReferenceId
+                    };
+
+                    var notifContent = new StringContent(notifData.ToString(), Encoding.UTF8, "application/json");
+                    var notifRes = httpClient.PostAsJsonAsync("https://localhost:7204/api/v1/service/notification/sendNotif", notifData).Result;
                 }
 
                 var dataForAuthApi = JsonConvert.SerializeObject(
@@ -128,6 +203,7 @@ namespace Thread.microservice.Controller
 
                 var content = new StringContent(dataForAuthApi.ToString(), Encoding.UTF8, "application/json");
                 var res = httpClient.PutAsync("https://localhost:7201/api/v1/service/auth/usercounts", content).Result;
+
 
 
                 if (thread.Entity != null)
@@ -186,7 +262,7 @@ namespace Thread.microservice.Controller
 
                         if (res.Success)
                         {
-                            if(res.Message == "notliked")
+                            if (res.Message == "notliked")
                             {
                                 ThreadRes.LikedByMe = false;
                             }
@@ -218,7 +294,7 @@ namespace Thread.microservice.Controller
         }
 
         [HttpGet("replies/{UserId}/{ThreadId}")]
-        public async Task<ActionResult<ResponseDTO>> GetThreadReplies(Guid ThreadId,Guid UserId)
+        public async Task<ActionResult<ResponseDTO>> GetThreadReplies(Guid ThreadId, Guid UserId)
         {
             ResponseDTO response = new ResponseDTO();
             try
@@ -380,7 +456,7 @@ namespace Thread.microservice.Controller
         }
 
         [HttpGet("user/{RequesterId}/{UserId}")]
-        public async Task<ActionResult<ResponseDTO>> GetUsersPosts(Guid RequesterId,Guid UserId)
+        public async Task<ActionResult<ResponseDTO>> GetUsersPosts(Guid RequesterId, Guid UserId)
         {
             ResponseDTO response = new ResponseDTO();
             try

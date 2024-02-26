@@ -61,9 +61,9 @@ namespace Subscription.microservice.Controllers
                         return Ok(response);
                     }
                 }
-                if (type == "draft")
+                if (type == "drafts")
                 {
-                    var packages = db.Packages.Where(t => t.Published == false && t.Active == true).ToList();
+                    var packages = db.Packages.Where(t => t.Active == true && t.Published == false).ToList();
                     if (packages != null)
                     {
                         response.Message = "Packages Fetched";
@@ -97,7 +97,7 @@ namespace Subscription.microservice.Controllers
                 }
 
 
-                response.Message = "Packages not found";
+                response.Message = "Invalid type";
                 response.Success = false;
                 return Ok(response);
 

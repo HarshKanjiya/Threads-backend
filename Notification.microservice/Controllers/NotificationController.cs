@@ -8,7 +8,7 @@ using Notification.microservice.Models.DTOs;
 namespace Notification.microservice.Controllers
 {
     [Route("api/v1/notification")]
-    [ApiController, Authorize]
+    [ApiController]
     public class NotificationController : ControllerBase
     {
         private readonly DBcontext db;
@@ -20,18 +20,34 @@ namespace Notification.microservice.Controllers
 
 
         // FOR END USER
-        [HttpGet("getall/{UserId}")]
-        public async Task<ActionResult<ResponseDTO>> GetMyNotifications(Guid UserId)
+        [HttpGet("getall/{UserId}/{type}")]
+        public async Task<ActionResult<ResponseDTO>> GetMyNotifications(Guid UserId,string type)
         {
             ResponseDTO response = new ResponseDTO();
             try
             {
-                var notifications = db.Notifications.Where(n => n.ReceiverId == UserId).ToList();
+                if (type == "ALL")
+                {
+                    var notifications = db.Notifications
+                        .Where(n => n.ReceiverId == UserId)
+                        .OrderByDescending(x => x.CreatedAt)
+                        .ToList();
 
-                response.Success = true;
-                response.Message = "Notifications Sent";
-                response.Data = notifications;
-                return Ok(response);
+
+                    response.Success = true;
+                    response.Message = "Notifications found";
+                    response.Data = notifications;
+                    return Ok(response);
+                }
+                else
+                {
+                    var notifications = db.Notifications.Where(n => n.ReceiverId == UserId && n.Type == type).ToList();
+
+                    response.Success = true;
+                    response.Message = "Notifications found";
+                    response.Data = notifications;
+                    return Ok(response);
+                }
             }
             catch (Exception ex)
             {

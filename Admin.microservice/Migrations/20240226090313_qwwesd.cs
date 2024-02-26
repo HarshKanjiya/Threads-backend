@@ -2,10 +2,10 @@
 
 #nullable disable
 
-namespace Thread.microservice.Migrations
+namespace Admin.microservice.Migrations
 {
     /// <inheritdoc />
-    public partial class ewew : Migration
+    public partial class qwwesd : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

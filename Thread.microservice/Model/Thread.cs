@@ -8,6 +8,9 @@ namespace Thread.Model
 
         public DateTime CreatedAt { get; set; } = DateTime.Now;
         public required Guid AuthorId { get; set; }
+        public required string AuthorName { get; set; }
+        public required string AuthorUserName { get; set; }
+        public required string AuthorAvatarURL { get; set; }
         public required string Type { get; set; } = "PARENT";
         public string? ReferenceId { get; set; } = string.Empty;
         public required string ReplyAccess { get; set; } = "ANY";

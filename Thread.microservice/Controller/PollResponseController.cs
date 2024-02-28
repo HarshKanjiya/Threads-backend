@@ -8,7 +8,7 @@ using UserApi.microservice.Models.DTOs;
 namespace Thread.microservice.Controller
 {
     [Route("api/v1/thread")]
-    [ApiController, Authorize]
+    [ApiController]
     public class PollResponseController : ControllerBase
     {
 

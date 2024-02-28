@@ -14,7 +14,7 @@ using System.Net.Http;
 namespace Subscription.microservice.Controllers
 {
     [Route("api/v1/buy")]
-    [ApiController, Authorize]
+    [ApiController]
     public class PurchaseSubscriptionController : ControllerBase
     {
         private readonly DBcontext db;

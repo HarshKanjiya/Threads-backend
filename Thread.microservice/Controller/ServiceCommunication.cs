@@ -10,7 +10,7 @@ using UserApi.microservice.Models.DTOs;
 namespace Thread.microservice.Controller
 {
     [Route("api/v1/service/thread")]
-    [ApiController,AllowAnonymous]
+    [ApiController, AllowAnonymous]
     public class ServiceCommunication : ControllerBase
     {
         private readonly DBcontext db;
@@ -23,17 +23,18 @@ namespace Thread.microservice.Controller
         }
 
         [HttpGet("user/{RequesterId}/{id}")]
-        public async Task<ActionResult<ResponseDTO>> getThreadsOfUser(Guid RequesterId,Guid id)
+        public async Task<ActionResult<ResponseDTO>> getThreadsOfUser(Guid RequesterId, Guid id)
         {
             ResponseDTO response = new ResponseDTO();
             try
             {
+                var parent = "PARENT";
                 var threads = db.Threads
+                    .Where(t => string.Equals(t.AuthorId, id) && t.Type == parent)
                     .Include(Thread => Thread.Content)
-                    .ThenInclude(t=>t.Ratings)
+                    .ThenInclude(t => t.Ratings)
                     .Include(Thread => Thread.Content)
-                    .ThenInclude(t=>t.Options)
-                    .Where(t => string.Equals(t.AuthorId,id))
+                    .ThenInclude(t => t.Options)
                     .ToList();
 
                 List<ThreadResponseDTO> threadsRes = new List<ThreadResponseDTO>();
@@ -51,6 +52,9 @@ namespace Thread.microservice.Controller
                         ReplyAccess = thread.ReplyAccess,
                         ThreadId = thread.ThreadId,
                         Type = thread.Type,
+                        AuthorAvatarURL = thread.AuthorAvatarURL,
+                        AuthorName = thread.AuthorName,
+                        AuthorUserName = thread.AuthorUserName
                     };
                     if (RequesterId != null)
                     {
@@ -118,7 +122,7 @@ namespace Thread.microservice.Controller
         }
 
         [HttpGet("likecount/{type}/{id}")]
-        public async Task<ActionResult<ResponseDTO>> manageLikeCount(string type,Guid id)
+        public async Task<ActionResult<ResponseDTO>> manageLikeCount(string type, Guid id)
         {
             ResponseDTO response = new ResponseDTO();
             try
@@ -143,7 +147,7 @@ namespace Thread.microservice.Controller
                     response.Message = "count managed";
                     return Ok(response);
                 }
-                
+
                 response.Success = false;
                 response.Message = "Thread not found";
                 return Ok(response);

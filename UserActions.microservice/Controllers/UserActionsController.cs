@@ -13,7 +13,7 @@ using UserActions.microservice.Models.DTOs;
 namespace UserActions.microservice.Controllers
 {
     [Route("api/v1/action")]
-    [ApiController, Authorize]
+    [ApiController]
     public class UserActionsController : ControllerBase
     {
         private readonly DBcontext db;

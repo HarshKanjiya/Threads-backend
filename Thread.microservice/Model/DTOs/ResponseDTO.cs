@@ -24,5 +24,8 @@ namespace UserApi.microservice.Models.DTOs
         public int Likes { get; set; } = 0;
         public Boolean LikedByMe { get; set; } = false;
         public string BanStatus { get; set; } = "UNBAN";
+        public required string AuthorName { get; set; }
+        public required string AuthorUserName { get; set; }
+        public required string AuthorAvatarURL { get; set; }
     }
 }

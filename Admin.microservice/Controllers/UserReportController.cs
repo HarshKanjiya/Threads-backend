@@ -9,7 +9,7 @@ using UserApi.microservice.Utils;
 namespace Admin.microservice.Controllers
 {
     [Route("api/v1/admin/report")]
-    [ApiController, Authorize]
+    [ApiController]
     public class UserReportController : ControllerBase
     {
         private readonly DBcontext db;

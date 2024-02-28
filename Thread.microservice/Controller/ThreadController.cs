@@ -254,6 +254,9 @@ namespace Thread.microservice.Controller
                         ReplyAccess = thread.ReplyAccess,
                         ThreadId = thread.ThreadId,
                         Type = thread.Type,
+                        AuthorAvatarURL = thread.AuthorAvatarURL,
+                        AuthorName = thread.AuthorName,
+                        AuthorUserName = thread.AuthorUserName,
                     };
 
                     if (UserId != null)
@@ -323,6 +326,9 @@ namespace Thread.microservice.Controller
                             ReplyAccess = thread.ReplyAccess,
                             ThreadId = thread.ThreadId,
                             Type = thread.Type,
+                            AuthorAvatarURL = thread.AuthorAvatarURL,
+                            AuthorName = thread.AuthorName,
+                            AuthorUserName = thread.AuthorUserName,
                         };
 
                         if (UserId != null)
@@ -380,18 +386,56 @@ namespace Thread.microservice.Controller
                     .Where(t => (t.Type != REPLY))
                     .ToList();
 
-                if (threads != null)
+                if (threads == null)
                 {
-                    response.Success = true;
-                    response.Message = "feed found";
-                    response.Data = threads;
+                    response.Success = false;
+                    response.Message = "feed not found";
                     return Ok(response);
                 }
-                response.Message = "Please try again.";
-                response.Success = false;
-                return BadRequest(response);
+                else
+                {
+                    List<ThreadResponseDTO> threadsRes = new List<ThreadResponseDTO>();
+                    foreach (var thread in threads)
+                    {
+                        ThreadResponseDTO temp = new()
+                        {
+                            Content = thread.Content,
+                            AuthorId = thread.AuthorId,
+                            BanStatus = thread.BanStatus,
+                            CreatedAt = thread.CreatedAt,
+                            Likes = thread.Likes,
+                            ReferenceId = thread.ReferenceId,
+                            Replies = thread.Replies,
+                            ReplyAccess = thread.ReplyAccess,
+                            ThreadId = thread.ThreadId,
+                            Type = thread.Type,
+                            AuthorAvatarURL = thread.AuthorAvatarURL,
+                            AuthorName = thread.AuthorName,
+                            AuthorUserName = thread.AuthorUserName
+                        };
+                        if (UserId != null)
+                        {
+                            ResponseDTO res = await httpClient.GetFromJsonAsync<ResponseDTO>("https://localhost:7203/api/v1/service/action/like/" + UserId + "/" + thread.ThreadId);
 
-
+                            if (res.Success)
+                            {
+                                if (res.Message == "notliked")
+                                {
+                                    temp.LikedByMe = false;
+                                }
+                                else
+                                {
+                                    temp.LikedByMe = true;
+                                }
+                            }
+                        }
+                        threadsRes.Add(temp);
+                    }
+                    response.Success = true;
+                    response.Message = "Threads found";
+                    response.Data = threadsRes;
+                    return Ok(response);
+                }
             }
             catch (Exception e)
             {
@@ -497,6 +541,9 @@ namespace Thread.microservice.Controller
                             ReplyAccess = thread.ReplyAccess,
                             ThreadId = thread.ThreadId,
                             Type = thread.Type,
+                            AuthorAvatarURL = thread.AuthorAvatarURL,
+                            AuthorName = thread.AuthorName,
+                            AuthorUserName = thread.AuthorUserName
                         };
                         if (RequesterId != null)
                         {

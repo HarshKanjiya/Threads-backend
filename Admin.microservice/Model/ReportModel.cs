@@ -44,7 +44,7 @@ namespace Admin.microservice.Model
     {
         [Key] public Guid UserReportId { get; set; }
         public Guid UserId { get; set; }
-        public Guid ReportId { get; set; }
+        public ReportModel Report { get; set; }
         public Guid HelperId { get; set; }
         public string Type { get; set; } // ACCOUNT_REPORT, POST_REPORT
     }

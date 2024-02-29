@@ -25,10 +25,12 @@ namespace Admin.microservice.Controllers
             ResponseDTO response = new ResponseDTO();
             try
             {
+                var Report = db.AvailableReports.FirstOrDefault(r => r.ReportId == req.ReportId);
+
                 UserReportModel reportData = new UserReportModel()
                 {
                     HelperId = req.HelperId,
-                    ReportId = req.ReportId,
+                    Report = Report,
                     UserId = req.UserId,
                     Type = req.Type,
                 };

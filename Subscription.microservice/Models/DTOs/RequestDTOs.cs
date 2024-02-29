@@ -16,6 +16,7 @@ namespace Subscription.microservice.Models.DTOs
         public string? PackagePrice { get; set; }
         public string? Discount { get; set; }
         public bool Active { get; set; }
+        public bool Published { get; set; }
         public List<string>? Perks { get; set; } = new List<string>();
         public string? AccentColor { get; set; }
 

@@ -2,9 +2,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using UAParser;
@@ -22,7 +19,6 @@ namespace UserApi.microservice.Controllers
     {
         private readonly DbContextUsers db;
         private readonly HttpClient httpClient;
-        private readonly ILogger<AuthController> logger;
 
 
         private readonly JwtTokenHandler JWT;
@@ -32,7 +28,6 @@ namespace UserApi.microservice.Controllers
         {
             db = _db;
             httpClient = httpClientFactory.CreateClient();
-            logger = _logger;
             JWT = _jwt;
         }
 
@@ -823,7 +818,7 @@ namespace UserApi.microservice.Controllers
             }
         }
 
-        
+
 
         [HttpPost("search"), AllowAnonymous]
         public async Task<ActionResult<ResponseDTO>> searchUser([FromBody] SearchReqDTO req)
@@ -831,7 +826,7 @@ namespace UserApi.microservice.Controllers
             ResponseDTO responseDTO = new ResponseDTO();
             try
             {
-                if(req.UserName.Length > 0)
+                if (req.UserName.Length > 0)
                 {
                     var users = db.Users.Where(user => user.UserName.Contains(req.UserName) || user.Name.Contains(req.UserName)).ToList();
                     //var users = db.Users.ToList();

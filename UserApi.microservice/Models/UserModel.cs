@@ -5,7 +5,7 @@ namespace UserApi.microservice.Models
     public class UserModel
     {
         [Key] public Guid UserId { get; set; }
-
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
         public required string Name { get; set; }
         public required string UserName { get; set; }
         public required string Email { get; set; } = string.Empty;

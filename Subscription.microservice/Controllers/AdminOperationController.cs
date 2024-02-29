@@ -150,7 +150,8 @@ namespace Subscription.microservice.Controllers
             {
                 PackagesModel data = new PackagesModel()
                 {
-                    Active = false,
+                    Active = true,
+                    Published = false,
                     Discount = req.Discount,
                     PackageName = req.PackageName,
                     PackagePrice = req.PackagePrice,
@@ -201,6 +202,7 @@ namespace Subscription.microservice.Controllers
                     existance.AccentColor = req.AccentColor != null ? req.AccentColor : existance.AccentColor;
                     existance.Active = req.Active != null ? req.Active : existance.Active;
                     existance.Discount = req.Discount != null ? req.Discount : existance.Discount;
+                    existance.Published = req.Published != null ? req.Published : existance.Published;
 
                     db.SaveChanges();
 

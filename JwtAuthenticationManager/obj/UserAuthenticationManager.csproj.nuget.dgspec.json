@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj": {}
+    "C:\\Harsh\\zz - side\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj": {
+    "C:\\Harsh\\zz - side\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj",
+        "projectUniqueName": "C:\\Harsh\\zz - side\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj",
         "projectName": "UserAuthenticationManager",
-        "projectPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj",
+        "projectPath": "C:\\Harsh\\zz - side\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj",
         "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\JwtAuthenticationManager\\obj\\",
+        "outputPath": "C:\\Harsh\\zz - side\\threads\\backend\\JwtAuthenticationManager\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",

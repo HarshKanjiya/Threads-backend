@@ -7694,11 +7694,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Gateaway\\Gateway.csproj",
+      "projectUniqueName": "C:\\Harsh\\zz - side\\threads\\backend\\Gateaway\\Gateway.csproj",
       "projectName": "Gateway",
-      "projectPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Gateaway\\Gateway.csproj",
+      "projectPath": "C:\\Harsh\\zz - side\\threads\\backend\\Gateaway\\Gateway.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Gateaway\\obj\\",
+      "outputPath": "C:\\Harsh\\zz - side\\threads\\backend\\Gateaway\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",

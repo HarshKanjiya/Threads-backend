@@ -7137,11 +7137,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Thread.microservice\\Thread.microservice.csproj",
+      "projectUniqueName": "C:\\Harsh\\zz - side\\threads\\backend\\Thread.microservice\\Thread.microservice.csproj",
       "projectName": "Thread.microservice",
-      "projectPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Thread.microservice\\Thread.microservice.csproj",
+      "projectPath": "C:\\Harsh\\zz - side\\threads\\backend\\Thread.microservice\\Thread.microservice.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Thread.microservice\\obj\\",
+      "outputPath": "C:\\Harsh\\zz - side\\threads\\backend\\Thread.microservice\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -7158,8 +7158,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj": {
-              "projectPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj"
+            "C:\\Harsh\\zz - side\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj": {
+              "projectPath": "C:\\Harsh\\zz - side\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj"
             }
           }
         }

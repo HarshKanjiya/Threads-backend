@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UefYREp3T4elUSD5Pysd7rvhwaeArTCQWNNsAgCWXuG9+j1Db7LRLfAR0JLo37dS40edhdT5cAmdTOQKGy79/w==",
+  "dgSpecHash": "eOuX73j4siAIm8Sh/DXhcp1VEnvUkukpzYzfaaqv+vSZhi9jrpiRBVuDmk5FPkgY/zcaTPAgxI0jlCId3kfHRw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj",
+  "projectFilePath": "C:\\Harsh\\zz - side\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\8.0.1\\microsoft.aspnetcore.authentication.jwtbearer.8.0.1.nupkg.sha512",
     "C:\\Users\\Admin\\.nuget\\packages\\microsoft.extensions.dependencyinjection.abstractions\\8.0.0\\microsoft.extensions.dependencyinjection.abstractions.8.0.0.nupkg.sha512",

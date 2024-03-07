@@ -7009,11 +7009,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Notification.microservice\\Notification.microservice.csproj",
+      "projectUniqueName": "C:\\Harsh\\zz - side\\threads\\backend\\Notification.microservice\\Notification.microservice.csproj",
       "projectName": "Notification.microservice",
-      "projectPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Notification.microservice\\Notification.microservice.csproj",
+      "projectPath": "C:\\Harsh\\zz - side\\threads\\backend\\Notification.microservice\\Notification.microservice.csproj",
       "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\Notification.microservice\\obj\\",
+      "outputPath": "C:\\Harsh\\zz - side\\threads\\backend\\Notification.microservice\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -7030,8 +7030,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj": {
-              "projectPath": "C:\\Users\\Admin\\Desktop\\demo\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj"
+            "C:\\Harsh\\zz - side\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj": {
+              "projectPath": "C:\\Harsh\\zz - side\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj"
             }
           }
         }

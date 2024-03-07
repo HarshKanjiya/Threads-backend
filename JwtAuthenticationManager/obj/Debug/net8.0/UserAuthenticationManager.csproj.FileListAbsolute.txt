@@ -24,3 +24,16 @@ D:\projects\side\thread\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAu
 D:\projects\side\thread\backend\JwtAuthenticationManager\obj\Debug\net8.0\refint\UserAuthenticationManager.dll
 D:\projects\side\thread\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.pdb
 D:\projects\side\thread\backend\JwtAuthenticationManager\obj\Debug\net8.0\ref\UserAuthenticationManager.dll
+C:\Harsh\zz - side\threads\backend\JwtAuthenticationManager\bin\Debug\net8.0\UserAuthenticationManager.deps.json
+C:\Harsh\zz - side\threads\backend\JwtAuthenticationManager\bin\Debug\net8.0\UserAuthenticationManager.dll
+C:\Harsh\zz - side\threads\backend\JwtAuthenticationManager\bin\Debug\net8.0\UserAuthenticationManager.pdb
+C:\Harsh\zz - side\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.csproj.AssemblyReference.cache
+C:\Harsh\zz - side\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.GeneratedMSBuildEditorConfig.editorconfig
+C:\Harsh\zz - side\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.AssemblyInfoInputs.cache
+C:\Harsh\zz - side\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.AssemblyInfo.cs
+C:\Harsh\zz - side\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.csproj.CoreCompileInputs.cache
+C:\Harsh\zz - side\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.sourcelink.json
+C:\Harsh\zz - side\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.dll
+C:\Harsh\zz - side\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\refint\UserAuthenticationManager.dll
+C:\Harsh\zz - side\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\UserAuthenticationManager.pdb
+C:\Harsh\zz - side\threads\backend\JwtAuthenticationManager\obj\Debug\net8.0\ref\UserAuthenticationManager.dll

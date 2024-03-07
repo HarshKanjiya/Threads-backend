@@ -90,6 +90,35 @@ namespace UserApi.microservice.Controllers
             }
         }
 
+        [HttpGet("user/{type}")]
+        public async Task<ActionResult<ResponseDTO>> getsingle(Guid UserId)
+        {
+            ResponseDTO responseDTO = new ResponseDTO();
+            try
+            {
+                var user = db.Users.FirstOrDefault(u => u.UserId == UserId);
+             
+                if (user == null)
+                {
+                    responseDTO.Message = "user does not exist.";
+                    responseDTO.Success = false;
+                    return Ok(responseDTO);
+                }
+                responseDTO.Success = true;
+                responseDTO.Data = user;
+                responseDTO.Message = "users found.";
+                return Ok(responseDTO);
+                        
 
+            }
+            catch (Exception e)
+            {
+                responseDTO.Message = "Something went wrong";
+                responseDTO.Success = false;
+                return BadRequest(responseDTO);
+
+
+            }
+        }
     }
 }

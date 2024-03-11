@@ -146,8 +146,61 @@ namespace Admin.microservice.Controllers
             }
         }
 
+        [HttpGet("reportcategories")]
+        public async Task<ActionResult<ResponseDTO>> GetAllCategories()
+        {
+            ResponseDTO response = new ResponseDTO();
+            try
+            {
+
+                var categories = db.ReportCategories.ToList();
+
+                if(categories == null)
+                {
+                    response.Success = false;
+                    response.Message = "Failed to get Categories";
+                    return Ok(response);
+                }
+
+                response.Success = true;
+                response.Data = categories;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = "Internal server error : Admin";
+                return BadRequest(response);
+            }
+        }
 
 
+        [HttpGet("report/{id}")]
+        public async Task<ActionResult<ResponseDTO>> GetAllReports(Guid id)
+        {
+            ResponseDTO response = new ResponseDTO();
+            try
+            {
+                var categories = db.AvailableReports.Where(r => r.ReportCategoryId == id);
+
+                if (categories == null)
+                {
+                    response.Success = false;
+                    response.Message = "Failed to get Categories";
+                    return Ok(response);
+                }
+
+                response.Success = true;
+                response.Data = categories;
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                response.Success = false;
+                response.Message = "Internal server error : Admin";
+                return BadRequest(response);
+            }
+        }
 
     }
 }

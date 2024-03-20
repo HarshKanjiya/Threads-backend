@@ -90,7 +90,7 @@ namespace UserApi.microservice.Controllers
             }
         }
 
-        [HttpGet("user/{type}")]
+        [HttpGet("user/{UserId}")]
         public async Task<ActionResult<ResponseDTO>> getsingle(Guid UserId)
         {
             ResponseDTO responseDTO = new ResponseDTO();

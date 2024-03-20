@@ -24,7 +24,7 @@ namespace UserApi.microservice.Controllers
         private readonly JwtTokenHandler JWT;
         private static readonly Random _random = new Random();
 
-        public AuthController(DbContextUsers _db, IHttpClientFactory httpClientFactory, ILogger<AuthController> _logger, JwtTokenHandler _jwt)
+        public AuthController(DbContextUsers _db, IHttpClientFactory httpClientFactory, JwtTokenHandler _jwt)
         {
             db = _db;
             httpClient = httpClientFactory.CreateClient();

@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Admin.microservice")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+0bfbadfa867f3eb54d47297675b2aecfb3058c78")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ebd574982374341a82fb6e9bef6242885703e91")]
 [assembly: System.Reflection.AssemblyProductAttribute("Admin.microservice")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Admin.microservice")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -28,6 +28,7 @@ namespace UserApi.microservice.Models
 
         public List<DeviceModel> Devices { get; set; } = new List<DeviceModel>();
 
+        public bool Private { get; set; } = false;
         public string BanStatus { get; set; } = "UNBAN";
         public DateTime? BanStartTime { get; set; }
         public string? BanDuration { get; set; }

@@ -5,10 +5,7 @@ using Thread.Data;
 using Thread.Model;
 using UserApi.microservice.Models.DTOs;
 using Thread.microservice.Utils;
-using Azure;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using System.Threading;
 
 namespace Thread.microservice.Controller
 {
@@ -19,13 +16,11 @@ namespace Thread.microservice.Controller
 
         private readonly DBcontext db;
         private readonly HttpClient httpClient;
-        private readonly ILogger<ThreadController> logger;
 
-        public ThreadController(DBcontext _db, HttpClient _httpClient, ILogger<ThreadController> _logger)
+        public ThreadController(DBcontext _db, HttpClient _httpClient)
         {
             db = _db;
             httpClient = _httpClient;
-            logger = _logger;
         }
 
 

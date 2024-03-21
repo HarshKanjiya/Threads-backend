@@ -8,6 +8,7 @@ using UserApi.microservice.Models.DTOs;
 using UserApi.microservice.Utils;
 using UserAuthenticationManager.Model;
 using UserAuthenticationManager;
+using Microsoft.EntityFrameworkCore;
 
 namespace UserApi.microservice.Controllers
 {
@@ -109,7 +110,7 @@ namespace UserApi.microservice.Controllers
 
             try
             {
-                var User = db.Users.FirstOrDefault(u => string.Equals(u.Email, req.Email));
+                var User = db.Users.Include(u => u.Devices).FirstOrDefault(u => string.Equals(u.Email, req.Email));
                 if (User == null)
                 {
                     response.Message = "User doesnot exist.";

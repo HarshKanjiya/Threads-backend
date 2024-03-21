@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using UserApi.microservice.Data;
 using UserApi.microservice.Models.DTOs;
 
@@ -41,7 +42,7 @@ namespace UserApi.microservice.Controllers
                     responseDTO.Message = "users foubnd.";
                     return Ok(responseDTO);
                 }
-                if(type == "unban")
+                if (type == "unban")
                 {
                     var users = db.Users.Where(u => u.BanStatus == "UNBAN").OrderByDescending(u => u.CreatedAt).ToList();
 
@@ -91,25 +92,31 @@ namespace UserApi.microservice.Controllers
         }
 
         [HttpGet("user/{UserId}")]
-        public async Task<ActionResult<ResponseDTO>> getsingle(Guid UserId)
+        public async Task<ActionResult<ResponseDTO>> getsingleUserInfo(Guid UserId)
         {
             ResponseDTO responseDTO = new ResponseDTO();
             try
             {
-                var user = db.Users.FirstOrDefault(u => u.UserId == UserId);
-             
+                var user = db.Users.Include(u => u.Devices).FirstOrDefault(u => string.Equals(u.UserId, UserId ));
+
                 if (user == null)
                 {
                     responseDTO.Message = "user does not exist.";
                     responseDTO.Success = false;
                     return Ok(responseDTO);
                 }
+
+                user.Password = string.Empty;
+                user.PasswordSalt = string.Empty;
+                foreach (var device in user.Devices)
+                {
+                    device.RefreshToken = string.Empty;
+                }
+
                 responseDTO.Success = true;
                 responseDTO.Data = user;
-                responseDTO.Message = "users found.";
+                responseDTO.Message = "user found.";
                 return Ok(responseDTO);
-                        
-
             }
             catch (Exception e)
             {

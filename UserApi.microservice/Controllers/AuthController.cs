@@ -194,7 +194,7 @@ namespace UserApi.microservice.Controllers
                 if (Regex.IsMatch(req.UniqueId, Username_REGEX))
                 {
                     // username
-                    var User = db.Users.FirstOrDefault(item => string.Equals(item.UserName, req.UniqueId));
+                    var User = db.Users.Include(u => u.Devices).FirstOrDefault(item => string.Equals(item.UserName, req.UniqueId));
 
                     if (User != null)
                     {
@@ -271,7 +271,7 @@ namespace UserApi.microservice.Controllers
                 else if (Regex.IsMatch(req.UniqueId, Phonenumber_REGEX))
                 {
                     // Phone number
-                    var User = db.Users.FirstOrDefault(item => string.Equals(item.PhoneNumber, req.UniqueId));
+                    var User = db.Users.Include(u => u.Devices).FirstOrDefault(item => string.Equals(item.PhoneNumber, req.UniqueId));
 
                     if (User != null)
                     {
@@ -340,7 +340,7 @@ namespace UserApi.microservice.Controllers
                 else if (Regex.IsMatch(req.UniqueId, Email_REGEX))
                 {
                     // email
-                    var User = db.Users.FirstOrDefault(item => string.Equals(item.Email, req.UniqueId));
+                    var User = db.Users.Include(u => u.Devices).FirstOrDefault(item => string.Equals(item.Email, req.UniqueId));
 
                     if (User != null)
                     {

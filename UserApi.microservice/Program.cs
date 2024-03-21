@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.EntityFrameworkCore;
 using UserApi.microservice.Data;
+using UserApi.microservice.Hubs;
 using UserApi.microservice.Models;
 using UserApi.microservice.services;
 using UserAuthenticationManager;
@@ -16,6 +17,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IMessageProducer, MessageProducer>();
 builder.Services.AddHttpClient();
+
+builder.Services.AddSignalR();
 
 builder.Services.AddDbContext<DbContextUsers>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("conn")));
 
@@ -38,6 +41,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+/*app.UseEndpoints(endpoints =>
+{
+});*/
+app.MapHub<UserHub>("/hub/user");
 
 app.UseHttpsRedirection();
 

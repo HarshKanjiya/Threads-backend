@@ -47,6 +47,7 @@ namespace UserApi.microservice.Models.DTOs
         public string? Status { get; set; }
         public string? Avatar { get; set; }
         public string? Birthdate { get; set; }
+        public bool Private { get; set; }
     }
     public class UpdatePasswordRequestDTO
     {

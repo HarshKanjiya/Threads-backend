@@ -531,7 +531,7 @@ namespace UserApi.microservice.Controllers
                 user.Gender = !string.IsNullOrWhiteSpace(req.Gender) ? req.Gender : user.Gender;
                 user.Birthdate = !string.IsNullOrWhiteSpace(req.Birthdate) ? req.Birthdate : user.Birthdate;
                 user.Status = !string.IsNullOrWhiteSpace(req.Status) ? req.Status : user.Status;
-
+                user.Private = req.Private ? req.Private : user.Private;
                 db.SaveChanges();
 
                 response.Message = "User Updated";
@@ -818,6 +818,40 @@ namespace UserApi.microservice.Controllers
             }
         }
 
+        [HttpGet("session/{DeviceId}")]
+        public async Task<ActionResult<ResponseDTO>> removeSession(Guid DeviceId)
+        {
+            ResponseDTO response = new ResponseDTO();
+            try
+            {
+                var device = db.Devices.FirstOrDefault(x => x.DeviceId == DeviceId);
+                if(device == null)
+                {
+                    response.Success = false;
+                    response.Message = "Session doesn't exist";
+                    return Ok(response);
+                }
+                
+                db.Devices.Remove(device);
+                db.SaveChanges();
+                var RefreshToken = Request.Cookies["RefreshToken"];
+                
+                if (string.Equals(RefreshToken,device.RefreshToken))
+                {
+                    response.Message = "OWN_SESSION_REMOVED";
+                    return Ok(response);
+                }
+                response.Success = true;
+                response.Message = "SESSION_REMOVED";
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                response.Message = "Something went wrong :" + e.Message;
+                response.Success = false;
+                return BadRequest(response);
+            }
+        }
 
 
         [HttpPost("search"), AllowAnonymous]

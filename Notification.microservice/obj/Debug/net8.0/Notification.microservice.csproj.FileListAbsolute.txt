@@ -421,3 +421,4 @@ C:\Harsh\zz - side\threads\backend\Notification.microservice\obj\Debug\net8.0\re
 C:\Harsh\zz - side\threads\backend\Notification.microservice\obj\Debug\net8.0\Notification.microservice.pdb
 C:\Harsh\zz - side\threads\backend\Notification.microservice\obj\Debug\net8.0\Notification.microservice.genruntimeconfig.cache
 C:\Harsh\zz - side\threads\backend\Notification.microservice\obj\Debug\net8.0\ref\Notification.microservice.dll
+C:\Harsh\zz - side\threads\backend\Notification.microservice\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll

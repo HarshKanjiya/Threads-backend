@@ -448,3 +448,4 @@ C:\Harsh\zz - side\threads\backend\UserApi.microservice\obj\Debug\net8.0\refint\
 C:\Harsh\zz - side\threads\backend\UserApi.microservice\obj\Debug\net8.0\UserApi.microservice.pdb
 C:\Harsh\zz - side\threads\backend\UserApi.microservice\obj\Debug\net8.0\UserApi.microservice.genruntimeconfig.cache
 C:\Harsh\zz - side\threads\backend\UserApi.microservice\obj\Debug\net8.0\ref\UserApi.microservice.dll
+C:\Harsh\zz - side\threads\backend\UserApi.microservice\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll

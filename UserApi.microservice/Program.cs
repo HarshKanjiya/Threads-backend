@@ -31,8 +31,6 @@ builder.Services.Configure<KestrelServerOptions>(options =>
 
 builder.Services.AddCustomJwtAuthentication();
 
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -45,7 +43,7 @@ if (app.Environment.IsDevelopment())
 /*app.UseEndpoints(endpoints =>
 {
 });*/
-app.MapHub<UserHub>("/hub/user");
+app.MapHub<UserHub>("/admin/hub/user");
 
 app.UseHttpsRedirection();
 

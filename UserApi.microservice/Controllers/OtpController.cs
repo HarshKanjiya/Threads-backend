@@ -1,8 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Text;
+using System;
+using UAParser;
 using UserApi.microservice.Data;
 using UserApi.microservice.Models;
 using UserApi.microservice.Models.DTOs;
 using UserApi.microservice.Utils;
+using UserAuthenticationManager.Model;
+using UserAuthenticationManager;
+using Microsoft.EntityFrameworkCore;
 
 namespace UserApi.microservice.Controllers
 {
@@ -11,10 +17,13 @@ namespace UserApi.microservice.Controllers
     public class OtpController : ControllerBase
     {
         private readonly DbContextUsers db;
+        private readonly JwtTokenHandler JWT;
+        private static readonly Random _random = new Random();
 
-        public OtpController(DbContextUsers _db)
+        public OtpController(DbContextUsers _db, JwtTokenHandler _jwt)
         {
             db = _db;
+            JWT = _jwt;
         }
 
         [HttpPost("create")]
@@ -101,7 +110,7 @@ namespace UserApi.microservice.Controllers
 
             try
             {
-                var User = db.Users.FirstOrDefault(u => string.Equals(u.Email, req.Email));
+                var User = db.Users.Include(u => u.Devices).FirstOrDefault(u => string.Equals(u.Email, req.Email));
                 if (User == null)
                 {
                     response.Message = "User doesnot exist.";
@@ -130,22 +139,66 @@ namespace UserApi.microservice.Controllers
 
                 if (string.Equals(OtpRecord.otp, req.Otp))
                 {
-                    User.Password = "";
-                    User.PasswordSalt = "";
-                    response.Message = "Login Successful." + timeDifference;
-                    response.Success = true;
-                    response.Data = User;
 
+                    GenerateTokenRequestDTO tokenData = new GenerateTokenRequestDTO()
+                    {
+                        UserName = User.UserName,
+                        Role = User.Role
+                    };
 
+                    var TokenResp = JWT.GenerateJwtToken(tokenData);
+
+                    AccessTokenData accessTokenData = new AccessTokenData()
+                    {
+                        ExpiresIn = TokenResp.ExpiresIn,
+                        Token = TokenResp.Token
+                    };
+                    var userAgent = HttpContext.Request.Headers["User-Agent"];
+                    var uaParser = Parser.GetDefault();
+                    ClientInfo c = uaParser.Parse(userAgent);
+
+                    var rToken = GenerateRandomString(30);
+
+                    DeviceModel device = new DeviceModel()
+                    {
+                        DeviceType = c.OS.Family,
+                        RefreshToken = rToken,
+                    };
+
+                    User.Devices.Add(device);
                     db.Otps.Remove(OtpRecord);
                     db.SaveChanges();
 
+                    CookieOptions options = new CookieOptions();
+                    options.Expires = DateTime.Now.AddDays(7);
+                    options.SameSite = SameSiteMode.None;
+                    options.Secure = true;
+
+                    CookieOptions optionsJWT = new CookieOptions();
+                    optionsJWT.Expires = DateTime.Now.AddMinutes(20);
+                    optionsJWT.SameSite = SameSiteMode.None;
+                    optionsJWT.Secure = true;
+
+                    Response.Cookies.Append("RefreshToken", rToken, options);
+                    Response.Cookies.Append("AccessToken", TokenResp.Token, optionsJWT);
+                    Response.Cookies.Append("UserName", User.UserName, options);
+
+                    foreach (var d in User.Devices)
+                    {
+                        d.RefreshToken = null;
+                    }
+
+                    response.Message = "Logged in Successfully.";
+                    response.Success = true;
+                    User.Password = null;
+                    User.PasswordSalt = null;
+                    response.Data = User;
 
                     return Ok(response);
                 }
                 else
                 {
-                    response.Message = "OTP doesn't match!" + timeDifference + "," + OtpRecord.otp + "," + req.Otp;
+                    response.Message = "OTP doesn't match!";
                     response.Success = false;
                     return Ok(response);
                 }
@@ -154,11 +207,27 @@ namespace UserApi.microservice.Controllers
             }
             catch (Exception e)
             {
-                response.Message = "Something went wrong";
+                response.Message = "Something went wrong " + e.Message;
                 response.Success = false;
                 return BadRequest(e.ToString());
 
             }
         }
+
+
+        // :: FOR RANDOM STRING ::
+        public static string GenerateRandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            StringBuilder stringBuilder = new StringBuilder(length);
+
+            for (int i = 0; i < length; i++)
+            {
+                stringBuilder.Append(chars[_random.Next(chars.Length)]);
+            }
+
+            return stringBuilder.ToString();
+        }
+
     }
 }

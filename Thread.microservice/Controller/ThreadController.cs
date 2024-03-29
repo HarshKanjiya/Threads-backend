@@ -5,10 +5,9 @@ using Thread.Data;
 using Thread.Model;
 using UserApi.microservice.Models.DTOs;
 using Thread.microservice.Utils;
-using Azure;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using System.Threading;
+using Thread.microservice.Model;
+using System.Text.RegularExpressions;
 
 namespace Thread.microservice.Controller
 {
@@ -19,13 +18,11 @@ namespace Thread.microservice.Controller
 
         private readonly DBcontext db;
         private readonly HttpClient httpClient;
-        private readonly ILogger<ThreadController> logger;
 
-        public ThreadController(DBcontext _db, HttpClient _httpClient, ILogger<ThreadController> _logger)
+        public ThreadController(DBcontext _db, HttpClient _httpClient)
         {
             db = _db;
             httpClient = _httpClient;
-            logger = _logger;
         }
 
 
@@ -204,7 +201,40 @@ namespace Thread.microservice.Controller
                 var content = new StringContent(dataForAuthApi.ToString(), Encoding.UTF8, "application/json");
                 var res = httpClient.PutAsync("https://localhost:7201/api/v1/service/auth/usercounts", content).Result;
 
+                /*                req.Content.Text*/
 
+                string pattern = @"#\w+";
+                MatchCollection matches = Regex.Matches(req.Content.Text, pattern);
+                string[] hashtags = new string[matches.Count];
+                for (int i = 0; i < matches.Count; i++)
+                {
+                    hashtags[i] = matches[i].Value.Substring(1);
+                }
+
+                /*List<string> textList = req.Content.Text.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries).ToList();*/
+
+                foreach (var text in hashtags ) {
+                    var existingTag = db.Tags.FirstOrDefault(x => string.Equals(x.TagName, text));
+
+                    if(existingTag == null)
+                    {
+                        List<Guid> lst = new List<Guid>()
+                        {
+                            thread.Entity.ThreadId
+                        };
+                        Hashtags tag = new()
+                        {
+                            TagName = text,
+                            Threads = lst
+                        };
+                        db.Tags.Add(tag);
+                    }
+                    else
+                    {
+                        existingTag.Threads.Add(thread.Entity.ThreadId);
+                    }
+                        db.SaveChanges();
+                }
 
                 if (thread.Entity != null)
                 {

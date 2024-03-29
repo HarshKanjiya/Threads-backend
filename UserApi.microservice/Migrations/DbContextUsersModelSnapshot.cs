@@ -138,6 +138,10 @@ namespace UserApi.microservice.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Mention")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -156,6 +160,9 @@ namespace UserApi.microservice.Migrations
 
                     b.Property<int>("PostsCount")
                         .HasColumnType("int");
+
+                    b.Property<bool>("Private")
+                        .HasColumnType("bit");
 
                     b.Property<int>("RepliesCount")
                         .HasColumnType("int");

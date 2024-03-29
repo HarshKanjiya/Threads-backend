@@ -421,3 +421,4 @@ C:\Harsh\zz - side\threads\backend\UserActions.microservice\obj\Debug\net8.0\ref
 C:\Harsh\zz - side\threads\backend\UserActions.microservice\obj\Debug\net8.0\UserActions.microservice.pdb
 C:\Harsh\zz - side\threads\backend\UserActions.microservice\obj\Debug\net8.0\UserActions.microservice.genruntimeconfig.cache
 C:\Harsh\zz - side\threads\backend\UserActions.microservice\obj\Debug\net8.0\ref\UserActions.microservice.dll
+C:\Harsh\zz - side\threads\backend\UserActions.microservice\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll

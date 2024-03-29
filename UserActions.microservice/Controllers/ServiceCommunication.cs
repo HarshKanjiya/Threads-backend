@@ -50,14 +50,14 @@ namespace UserActions.microservice.Controllers
             }
         }
 
-        [HttpPost("follow")]
-        public async Task<ActionResult<ResponseDTO>> addRemoveFollowUser(FollowUserRequestDTO req)
+        [HttpGet("follow/{UserId}/{RequesterId}")]
+        public async Task<ActionResult<ResponseDTO>> addRemoveFollowUser(Guid UserId,Guid RequesterId)
         {
             ResponseDTO response = new ResponseDTO();
 
             try
             {
-                var existance = db.Relationships.FirstOrDefault(x => x.CasterId == req.CasterId && x.ReceiverId == req.ReceiverId && x.Type == req.Type);
+                var existance = db.Relationships.FirstOrDefault(x => x.CasterId == RequesterId && x.ReceiverId == UserId && x.Type == "FOLLOW");
 
                 if (existance != null)
                 {

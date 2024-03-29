@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using UAParser;
 using UserApi.microservice.Data;
 using UserApi.microservice.Models;
@@ -24,7 +25,7 @@ namespace UserApi.microservice.Controllers
         private readonly JwtTokenHandler JWT;
         private static readonly Random _random = new Random();
 
-        public AuthController(DbContextUsers _db, IHttpClientFactory httpClientFactory, ILogger<AuthController> _logger, JwtTokenHandler _jwt)
+        public AuthController(DbContextUsers _db, IHttpClientFactory httpClientFactory, JwtTokenHandler _jwt)
         {
             db = _db;
             httpClient = httpClientFactory.CreateClient();
@@ -194,7 +195,7 @@ namespace UserApi.microservice.Controllers
                 if (Regex.IsMatch(req.UniqueId, Username_REGEX))
                 {
                     // username
-                    var User = db.Users.FirstOrDefault(item => string.Equals(item.UserName, req.UniqueId));
+                    var User = db.Users.Include(u => u.Devices).FirstOrDefault(item => string.Equals(item.UserName, req.UniqueId));
 
                     if (User != null)
                     {
@@ -271,7 +272,7 @@ namespace UserApi.microservice.Controllers
                 else if (Regex.IsMatch(req.UniqueId, Phonenumber_REGEX))
                 {
                     // Phone number
-                    var User = db.Users.FirstOrDefault(item => string.Equals(item.PhoneNumber, req.UniqueId));
+                    var User = db.Users.Include(u => u.Devices).FirstOrDefault(item => string.Equals(item.PhoneNumber, req.UniqueId));
 
                     if (User != null)
                     {
@@ -340,7 +341,7 @@ namespace UserApi.microservice.Controllers
                 else if (Regex.IsMatch(req.UniqueId, Email_REGEX))
                 {
                     // email
-                    var User = db.Users.FirstOrDefault(item => string.Equals(item.Email, req.UniqueId));
+                    var User = db.Users.Include(u => u.Devices).FirstOrDefault(item => string.Equals(item.Email, req.UniqueId));
 
                     if (User != null)
                     {
@@ -531,7 +532,8 @@ namespace UserApi.microservice.Controllers
                 user.Gender = !string.IsNullOrWhiteSpace(req.Gender) ? req.Gender : user.Gender;
                 user.Birthdate = !string.IsNullOrWhiteSpace(req.Birthdate) ? req.Birthdate : user.Birthdate;
                 user.Status = !string.IsNullOrWhiteSpace(req.Status) ? req.Status : user.Status;
-
+                user.Mention = !string.IsNullOrWhiteSpace(req.Mention) ? req.Mention : user.Mention;
+                user.Private = req.Private == true || req.Private == false ? req.Private : user.Private;
                 db.SaveChanges();
 
                 response.Message = "User Updated";
@@ -623,10 +625,23 @@ namespace UserApi.microservice.Controllers
                         res.posts = postsResponse.Data;
                     }
 
+                    ResponseDTO followResponse = await httpClient.GetFromJsonAsync<ResponseDTO>("https://localhost:7203/api/v1/service/action/follow/" + dbUser.UserId + "/" + userId);
+
                     // string responseBody = await postsResponse.Content.ReadAsStringAsync();
+                    if (followResponse.Success == true)
+                    {
+                        if(followResponse.Message == "followed")
+                        {
+                            res.FollowedByMe = true;
+                        }
+                        else
+                        {
+                            res.FollowedByMe = false;
+                        }
+                    }
 
-
-
+                    res.user.Password = null;
+                    res.user.PasswordSalt = null;
 
                     responseDTO.Success = true;
                     responseDTO.Message = "User data found";
@@ -645,14 +660,13 @@ namespace UserApi.microservice.Controllers
                 responseDTO.Success = false;
                 return BadRequest(responseDTO);
             }
-
-
-
         }
+
         public class UserProfileResponseDTO
         {
             public UserModel user { get; set; }
             public Object posts { get; set; }
+            public bool FollowedByMe { get; set; } = false;
         }
 
         [HttpGet("token")]
@@ -818,6 +832,40 @@ namespace UserApi.microservice.Controllers
             }
         }
 
+        [HttpGet("session/{DeviceId}")]
+        public async Task<ActionResult<ResponseDTO>> removeSession(Guid DeviceId)
+        {
+            ResponseDTO response = new ResponseDTO();
+            try
+            {
+                var device = db.Devices.FirstOrDefault(x => x.DeviceId == DeviceId);
+                if(device == null)
+                {
+                    response.Success = false;
+                    response.Message = "Session doesn't exist";
+                    return Ok(response);
+                }
+                
+                db.Devices.Remove(device);
+                db.SaveChanges();
+                var RefreshToken = Request.Cookies["RefreshToken"];
+                
+                if (string.Equals(RefreshToken,device.RefreshToken))
+                {
+                    response.Message = "OWN_SESSION_REMOVED";
+                    return Ok(response);
+                }
+                response.Success = true;
+                response.Message = "SESSION_REMOVED";
+                return Ok(response);
+            }
+            catch (Exception e)
+            {
+                response.Message = "Something went wrong :" + e.Message;
+                response.Success = false;
+                return BadRequest(response);
+            }
+        }
 
 
         [HttpPost("search"), AllowAnonymous]

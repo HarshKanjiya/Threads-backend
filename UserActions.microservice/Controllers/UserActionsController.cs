@@ -136,40 +136,54 @@ namespace UserActions.microservice.Controllers
             {
                 if (req.Type == "FOLLOW")
                 {
-                    RelationshipModel relationship = new()
-                    {
-                        CasterId = req.CasterId,
-                        ReceiverId = req.ReceiverId,
-                        Type = "FOLLOW",
-                    };
-                    var Follow = await db.Relationships.AddAsync(relationship);
-                    await db.SaveChangesAsync();
+                    var existance = db.Relationships.FirstOrDefault(x => x.CasterId == req.CasterId && x.ReceiverId == req.ReceiverId && x.Type == "FOLLOW");
 
-                    if (Follow != null)
+                    if (existance == null)
                     {
-                        getUserInfoResponseDTO caster = await httpClient.GetFromJsonAsync<getUserInfoResponseDTO>("https://localhost:7201/api/v1/service/auth/user/" + req.CasterId);
-
-                        if (caster != null)
+                        RelationshipModel relationship = new()
                         {
-                            var notificationData = JsonConvert.SerializeObject(
-                                new
-                                {
-                                    Type = "FOLLOW",
-                                    ReceiverId = req.ReceiverId,
-                                    CasterId = req.CasterId,
-                                    CasterUserName = caster.Data.UserName,
-                                    CasterAvatarUrl = caster.Data.AvatarURL
-                                });
+                            CasterId = req.CasterId,
+                            ReceiverId = req.ReceiverId,
+                            Type = "FOLLOW",
+                        };
+                        var Follow = await db.Relationships.AddAsync(relationship);
+                        await db.SaveChangesAsync();
 
-                            var content = new StringContent(notificationData.ToString(), Encoding.UTF8, "application/json");
-                            var res = httpClient.PostAsync("https://localhost:7204/api/v1/service/notification/sendnotif", content).Result;
+                        if (Follow != null)
+                        {
+                            getUserInfoResponseDTO caster = await httpClient.GetFromJsonAsync<getUserInfoResponseDTO>("https://localhost:7201/api/v1/service/auth/user/" + req.CasterId);
 
+                            if (caster != null)
+                            {
+                                var notificationData = JsonConvert.SerializeObject(
+                                    new
+                                    {
+                                        Type = "FOLLOW",
+                                        ReceiverId = req.ReceiverId,
+                                        CasterId = req.CasterId,
+                                        CasterUserName = caster.Data.UserName,
+                                        CasterAvatarUrl = caster.Data.AvatarURL
+                                    });
+
+                                var content = new StringContent(notificationData.ToString(), Encoding.UTF8, "application/json");
+                                var res = httpClient.PostAsync("https://localhost:7204/api/v1/service/notification/sendnotif", content).Result;
+
+                            }
+
+                            response.Message = "User Followed";
+                            response.Success = true;
+                            return Ok(response);
                         }
-
-                        response.Message = "User Followed";
-                        response.Success = true;
-                        return BadRequest(response);
                     }
+                    else
+                    {
+                        db.Relationships.Remove(existance);
+                        db.SaveChanges();
+                        response.Message = "User Unfollowed";
+                        response.Success = true;
+                        return Ok(response);
+                    }
+                    
                 }
                 else
                 {

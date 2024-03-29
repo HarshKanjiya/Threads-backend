@@ -7004,19 +7004,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Admin\\.nuget\\packages\\": {}
+    "C:\\Users\\asus\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Harsh\\zz - side\\threads\\backend\\Notification.microservice\\Notification.microservice.csproj",
+      "projectUniqueName": "D:\\projects\\side\\thread\\backend\\Notification.microservice\\Notification.microservice.csproj",
       "projectName": "Notification.microservice",
-      "projectPath": "C:\\Harsh\\zz - side\\threads\\backend\\Notification.microservice\\Notification.microservice.csproj",
-      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Harsh\\zz - side\\threads\\backend\\Notification.microservice\\obj\\",
+      "projectPath": "D:\\projects\\side\\thread\\backend\\Notification.microservice\\Notification.microservice.csproj",
+      "packagesPath": "C:\\Users\\asus\\.nuget\\packages\\",
+      "outputPath": "D:\\projects\\side\\thread\\backend\\Notification.microservice\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\asus\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -7030,8 +7030,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Harsh\\zz - side\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj": {
-              "projectPath": "C:\\Harsh\\zz - side\\threads\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj"
+            "D:\\projects\\side\\thread\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj": {
+              "projectPath": "D:\\projects\\side\\thread\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj"
             }
           }
         }
@@ -7040,6 +7040,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -7092,7 +7097,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.200/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

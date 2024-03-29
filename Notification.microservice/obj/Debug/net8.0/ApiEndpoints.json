@@ -2,7 +2,7 @@
   {
     "ContainingType": "Notification.microservice.Controllers.NotificationController",
     "Method": "GetMyNotifications",
-    "RelativePath": "api/v1/notification/getall/{UserId}",
+    "RelativePath": "api/v1/notification/getall/{UserId}/{type}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -10,6 +10,11 @@
       {
         "Name": "UserId",
         "Type": "System.Guid",
+        "IsRequired": true
+      },
+      {
+        "Name": "type",
+        "Type": "System.String",
         "IsRequired": true
       }
     ],

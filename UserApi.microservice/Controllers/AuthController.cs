@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using UAParser;
 using UserApi.microservice.Data;
 using UserApi.microservice.Models;
@@ -531,7 +532,8 @@ namespace UserApi.microservice.Controllers
                 user.Gender = !string.IsNullOrWhiteSpace(req.Gender) ? req.Gender : user.Gender;
                 user.Birthdate = !string.IsNullOrWhiteSpace(req.Birthdate) ? req.Birthdate : user.Birthdate;
                 user.Status = !string.IsNullOrWhiteSpace(req.Status) ? req.Status : user.Status;
-                user.Private = req.Private ? req.Private : user.Private;
+                user.Mention = !string.IsNullOrWhiteSpace(req.Mention) ? req.Mention : user.Mention;
+                user.Private = req.Private == true || req.Private == false ? req.Private : user.Private;
                 db.SaveChanges();
 
                 response.Message = "User Updated";
@@ -623,10 +625,23 @@ namespace UserApi.microservice.Controllers
                         res.posts = postsResponse.Data;
                     }
 
+                    ResponseDTO followResponse = await httpClient.GetFromJsonAsync<ResponseDTO>("https://localhost:7203/api/v1/service/action/follow/" + dbUser.UserId + "/" + userId);
+
                     // string responseBody = await postsResponse.Content.ReadAsStringAsync();
+                    if (followResponse.Success == true)
+                    {
+                        if(followResponse.Message == "followed")
+                        {
+                            res.FollowedByMe = true;
+                        }
+                        else
+                        {
+                            res.FollowedByMe = false;
+                        }
+                    }
 
-
-
+                    res.user.Password = null;
+                    res.user.PasswordSalt = null;
 
                     responseDTO.Success = true;
                     responseDTO.Message = "User data found";
@@ -645,14 +660,13 @@ namespace UserApi.microservice.Controllers
                 responseDTO.Success = false;
                 return BadRequest(responseDTO);
             }
-
-
-
         }
+
         public class UserProfileResponseDTO
         {
             public UserModel user { get; set; }
             public Object posts { get; set; }
+            public bool FollowedByMe { get; set; } = false;
         }
 
         [HttpGet("token")]

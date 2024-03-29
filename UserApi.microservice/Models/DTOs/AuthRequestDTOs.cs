@@ -48,6 +48,8 @@ namespace UserApi.microservice.Models.DTOs
         public string? Avatar { get; set; }
         public string? Birthdate { get; set; }
         public bool Private { get; set; }
+        public string? Mention { get; set; } //all,follow,none
+
     }
     public class UpdatePasswordRequestDTO
     {

@@ -27,7 +27,7 @@ namespace UserApi.microservice.Models
         public bool Verified { get; set; } = false;
 
         public List<DeviceModel> Devices { get; set; } = new List<DeviceModel>();
-
+        public string Mention { get; set; } = "ALL"; //all,follow,none
         public bool Private { get; set; } = false;
         public string BanStatus { get; set; } = "UNBAN";
         public DateTime? BanStartTime { get; set; }

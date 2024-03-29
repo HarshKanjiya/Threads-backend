@@ -7,6 +7,7 @@ using UserApi.microservice.Models.DTOs;
 using Thread.microservice.Utils;
 using Microsoft.EntityFrameworkCore;
 using Thread.microservice.Model;
+using System.Text.RegularExpressions;
 
 namespace Thread.microservice.Controller
 {
@@ -201,10 +202,19 @@ namespace Thread.microservice.Controller
                 var res = httpClient.PutAsync("https://localhost:7201/api/v1/service/auth/usercounts", content).Result;
 
                 /*                req.Content.Text*/
-                List<string> textList = req.Content.Text.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries).ToList();
 
-                foreach (var text in textList ) {
-                    var existingTag = db.Tags.FirstOrDefault(x => x.TagName == text);
+                string pattern = @"#\w+";
+                MatchCollection matches = Regex.Matches(req.Content.Text, pattern);
+                string[] hashtags = new string[matches.Count];
+                for (int i = 0; i < matches.Count; i++)
+                {
+                    hashtags[i] = matches[i].Value.Substring(1);
+                }
+
+                /*List<string> textList = req.Content.Text.Split(new char[] {' '}, StringSplitOptions.RemoveEmptyEntries).ToList();*/
+
+                foreach (var text in hashtags ) {
+                    var existingTag = db.Tags.FirstOrDefault(x => string.Equals(x.TagName, text));
 
                     if(existingTag == null)
                     {
@@ -222,8 +232,8 @@ namespace Thread.microservice.Controller
                     else
                     {
                         existingTag.Threads.Add(thread.Entity.ThreadId);
-                        db.SaveChanges();
                     }
+                        db.SaveChanges();
                 }
 
                 if (thread.Entity != null)

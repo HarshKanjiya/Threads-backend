@@ -445,14 +445,14 @@ namespace UserApi.microservice.Controllers
                     responseDTO.Message = "Username is not Available.";
                     responseDTO.Success = false;
 
-                    return BadRequest(responseDTO);
+                    return Ok(responseDTO);
                 }
             }
             catch (Exception e)
             {
                 responseDTO.Message = "Something went wrong";
                 responseDTO.Success = false;
-                return BadRequest(responseDTO);
+                return Ok(responseDTO);
 
 
             }

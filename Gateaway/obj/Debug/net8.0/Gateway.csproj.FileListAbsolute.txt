@@ -464,3 +464,4 @@ C:\Harsh\zz - side\threads\backend\Gateaway\obj\Debug\net8.0\Gateway.pdb
 C:\Harsh\zz - side\threads\backend\Gateaway\obj\Debug\net8.0\Gateway.genruntimeconfig.cache
 C:\Harsh\zz - side\threads\backend\Gateaway\obj\Debug\net8.0\ref\Gateway.dll
 C:\Harsh\zz - side\threads\backend\Gateaway\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll
+D:\projects\side\thread\backend\Gateaway\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll

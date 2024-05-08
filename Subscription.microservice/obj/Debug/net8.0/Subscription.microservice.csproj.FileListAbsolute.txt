@@ -425,3 +425,4 @@ C:\Harsh\zz - side\threads\backend\Subscription.microservice\obj\Debug\net8.0\Su
 C:\Harsh\zz - side\threads\backend\Subscription.microservice\obj\Debug\net8.0\Subscription.microservice.genruntimeconfig.cache
 C:\Harsh\zz - side\threads\backend\Subscription.microservice\obj\Debug\net8.0\ref\Subscription.microservice.dll
 C:\Harsh\zz - side\threads\backend\Subscription.microservice\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll
+D:\projects\side\thread\backend\Subscription.microservice\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll

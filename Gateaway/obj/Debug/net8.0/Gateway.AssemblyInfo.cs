@@ -14,11 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Gateway")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ebd574982374341a82fb6e9bef6242885703e91")]
-=======
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c073d253c3937c42e15255e12abb29b443b93db1")]
->>>>>>> 18ffde4078c6b56b140eb0dc07ee110ae19964ce
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+786c214be11e1bb5fabc59b0f37f1ceba9fd549c")]
 [assembly: System.Reflection.AssemblyProductAttribute("Gateway")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Gateway")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "JjbUdWQ9ezaWBIS3j7rxAoWpbM4IFzQ3K61DBQT/GUj9Yk94LJdV3lOIFuEj4Gbuz02ppc5FmbR1D2qWimylUQ==",
+  "dgSpecHash": "aT1ONSsRCyi7Rmmx9AK9eRYHtTN5+9X+O7SmlntV0ZMUn8GXOZYNNZfDno47MZ06PCjRWHqSWvq89KWkPeSFSg==",
   "success": true,
   "projectFilePath": "D:\\projects\\side\\thread\\backend\\JwtAuthenticationManager\\UserAuthenticationManager.csproj",
   "expectedPackageFiles": [

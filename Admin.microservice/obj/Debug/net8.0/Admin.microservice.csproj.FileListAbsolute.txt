@@ -425,3 +425,4 @@ C:\Harsh\zz - side\threads\backend\Admin.microservice\obj\Debug\net8.0\Admin.mic
 C:\Harsh\zz - side\threads\backend\Admin.microservice\obj\Debug\net8.0\Admin.microservice.genruntimeconfig.cache
 C:\Harsh\zz - side\threads\backend\Admin.microservice\obj\Debug\net8.0\ref\Admin.microservice.dll
 C:\Harsh\zz - side\threads\backend\Admin.microservice\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll
+D:\projects\side\thread\backend\Admin.microservice\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll
